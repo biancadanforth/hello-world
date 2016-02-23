@@ -1,2 +1,5 @@
 # hello-world
-A place where I store ideas, resources and share and discuss things with others
+
+Hi humans!
+
+Bianca here. I am learning front-end web design and development. My plan is to store any useful, modular bits of code here on GitHub in this hello-world repository.
