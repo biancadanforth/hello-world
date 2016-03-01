@@ -1,0 +1,27 @@
+/*Example modal pop-up CSS; width, padding, background-color, text-align and margin-top and margin-left can all be customized. Note that margin-left needs to be equal to negative half the final width of the element and margin-top needs to be equal to negative half the final height of the element*/
+
+/* Still need to add: color overlay on rest of website when pop-up pops up. Forms: e-mail entry and post to web server*/
+
+/*Problem: you want the web page to be responsive and not to have to manually enter a new margin-top and margin-left every time the style of content in the modal is changed. This can be done by using Sass... any other ways?*/
+
+#modal-pop-up {
+  width: 300px; /*arbitrary width, can change*/
+  padding: 20px; /* adds padding to all sides of the content of the element, so effective width is "width" + 2Xpadding = 140px in this case*/
+  text-align: center;
+  background-color: tomato;
+  overflow: auto; /*ensures that the height of the div adjusts to the amount of text contained inside*/
+  z-index: 99; /*Places element above all others on the page; default z-index is 0*/
+  position: fixed; /* keeps position fixed relative to browser window; element stays put when user scrolls. */
+  top: 50%; /*aligns the top horizontal edge of the element with the horizontal centerline of the webpage*/
+  left: 50%; /*aligns the left vertical edge of the element with the vertical centerline of the webpage*/
+  margin-top: -100px; /*offset value is equal to negative half the final height of the element, including any padding*/
+  margin-left: -170px; /*offset value is equal to negative half the final width of the element, including any padding*/
+}
+
+p {
+	font-family: arial;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 1.2;
+	color: #fff;
+}
