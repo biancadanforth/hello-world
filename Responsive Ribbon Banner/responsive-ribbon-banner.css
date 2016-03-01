@@ -1,0 +1,73 @@
+/* Making a responsive ribbon banner
+Derived from making a triangle in CSS code and inverting what is transparent and what is colored*/
+
+p {
+	margin: 0; /* reset browser default margin on <p> elements*/
+}
+
+body {
+	background-color: #fefcf2;
+}
+
+/*makes a "border-width by 2*border-width" ribbon end*/ 
+.ribbon-end-left {
+	float: left;
+	width: 0;
+	height: 0;
+	border-top: 18px solid #f6515d;
+	border-bottom: 18px solid #f6515d;
+	border-left: 18px solid transparent;
+}
+
+/*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
+.ribbon-length-left {
+	float: left;
+	width: 0;
+	height: 0;
+	border: 18px solid #f6515d;
+	margin-right: -20px; /*allows "center" div to overlap "left" div*/
+}
+
+.center {
+	float: left;
+	position: relative;
+	margin-top: 7px;
+	color: white;
+	font-family: sans-serif;
+	font-weight: 700;
+	font-style: italic;
+	font-size: 16px;
+	background-color: #f6515d;
+	border: 2px solid #fefcf2; /*choose a color the same as the background color of the section or page, in this case, the body background-color*/
+	padding: 0 20px;
+	height: 36px; /* height of center ribbon should be 2*border-width*/
+	line-height: 36px; /* making line-height = height of a div centers the text vertically inside it (for single lines of text only*/
+	z-index: 1; /*places center of ribbon above both left and right ends*/
+}
+
+.right {
+	z-index: 0; /*places center of ribbon above both left and right ends*/
+}
+
+/*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
+.ribbon-length-right {
+	float: left;
+	width: 0;
+	height: 0;
+	border: 18px solid #f6515d;
+	margin-left: -20px; /*allows "center" div to overlap "right" div*/
+}
+
+/*makes a "border-width by 2*border-width" ribbon end*/ 
+.ribbon-end-right {
+	float: left;
+	width: 0;
+	height: 0;
+	border-top: 18px solid #f6515d;
+	border-bottom: 18px solid #f6515d;
+	border-right: 18px solid transparent;
+}
+
+.clear-fix {
+	clear: both;
+}
