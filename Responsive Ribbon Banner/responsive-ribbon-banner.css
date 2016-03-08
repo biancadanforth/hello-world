@@ -1,5 +1,7 @@
 /* Making a responsive ribbon banner
-Derived from making a triangle in CSS code and inverting what is transparent and what is colored*/
+Derived from making a triangle in CSS code and inverting what is transparent and what is colored
+
+This project shows how to use CSS to design a simple ribbon banner and JavaScript to make the banner resize based on the amount of text contained within the banner and font-size. It also uses the flexbox layout mode to ensure the ribbon remains centered in the viewport at any width 480px and above*/
 
 p {
 	margin: 0; /* reset browser default margin on <p> elements*/
@@ -9,9 +11,16 @@ body {
 	background-color: #fefcf2;
 }
 
+.ribbon-container {
+	display: flex; /*CSS3 Flexible Box or "flexbox" property; makes container a flexible container and child elements flexible items*/
+	justify-content: center; /*CSS3 Flexible Box or "flexbox" property*/
+	min-width: 480px; /*min screen width on smart phone portrait; at 408 px with font-size 1em, ribbon elements breaks, wrapping down*/
+}
+
 /*makes a "border-width by 2*border-width" ribbon end*/ 
 .ribbon-end-left {
 	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
 	width: 0;
 	height: 0;
 	border-top: 18px solid #f6515d;
@@ -22,6 +31,7 @@ body {
 /*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
 .ribbon-length-left {
 	float: left;
+	display: inline;
 	width: 0;
 	height: 0;
 	border: 18px solid #f6515d;
@@ -30,6 +40,7 @@ body {
 
 .center {
 	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
 	position: relative;
 	margin-top: 7px;
 	color: white;
@@ -54,6 +65,7 @@ p {
 /*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
 .ribbon-length-right {
 	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
 	width: 0;
 	height: 0;
 	border: 18px solid #f6515d;
@@ -63,6 +75,7 @@ p {
 /*makes a "border-width by 2*border-width" ribbon end*/ 
 .ribbon-end-right {
 	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
 	width: 0;
 	height: 0;
 	border-top: 18px solid #f6515d;

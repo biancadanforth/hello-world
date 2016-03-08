@@ -1,4 +1,7 @@
-//Responsive Ribbon 03032016
+/* ///* Making a responsive ribbon banner
+Derived from making a triangle in CSS code and inverting what is transparent and what is colored
+
+This project shows how to use CSS to design a simple ribbon banner and JavaScript to make the banner resize based on the amount of text contained within the banner and font-size. It also uses the flexbox layout mode to ensure the ribbon remains centered in the viewport at any width 480px and above*/ //
 
 // function to calculate rendered height of the ribbon with content
 function computeRibbonHeight() {
