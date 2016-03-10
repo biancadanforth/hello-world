@@ -1,0 +1,356 @@
+/* Fluid Grid Demo*/
+/* Source: Variable Grid System at http://1stwebdesigner.com/fluid-grid-layout/ */
+
+/* Uses a grid system with:
+- 12 evenly sized and spaced columns */
+
+/* Cross Browser Compatability CSS */
+/**
+ * html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+ * v1.6.1 2010-09-17 | Authors: Eric Meyer & Richard Clark
+ * html5doctor.com/html-5-reset-stylesheet/
+ */
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+blockquote, q { quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content: ""; content: none; }
+
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+
+input, select { vertical-align: middle; }
+
+a {
+	text-decoration: none;
+	}
+
+/* BEGIN FLUID GRID STYLES*/
+
+/* Largest container */
+.container-12 {
+	position: relative; /*only relevant if using positioning properties like left, right, top, bottom down the line*/
+	margin: 0 auto .9em auto;
+	overflow: auto; /* because all children elements are floated*/
+	max-width: 960px; /* PSD is designed on a 960px system */
+}
+
+.container-12 div { /*select the children div elements of the element with class of container-12*/
+	background:#eee;
+}
+
+/*Each grid_n is a div n-columns wide. Ex: grid-5 is 5 columns wide*/
+/* Say if you have an image that is 7 columns wide, give it a class of grid-7 in the HTML */
+.grid-1,.grid-2,.grid-3,.grid-4,.grid-5,.grid-6,.grid-7,.grid-8,.grid-9,.grid-10,.grid-11,.grid-12 {
+	float:left;
+	margin-left:1%; /*left gutter width*/
+	margin-right:1%; /*right gutter width*/
+}
+
+.grid-1:first-child,.grid-2:first-child,.grid-3:first-child,.grid-4:first-child,.grid-5:first-child,.grid-6:first-child,.grid-7:first-child,.grid-8:first-child,.grid-9:first-child,.grid-10:first-child,.grid-11:first-child,.grid-12:first-child {
+	margin-left: 0;
+}
+
+.grid-1:last-child,.grid-2:last-child,.grid-3:last-child,.grid-4:last-child,.grid-5:last-child,.grid-6:last-child,.grid-7:last-child,.grid-8:last-child,.grid-9:last-child,.grid-10:last-child,.grid-11:last-child,.grid-12:last-child {
+	margin-right: 0;
+}
+
+/*Div that is 1 column wide*/
+.container-12 .grid-1 {
+	width:6.5%;
+}
+
+/*Div that is 2 column wide*/
+.container-12 .grid-2 {
+	width:15%;
+}
+
+/*Div that is 3 column wide*/
+.container-12 .grid-3 {
+	width:23.5%;
+}
+
+/*Div that is 4 column wide*/
+.container-12 .grid-4 {
+	width:32%;
+}
+
+/*Div that is 5 column wide*/
+.container-12 .grid-5 {
+	width:40.5%;
+}
+
+/*Div that is 6 column wide*/
+.container-12 .grid-6  {
+	width:49%;
+}
+
+
+/*Div that is 7 column wide*/
+.container-12 .grid-7 {
+	width:57.5%;
+}
+
+/*Div that is 8 column wide*/
+.container-12 .grid-8 {
+	width:66%;
+}
+
+/*Div that is 9 column wide*/
+.container-12 .grid-9 {
+	width:74.5%;
+}
+
+/*Div that is 10 column wide*/
+.container-12 .grid-10 {
+	width:83%;
+}
+
+/*Div that is 11 column wide*/
+.container-12 .grid-11{ 
+	width:91.5%;
+}
+
+/*Div that is 12 column wide*/
+.container-12 .grid-12 {
+	/* width:98.0%; */
+	width: 100%;
+}
+
+/*Add a prefix_n class to an element to left indent content by a certain amount; makes the element itself larger*/
+.container_12 .prefix_1 {
+	padding-left:8.333%;
+}
+
+.container_12 .prefix_2 {
+	padding-left:16.667%;
+}
+
+.container_12 .prefix_3 {
+	padding-left:25.0%;
+}
+
+.container_12 .prefix_4 {
+	padding-left:33.333%;
+}
+
+.container_12 .prefix_5 {
+	padding-left:41.667%;
+}
+
+.container_12 .prefix_6 {
+	padding-left:50.0%;
+}
+
+.container_12 .prefix_7 {
+	padding-left:58.333%;
+}
+
+.container_12 .prefix_8 {
+	padding-left:66.667%;
+}
+
+.container_12 .prefix_9 {
+	padding-left:75.0%;
+}
+
+.container_12 .prefix_10 {
+	padding-left:83.333%;
+}
+
+.container_12 .prefix_11 {
+	padding-left:91.667%;
+}
+
+/*Add a suffix_n class to an element to right indent content by a certain amount; makes the element itself larger*/	
+.container_12 .suffix_1 {
+	padding-right:8.333%;
+}
+
+.container_12 .suffix_2 {
+	padding-right:16.667%;
+}
+
+.container_12 .suffix_3 {
+	padding-right:25.0%;
+}
+	
+.container_12 .suffix_4 {
+	padding-right:33.333%;
+}
+
+.container_12 .suffix_5 {
+	padding-right:41.667%;
+}
+
+.container_12 .suffix_6 {
+	padding-right:50.0%;
+}
+
+.container_12 .suffix_7 {
+	padding-right:58.333%;
+}
+
+.container_12 .suffix_8 {
+	padding-right:66.667%;
+}
+
+.container_12 .suffix_9 {
+	padding-right:75.0%;
+}
+
+.container_12 .suffix_10 {
+	padding-right:83.333%;
+}
+
+.container_12 .suffix_11 {
+	padding-right:91.667%;
+}
+
+/*Add a pull_n class to an element to position content right by a certain amount. For example, can be used to offset two horizontal sections by a certain amount say for nested comments in a forum if use .container_n.push_1 with no spaces in between and give the parent div with class container_12 also a class of push_1. Can also keep the space as in ".container_12 .push_1 {...} and add a push_1 class to one of the grid_n class child divs; this shifts just that child div over*/
+/*the container_12 class is positioned relative above. Therefore pushing moves the div over to the left from where it would originally have been, leaving a gap*/
+.container_12 .push_1 {
+	left:8.333%;
+}
+
+.container_12 .push_2 {
+	left:16.667%;
+}
+
+.container_12 .push_3 {
+	left:25.0%;
+}
+
+.container_12 .push_4 {
+	left:33.333%;
+}
+
+.container_12 .push_5 {
+	left:41.667%;
+}
+
+.container_12 .push_6 {
+	left:50.0%;
+}
+
+.container_12 .push_7 {
+	left:58.333%;
+}
+
+.container_12 .push_8 {
+	left:66.667%;
+}
+
+.container_12 .push_9 {
+	left:75.0%;
+}
+
+.container_12 .push_10 {
+	left:83.333%;
+}
+
+.container_12 .push_11 {
+	left:91.667%;
+}
+
+/*Add a pull_n class to an element to position content right by a certain amount. For example, can be used to offset two horizontal sections by a certain amount say for nested comments in a forum*/
+/*the container_12 class is positioned:relative; above. Therefore pushing moves the div over to the right from where it would originally have been, leaving a gap*/
+
+.container_12 .pull_1 {
+	left:-8.333%;
+}
+
+.container_12 .pull_2 {
+	left:-16.667%;
+}
+
+.container_12 .pull_3 {
+	left:-25.0%;
+}
+
+.container_12 .pull_4 {
+	left:-33.333%;
+}
+
+.container_12 .pull_5 {
+	left:-41.667%;
+}
+
+.container_12 .pull_6 {
+	left:-50.0%;
+}
+
+.container_12 .pull_7 {
+	left:-58.333%;
+}
+
+.container_12 .pull_8 {
+	left:-66.667%;
+}
+
+.container_12 .pull_9 {
+	left:-75.0%;
+}
+
+.container_12 .pull_10 {
+	left:-83.333%;
+}
+
+.container_12 .pull_11 {
+	left:-91.667%;
+}
+
+body {
+	margin-top:20px;
+}
+
+.container_12 {
+	float:left;
+	margin-bottom:10px;
+}
+
+.container_12 div {
+	background:#eee;
+	height:200px;
+}
+
+span{
+	background:none repeat scroll 0 0 #443C3C;
+	color:#FFFFFF;
+	float:left;
+	margin:20px 30%;
+	padding:10px 5%;
+	text-align:center;
+	width:30%;
+}
