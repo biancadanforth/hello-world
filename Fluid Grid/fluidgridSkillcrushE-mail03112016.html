@@ -1,0 +1,79 @@
+<!-- Fluid Grid Demo -->
+<!-- Source: Variable Grid System at http://1stwebdesigner.com/fluid-grid-layout/ -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!--Viewport meta tag sets webpage width equal to device width, rather than having awkward whitespace in the case the page is narrower than the device viewport or displaying only the top left corner of the page in the case that the page is wider than the viewport-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Skillcrush E-mail Fluid Grid with Fluid Columns</title>
+        <link type="text/css" rel="stylesheet" href="fluidgridSkillcrushE-mail03112016.css" />
+    </head>
+    <body>
+		<header class="container-12">
+			<div class="grid-4 logo">
+				<p>logo<p>
+			</div>
+			<div class="grid-4 ribbon">
+				<p>ribbon<p>
+			</div>
+			<div class="grid-10 headline">
+				<p>headline<p>
+			</div>
+		</header>
+		<section class="container-12 sign-up">
+				<p class="e-mail grid-12">e-mail sign-up</p>
+				<div class="sign-up-container">
+					<form class="sign-up" action="#" method="post" name="e-mail sign-up form">
+						<div class="input">
+							<input type="text" class="button" id="email" name="email" placeholder="Your e-mail address">
+							<input type="submit" class="button" id="submit" value="SIGN UP">
+						</div>
+					</form>
+				</div>
+		</section>
+		<div class="margin-container-blogs">
+			<section class="container-12 blogs">
+				<div class="blog-post grid-4">
+					<p>blog post 1</p>
+				</div>
+				<div class="blog-post grid-4">
+					<p>blog post 2</p>
+				</div>
+				<div class="blog-post grid-4">
+					<p>blog post 3</p>
+				</div>
+			</section>
+		</div>
+		<div class="margin-container-about-contact">
+			<section class="container-12 about-contact">
+				<div class="about grid-6">
+					<p>about</p>
+				</div>
+				<div class="contact grid-6">
+					<p>contact</p>
+					<form class="contact" action="#" method="post" name="contact-us-form-beta">
+							<div class="contact-input">
+								<!-- name form field -->
+								<input type="text" class="contact-button" id="name" name="name" placeholder="Name">
+								<!-- e-mail address form field -->
+								<input type="text" class="contact-button" id="e-mail-address" name="e-mail" placeholder="E-mail address">
+								<!-- reason of contact form field -->
+								<input type="text" class="contact-button" id="subject" name="subject" placeholder="Reason of contact">
+								<!-- type your message here form field -->
+								<textarea name="message" cols="40" rows="5" class="contact-button" id="message" placeholder="Type your message here"></textarea>
+								<!-- Send Message button -->
+								<input type="submit" class="contact-button" id="contact-submit" value="Send Message">
+							</div>
+						</form>
+				</div>
+			</section>
+		</div>
+		<div class ="margin-container-footer">
+			<footer>
+			<p>copyright info 2016</p>
+			</footer>
+		</div>
+    </body>
+</html>

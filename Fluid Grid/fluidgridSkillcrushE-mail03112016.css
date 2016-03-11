@@ -1,0 +1,366 @@
+/* Fluid Grid Demo*/
+/* Source: Variable Grid System at http://1stwebdesigner.com/fluid-grid-layout/ */
+
+/* Uses a grid system with:
+- 12 evenly sized and spaced columns */
+
+/* Cross Browser Compatability CSS */
+/**
+ * html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+ * v1.6.1 2010-09-17 | Authors: Eric Meyer & Richard Clark
+ * html5doctor.com/html-5-reset-stylesheet/
+ */
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+blockquote, q { quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content: ""; content: none; }
+
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+
+input, select { vertical-align: middle; }
+
+a {
+	text-decoration: none;
+	}
+	
+/*border-box: The width and height properties include the padding and border, but not the margin.*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+} /* "*" is a placeholder for ALL selectors/elements, very taxing on browser to use; only use sparingly.*/
+
+/* BEGIN FLUID GRID/Flexbox STYLES*/
+
+body {
+	background-image:url("images/background.jpg");
+}
+
+/* Largest container */
+.container-12 {
+	position: relative; /*only relevant if using positioning properties like left, right, top, bottom down the line*/
+	margin: 0 auto;
+	overflow: auto; /* because all children elements are floated*/
+	max-width: 960px; /* PSD is designed on a 960px system */
+}
+
+.container-12 div { /*select the children div elements of the element with class of container-12*/
+	background:#eee;
+}
+
+/*Each grid_n is a div n-columns wide. Ex: grid-5 is 5 columns wide*/
+/* Say if you have an image that is 7 columns wide, give it a class of grid-7 in the HTML */
+.grid-1,.grid-2,.grid-3,.grid-4,.grid-5,.grid-6,.grid-7,.grid-8,.grid-9,.grid-10,.grid-11,.grid-12 {
+	float:left;
+	margin-left:1%; /*left gutter width*/
+	margin-right:1%; /*right gutter width*/
+}
+
+.grid-1:first-child,.grid-2:first-child,.grid-3:first-child,.grid-4:first-child,.grid-5:first-child,.grid-6:first-child,.grid-7:first-child,.grid-8:first-child,.grid-9:first-child,.grid-10:first-child,.grid-11:first-child,.grid-12:first-child {
+	margin-left: 0;
+}
+
+.grid-1:last-child,.grid-2:last-child,.grid-3:last-child,.grid-4:last-child,.grid-5:last-child,.grid-6:last-child,.grid-7:last-child,.grid-8:last-child,.grid-9:last-child,.grid-10:last-child,.grid-11:last-child,.grid-12:last-child {
+	margin-right: 0;
+}
+
+/*Div that is 1 column wide*/
+.container-12 .grid-1 {
+	width:6.5%;
+}
+
+/*Div that is 2 column wide*/
+.container-12 .grid-2 {
+	width:15%;
+}
+
+/*Div that is 3 column wide*/
+.container-12 .grid-3 {
+	width:23.5%;
+}
+
+/*Div that is 4 column wide*/
+.container-12 .grid-4 {
+	width:32%;
+}
+
+/*Div that is 5 column wide*/
+.container-12 .grid-5 {
+	width:40.5%;
+}
+
+/*Div that is 6 column wide*/
+.container-12 .grid-6  {
+	width:49%;
+}
+
+
+/*Div that is 7 column wide*/
+.container-12 .grid-7 {
+	width:57.5%;
+}
+
+/*Div that is 8 column wide*/
+.container-12 .grid-8 {
+	width:66%;
+}
+
+/*Div that is 9 column wide*/
+.container-12 .grid-9 {
+	width:74.5%;
+}
+
+/*Div that is 10 column wide*/
+.container-12 .grid-10 {
+	width:83%;
+}
+
+/*Div that is 11 column wide*/
+.container-12 .grid-11{ 
+	width:91.5%;
+}
+
+/*Div that is 12 column wide*/
+.container-12 .grid-12 {
+	/* width:98.0%; */
+	width: 100%;
+}
+
+
+
+/*-----------------------HEADER-----------------------*/
+
+header {
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	-webkit-align-items: center;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	text-align: center;
+}
+
+.logo, .ribbon, .headline {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.logo {
+	margin-top:2.5em; /*about 40px, based on the font-size of this element*/
+	font-size: 1em;
+}
+
+.ribbon {
+	margin-top: .9em; /* about 10px based on original PSD page height of 1600px when font size is 1em = 16px*/
+	font-size: 1em;
+	height: 48px; /*placeholder until content is there */
+}
+
+.headline {
+	margin-top: 3.75em;
+	font-size: 1em;
+	height: 70px; /*placeholder height until content is there*/
+}
+
+/*-----------------------SIGN-UP SECTION-----------------------*/
+
+section.sign-up {
+	height: 350px; /*temporary place holder until put in child elements*/
+	background:#eee;
+	margin-top: 3.75em; /* if body font is 16px = 1 em, then a 60px top margin is 60/16 = 3.75. */
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	-webkit-justify-content: center;
+	align-items: center;
+	-webkit-align-items: center;
+}
+
+p.e-mail {
+	align-self: flex-start;
+	-webkit-align-self: flex-start;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+div.sign-up-container {
+	width: 75%;
+}
+
+div.input {
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	-webkit-justify-content: center;
+	align-items: center;
+	-webkit-align-items: center;
+}
+
+#email {
+	flex: 0 3 75%;
+	-webkit-flex: 0 3 75%;
+}
+
+#submit {
+	flex: 0 1 25%;
+	-webkit-flex: 0 1 25%;
+}
+
+@media (max-width:600px) {
+	section.sign-up {
+		flex-flow: column wrap;
+		-webkit-flex-flow: column wrap;
+		width: 94%;
+		margin-left: auto;
+	}
+	div.input {
+		flex-flow: column wrap;
+		-webkit-flex-flow: column wrap;
+	}
+	#email {
+		width: 87.5%;
+	}
+	#submit {
+		width: 25%;
+		min-width: 75px;
+	}
+}
+
+
+/*-----------------------BLOG SECTION-----------------------*/
+
+div.margin-container-blogs {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: #f6515d;
+}
+
+section.blogs {
+	display: flex;
+	display: -webkit-flex;
+}
+
+@media (max-width:600px) {
+	section.blogs {
+		flex-flow: column wrap;
+		-webkit-flex-flow: column wrap;
+		align-items: center;
+		-webkit-align-items: center;
+	}
+	.blog-post.grid-4 {
+		width: 96%;
+		margin: 2%;
+	}
+	.blog-post:first-child {
+		margin-bottom: 0;
+	}
+	.blog-post:last-child {
+		margin-top: 0;
+	}
+}
+
+.blog-post {
+	height: 250px; /*temporary place holder until child elements put in*/
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+
+/*-----------------------ABOUT US/CONTACT SECTION-----------------------*/
+
+div.margin-container-about-contact {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: #333;
+}
+
+.about, .contact {
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+section.about-contact {
+	display: flex;
+	display: -webkit-flex;
+}
+
+#name, #e-mail-address {
+	width: 49.75%;
+	margin: 0;
+	padding: 0;
+}
+
+#subject, #message {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#e-mail-address, #contact-submit {
+	float: right;
+}
+
+@media (max-width:600px) {
+	section.about-contact {
+		flex-flow: column wrap;
+		-webkit-flex-flow: column wrap;
+		align-items: center;
+		-webkit-align-items: center;
+	}
+	.about.grid-6, .contact.grid-6 {
+		width: 96%;
+		margin: 2%;
+	}
+	.about.grid-6 {
+		margin-bottom: 0;
+	}
+	#name, #e-mail-address {
+		width: 100%;
+	}
+}
+
+/*-----------------------FOOTER-----------------------*/
+
+div.margin-container-footer {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: #f6515d;
+}
+
+footer {
+	height: 30px; /*placeholder height until content is put in*/
+}
