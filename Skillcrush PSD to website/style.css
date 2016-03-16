@@ -1,3 +1,9 @@
+/* Fluid Grid Demo*/
+/* Source: Variable Grid System at http://1stwebdesigner.com/fluid-grid-layout/ */
+
+/* Uses a grid system with:
+- 12 evenly sized and spaced columns */
+
 /* Cross Browser Compatability CSS */
 /**
  * html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
@@ -49,138 +55,318 @@ input, select { vertical-align: middle; }
 a {
 	text-decoration: none;
 	}
+	
+/*border-box: The width and height properties include the padding and border, but not the margin.*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+} /* "*" is a placeholder for ALL selectors/elements, very taxing on browser to use; only use sparingly.*/
 
-/* ---------------page styling -------------------- */
-
-/*import hosted fonts*/
-@font-face {
-	font-family: Wisdom Script;
-	src:url("fonts/Wisdom_Script.otf") format("opentype");
-}
-
-.container {
-	width: 960px; /*960 grid system*/
-	margin: auto;
-}
+/* BEGIN FLUID GRID/Flexbox STYLES*/
 
 body {
 	background-image:url("images/background.jpg");
 }
 
-.centered {
-	display: block;
+/* Largest container */
+.container-12 {
+	position: relative; /*only relevant if using positioning properties like left, right, top, bottom down the line*/
 	margin: 0 auto;
+	overflow: auto; /* because all children elements are floated*/
+	max-width: 960px; /* PSD is designed on a 960px system */
 }
-/* ---------------HEADER -------------------- */
+
+/*Each grid_n is a div n-columns wide. Ex: grid-5 is 5 columns wide*/
+/* Say if you have an image that is 7 columns wide, give it a class of grid-7 in the HTML */
+.grid-1,.grid-2,.grid-3,.grid-4,.grid-5,.grid-6,.grid-7,.grid-8,.grid-9,.grid-10,.grid-11,.grid-12 {
+	float:left;
+	margin-left:1%; /*left gutter width*/
+	margin-right:1%; /*right gutter width*/
+}
+
+.grid-1:first-child,.grid-2:first-child,.grid-3:first-child,.grid-4:first-child,.grid-5:first-child,.grid-6:first-child,.grid-7:first-child,.grid-8:first-child,.grid-9:first-child,.grid-10:first-child,.grid-11:first-child,.grid-12:first-child {
+	margin-left: 0;
+}
+
+.grid-1:last-child,.grid-2:last-child,.grid-3:last-child,.grid-4:last-child,.grid-5:last-child,.grid-6:last-child,.grid-7:last-child,.grid-8:last-child,.grid-9:last-child,.grid-10:last-child,.grid-11:last-child,.grid-12:last-child {
+	margin-right: 0;
+}
+
+/*Div that is 1 column wide*/
+.container-12 .grid-1 {
+	width:6.5%;
+}
+
+/*Div that is 2 column wide*/
+.container-12 .grid-2 {
+	width:15%;
+}
+
+/*Div that is 3 column wide*/
+.container-12 .grid-3 {
+	width:23.5%;
+}
+
+/*Div that is 4 column wide*/
+.container-12 .grid-4 {
+	width:32%;
+}
+
+/*Div that is 5 column wide*/
+.container-12 .grid-5 {
+	width:40.5%;
+}
+
+/*Div that is 6 column wide*/
+.container-12 .grid-6  {
+	width:49%;
+}
+
+
+/*Div that is 7 column wide*/
+.container-12 .grid-7 {
+	width:57.5%;
+}
+
+/*Div that is 8 column wide*/
+.container-12 .grid-8 {
+	width:66%;
+}
+
+/*Div that is 9 column wide*/
+.container-12 .grid-9 {
+	width:74.5%;
+}
+
+/*Div that is 10 column wide*/
+.container-12 .grid-10 {
+	width:83%;
+}
+
+/*Div that is 11 column wide*/
+.container-12 .grid-11{ 
+	width:91.5%;
+}
+
+/*Div that is 12 column wide*/
+.container-12 .grid-12 {
+	/* width:98.0%; */
+	width: 100%;
+}
+
+/*-----------------------HEADER-----------------------*/
+
+header {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+.logo, .ribbon, .headline {
+	margin-left: 0;
+	margin-right: 0;
+}
 
 .logo {
-	margin-top: 40px;
+	margin-top:2.5em; /*about 40px, based on the font-size of this element*/
+	font-size: 1em;
+	max-width: 100%;
 }
 
-.ribbon-banner-container {
-	/*alternate way of centering ribbon in container div: */
-	/*
-	width: 317px;
-	margin:10px auto 0 auto; /*top, left, bottom, right*/
-	text-align: center;
-	clear: both;
-	height: 36px; /*same height as ribbon.png, otherwise ribbon.png gets cropped*/
-	background-image:url('images/ribbon.png');
-	background-repeat: no-repeat;
-	width: 100%;
-	background-position: center;
-	margin-top:10px;
+.ribbon-container {
+	display: flex; /*CSS3 Flexible Box or "flexbox" property; makes container a flexible container and child elements flexible items*/
+	justify-content: center; /*CSS3 Flexible Box or "flexbox" property*/
+	margin-top: .75em;
+	min-width: 280px; /*beyond which ribbon breaks, segments start wrapping down*/
 }
 
-h6 { /*How do I overlay this text over the ribbon image and center it up?*/
-	z-index: 1; /*default z-index is 0, so 1 puts it above banner.png*/
-	color: #fefcf2;
-	font-family: Libre Baskerville Italic;
+/*makes a "border-width by 2*border-width" ribbon end*/ 
+.ribbon-end-left {
+	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+	width: 0;
+	height: 0;
+	border-top: 18px solid #f6515d;
+	border-bottom: 18px solid #f6515d;
+	border-left: 18px solid transparent;
+}
+
+/*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
+.ribbon-length-left {
+	float: left;
+	display: inline;
+	width: 0;
+	height: 0;
+	
+	border-width: 18px;
+	border-style: solid;
+	border-color: #f6515d;
+	margin-right: -20px; /*allows "center" div to overlap "left" div*/
+}
+
+.center {
+	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+	position: relative;
+	margin-top: 7px;
+	background-color: #f6515d;
+	border: 2px solid #fefcf2; /*choose a color the same as the background color of the section or page, in this case, the body background-color*/
+	color: white;
+	font-family: sans-serif;
 	font-weight: 700;
-	font-size: 16px;
 	font-style: italic;
-	vertical-align: middle;
-	padding-top: 12px; /*padding used for block elements, margin for inline*/
+	font-size: 1em;
+	line-height: 1em;
 }
 
-h2 {
-	margin-top: 60px;
+p.slogan {
+	padding: .625em;
+	text-align: center;
+}
+
+/*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
+.ribbon-length-right {
+	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+	width: 0;
+	height: 0;
+	border: 18px solid #f6515d;
+	margin-left: -20px; /*allows "center" div to overlap "right" div*/
+}
+
+/*makes a "border-width by 2*border-width" ribbon end*/ 
+.ribbon-end-right {
+	float: left;
+	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+	width: 0;
+	height: 0;
+	border-top: 18px solid #f6515d;
+	border-bottom: 18px solid #f6515d;
+	border-right: 18px solid transparent;
+}
+
+br.slogan-small {
+	display: none;
+}
+
+.clear-fix {
+	clear: both;
+}
+
+.headline {
+	margin-top: 2.3em; /*about 60 px with a font-size of 26 px, assuming default user font is 16px*/
 	font-family: Noticia Text;
-	font-size: 26px;
+	font-size: 1.625em;
 	line-height: 2;
 	text-align: center;
 	font-weight:700;
 	color: #f6515d;
 }
 
-/* ---------------SECTION: SIGN-UP -------------------- */
-
-.sign-up {
-	width: 100%;
-	margin-top: 60px;
-	text-align: center;
-	background-image: url('images/paper-stack.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 0;
-    padding-top: 36%; /* (img-height / img-width * width) http://stackoverflow.com/questions/600743/how-to-get-div-height-to-auto-adjust-to-background-size /* (564 / 987 * 100) */
-	position: relative;
-	 /*offset-x | offset-y | blur-radius | spread-radius | color */
+.headline {
+	width: 90%;
 }
 
-.form-position {
-	position: absolute;
-	left: 50%;
-	top: 0;
-	width: 730px;
-	margin-left: -365px; /*offset half of the width of the element to center it horizontally on the page*/
+@media (max-width:480px) {
+
+	header {
+		width: 90%
+	}
+	
+	br.slogan-small {
+		display: inline;
+		line-height: 1.2;
+	}
+	
+	.headline {
+		font-size: 1.1em;
+	}
+
+}
+
+/*-----------------------SIGN-UP SECTION-----------------------*/
+
+section.sign-up {
+	margin-top: 3em;
+	position: relative;
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	overflow-x: hidden;
+	margin-left: auto;
+}
+
+img.paper-stack {
+	min-width: 960px;
+	max-width: 960px;
+	height: auto;
 }
 
 h3 {
 	font-family:'Wisdom Script';
-	z-index:1;
-	font-size: 25px;
+	font-size: 1.625em; /*26px*/
 	line-height: 2;
 	text-shadow: 0 1px 1px black;/* offset-x | offset-y | blur-radius | color */
 }
 
 h3.newsletter {
-	margin-top: 40px;
+	position: absolute;
+	top: 7%;
+	width: 100%;
+	text-align: center;
+}
+
+br.newsletter-br {
+	display: none;
 }
 
 h4 {
-	margin-top: 60px;
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	text-align: center;
 	font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
 	z-index:1;
-	font-size: 30px;
+	font-size: 1.875em; /*30 px*/
 	line-height: 1.4;
 	color: #f6515d;
 	text-transform: uppercase;
 }
 
-.input {
-  display: flex;
-  align-items: center;
-  margin-top: 25px;
+br.h4 {
+	display: none;
 }
 
+div.sign-up-container {
+	width: 75%;
+	position: absolute;
+	top: 70%;
+	left: 12.5%;
+}
+
+div.input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 .button {
-  height: 65px;
-  border: none;
+	height: 2em;
+	border: none;
 }
 
-  
 #email {
-  width: 75%;
-  color: #333;
-  background: #fefcf2;
-  font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-  font-size: 26px;
-  letter-spacing: 1px;
-  text-indent: 5%;
-  border-radius: 5px 0 0 5px;
-  box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+	flex: 0 3 75%;
+	color: #333;
+	background: #fefcf2;
+	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+	font-size: 1.5em;
+	letter-spacing: 1px;
+	text-indent: 5%;
+	border-radius: 5px 0 0 5px;
+	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -202,73 +388,121 @@ h4 {
 }
 
 #submit {
-  width: 25%;
-  height: 65px;
-  background: #f6515d;
-  font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
-  font-size: 30px;
-  line-height: 1.4;
-  color: #fffffe;
-  text-transform: uppercase;
-  font-weight: 700;
-  border-radius: 0 5px 5px 0;
-  box-shadow: inset 2px 2px 2px 0px #ffa4aa;
-  cursor: pointer;
-  transition: background .3s ease-in-out;
+	flex: 0 1 25%;
+	font-size: 1.5em;
+	background: #f6515d;
+	font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
+	line-height: 1.4;
+	color: #fffffe;
+	text-transform: uppercase;
+	font-weight: 700;
+	border-radius: 0 5px 5px 0;
+	box-shadow: inset 2px 2px 2px 0px #ffa4aa;
+	cursor: pointer;
+	transition: background .3s ease-in-out;
 }
-  
 
 #submit:hover {
   background: #e24246;
 }
   
-
 input:focus {
   outline: 1px solid #f6515d;
   box-shadow: 3px 3px 1px #dcc199;
 }
 
-/* ---------------SECTION: BLOG-POSTS -------------------- */
+@media (max-width:600px) {
+	section.sign-up {
+		flex-flow: column wrap;
+		width: 100%;
+	}
+	
+	h3.newsletter {
+		width: 90%;
+		font-size: 1.25em;
+		top: 10%;
+		left: 5%;
+	}
+	
+	h4 {
+		font-size: 1.5em;
+		width: 90%;
+		left: 5%;
+		top: 40%;
+	}
+	
+	br.h4 {
+		display: inline;
+	}
+	
+	div.sign-up-container {
+		top: 65%;
+	}
+	
+	div.input {
+		flex-flow: column wrap;
+	}
+	
+	.button {
+		height: 2em;
+	}
+	
+	#email {
+		width: 87.5%;
+		border-radius: 5px;
+	}
+	
+	#submit {
+		width: 25%;
+		min-width: 5em;
+		margin-top: .5em;
+		border-radius: 5px;
+	}
+}
 
-section.blog {
+@media (max-width: 480px) {
+	
+	h3.newsletter {
+		width: 90%;
+		font-size: 1.25em;
+		top: 4%;
+		left: 5%;
+	}
+	
+	br.newsletter-br {
+		display: inline;
+	}
+}
+
+/*-----------------------BLOG SECTION-----------------------*/
+
+div.margin-container-blogs {
+	max-width: 1200px;
+	margin: 0 auto;
 	background-color: #f6515d;
 	overflow: auto;
-	margin: 0 -120px; /*Makes this section 1200 px (1200 = 960 + 2*120) 960px is our webpage container size*/
-	/*offset-x | offset-y | blur-radius | spread-radius | color */
-	box-shadow: 0 -5px 10px 0 rgba(0,0,0,0.15);
-	position: relative;
-	z-index: 99;
+	padding-bottom: 1.5em;
+}
+
+section.blogs {
+	display: flex;
 }
 
 h3.blog-header {
 	text-align: center;
 	color: #333;
-	padding-top:60px;
-}
-
-.all-posts {
-	width: 80%; /*80% of 1200 is 960px*/
-	overflow: auto;
-	margin: 40px auto;
+	padding-top:2.3em; /*60px, since h3 font-size is 26px*/
 }
 
 .blog-post {
-	width: 31.33%;
-	float: left;
-}
-
-.blog-post:first-child {
-	margin-right:3%;
-}
-
-.blog-post:last-child {
-	margin-left:3%;
+	margin-top: 2%;
+	margin-bottom: 2%;
 }
 
 h5 {
 	font-family: Noticia Text;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 1.25em; /*20px*/
 	line-height: 1.5;
 	color: #333;
 }
@@ -279,120 +513,150 @@ hr {
 
 p.byline {
 	font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	font-size: 12px;
+	font-size: .75em; /*12px*/
 	line-height: 1.8;
 	color: #333;
 }
 
 p.post{
 	font-family: Georgia;
-	font-size: 14px;
+	font-size: 1em; /* 16px */
 	line-height: 1.5;
 	color: #333;
 }
 
 span {
-	color: #fffffe;
-	text-transform: uppercase;
+	color: #fefcf2;
 	font-style: italic;
+	text-transform: uppercase;
 }
 
-/* ---------------FOOTER: ABOUT-CONTACT -------------------- */
+@media (max-width: 1040px) {
+	.blog-post.grid-4 {
+		width: 90%;
+		margin: 2.5%;
+	}
+	.blog-post:first-child {
+		margin-left: 5%;
+	}
+	.blog-post:last-child {
+		margin-right: 5%;
+	}
+}
 
-footer {
-	background-color: #333;
-	overflow: auto;
-	margin: 0 -120px; /*Makes this section 1200 px (1200 = 960 + 2*120) 960px is our webpage container size*/
+@media (max-width:800px) {
+	section.blogs {
+		flex-flow: column wrap;
+		align-items: center;
+	}
+	.blog-post.grid-4 {
+		width: 90%;
+		margin: 5%;
+	}
+	.blog-post:first-child {
+		margin-bottom: 0;
+	}
+	.blog-post:last-child {
+		margin-top: 0;
+	}
+}
+
+
+/*-----------------------ABOUT US/CONTACT SECTION-----------------------*/
+
+div.margin-container-about-contact {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: #333;
+	padding-bottom: 1.5em;
+}
+
+.about, .get-in-touch {
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+section.about-contact {
+	display: flex;
 }
 
 h3.footer-headline {
 	color: #fff0da;
 }
 
-.all-footer-content {
-	width: 80%; /*made <footer> section 1200px with margin, want to keep content at 960px though, which is 80% of 1200*/
-	margin: 40px auto;
-}
-
-.about {
-	width: 48.5%;
-	margin-right:3%;
-	float: left;
-}
-
 .footer-paragraph {
 	font-family: Georgia;
-	font-size: 14px;
+	font-size: 1em; /* 16px */
 	line-height: 1.5;
 	color: #fff0da;
-	margin-top: 20px;
+	margin-top: 1.25em;
 }
 
-.get-in-touch {
-	width: 48.5%;
-	float: left;
+#name, #e-mail-address, #subject {
+	height: 2em;
 }
 
-.contact-button {
-	border: none;
-	margin-top: 20px;
-	height: 30px;
-	text-indent: 10px;
-	background: #fefcf2;
-	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	font-size: 16px;
-	letter-spacing: 1px;
-	border-radius: 2px;
-	}
+#name, #e-mail-address {
+	width: 48%;
+	margin: 1%;
+	padding: 0;
+	margin-top: 1.25em;
+}
 
 #name {
-	width: 49%;
-	float: left;
-	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+	margin-top: 1.25em;
 }
 
-#e-mail-address {
-	width: 49%;
-	margin-left: 2%;
-	float: left;
-	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+#subject, #message {
+	width: 98%;
+	margin: 1%;
+	padding: 0;
 }
 
-#subject {
-	width: 100%;
-	margin-top: 2%;
-	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+#e-mail-address, #contact-submit {
+	float: right;
 }
 
-#message {
-	width: 100%;
-	margin-top: 2%;
-	height: 100px;
+input.contact-button {
+	border: 1px solid #fff0da;
+	margin-top: 1em;
+	height: 1.5em;
+	text-indent: .5em;
+	background: #fefcf2;
+	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+	font-size: 1.25em; /* 20px */
+	letter-spacing: 1px;
+	border-radius: 2px;
 	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
 }
 
 textarea {
-	font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	border: none;
+	border: 1px solid #fff0da;
+	border-radius: 2px;
+	resize: none; /*otherwise users can resize the box at the lower right-hand corner*/
+	text-indent: .5em;
+	background: #fefcf2;
+	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+	font-size: 1.25em; /* 20px */
+	line-height: 1.5em;
+	color: #333;
 	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
-	padding: 10px 0 0 0;
 }
 
 textarea:focus {
   outline: 1px solid #f6515d;
-  box-shadow: 3px 3px 1px #dcc199;
 }
 
 #contact-submit {
-	margin-top: 2%;
-	float: right;
 	text-indent: 0; /*resets text indent of class "contact-button"*/
 	color: #333;
+	height: 2em;
 	background-color: #dcc199;
 	padding: 0 20px;
 	cursor: pointer;
 	transition: background .3s ease-in-out;
 	box-shadow: inset 2px 2px 2px 0px #ffeacc;
+	margin-top: 0;
 }
   
 
@@ -400,23 +664,63 @@ textarea:focus {
   background: #c9b282;
 }
 
-.clear-fix {
-	clear: both;
+@media (max-width: 1040px) {
+	.about.grid-6, .get-in-touch.grid-6 {
+		width: 90%;
+		margin: 2.5%;
+	}
+	.about.grid-6 {
+		margin-left: 5%;
+	}
+	.get-in-touch.grid-6 {
+		margin-right: 5%;
+	}
 }
 
-/*--------------SUB FOOTER -----------------*/
-
-.copyright-info {
-	background-color: #f6515d;
-	text-align: center;
-	overflow: auto;
-	margin: 0 -120px; /*Makes this section 1200 px (1200 = 960 + 2*120) 960px is our webpage container size*/
+@media (max-width:800px) {
+	section.about-contact {
+		flex-flow: column wrap;
+		align-items: center;
+	}
+	.about.grid-6, .get-in-touch.grid-6 {
+		width: 90%;
+		margin: 5%;
+	}
+	.about.grid-6 {
+		margin-bottom: 0;
+	}
+	
+	#name, #e-mail-address {
+		width: 98%;
+		margin: 1%;
+		float: left;
+	}
+	
+	#name {
+		margin-top: 1.25em;
+	}
+	
+	#contact-submit {
+		margin-top: 1%;
+		margin-right: 1%;
+	}
 }
 
-p.copyright {
+/*-----------------------FOOTER-----------------------*/
+
+div.margin-container-footer {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: #f6515d;
+}
+
+h6.copyright {
 	font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
 	color: #333;
-	font-size: 10px;
-	line-height: 2;
-	margin: 5px auto;
+	font-size: .75em;
+	font-style: normal;
+	line-height: 1.2;
+	margin: 0 auto;
+	text-align: center;
+	padding: 1.5%;
 }
