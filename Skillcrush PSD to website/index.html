@@ -1,118 +1,123 @@
-<!-- Fluid Grid Demo -->
-<!-- Source: Variable Grid System at http://1stwebdesigner.com/fluid-grid-layout/ -->
-
 <!DOCTYPE html>
-<html>
-    <head>
-		<meta charset="utf-8">
-        <!--Viewport meta tag sets webpage width equal to device width, rather than having awkward whitespace in the case the page is narrower than the device viewport or displaying only the top left corner of the page in the case that the page is wider than the viewport-->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Skillcrush E-mail Fluid Grid with Fluid Columns</title>
-        <link type="text/css" rel="stylesheet" href="style.css" />
-		<link href='https://fonts.googleapis.com/css?family=Noticia+Text' rel='stylesheet' type='text/css'> <!--NoticiaText Regular Google web font-->
-		<link href='https://fonts.googleapis.com/css?family=Arimo:700' rel='stylesheet' type='text/css'>
-	  <!--Arimo Bold, Helvetica Neue Bold substitute, Google web font-->
-		<link href='https://fonts.googleapis.com/css?family=Libre+Baskerville:400italic' rel='stylesheet' type='text/css'> <!--Libre Baskerville Italic, Baskerville Bold Italic substitute-->
-		<script type="text/javascript" src="javascript.js">
-		</script>
-    </head>
-    <body>
-		<header class="container-12">
-			<img class="logo" src="images/logo.png" alt="Skillcrush logo" />
-			<div class="ribbon-container">
-				<div class="left" id="left">
-					<div class="ribbon-end-left" id="ribbon-end-left">
-					</div>
-					<div class="ribbon-length-left" id="ribbon-length-left">
-					</div>
-				</div>
-				<div class="center" id="center">
-					<p class="slogan">the delightful, smart <br class="slogan-small" />way to learn</p>
-				</div>
-				<div class="right" id="right">
-					<div class="ribbon-length-right" id="ribbon-length-right">
-					</div>
-					<div class="ribbon-end-right" id="ribbon-end-right">
-					</div>
-				</div>
-				<div class="clear-fix">
-				</div>
-			</div>
-			<div class="headline">
-				<p>Whether you're conquering Tumblr, befriending CSS, or just getting a better handle of how the web works, Skillcrush has a path for you.<p>
-			</div>
-		</header>
-		<section class="container-12 sign-up">
-			<img class="paper-stack" src="images/paper-stack.png" alt="paper stack" />
-			<h3 class="newsletter">Sign-up for our newsletter, <br class="newsletter-br" /> launching April 1st.</h3>
-			<h4>30 days to a web-<br class="h4" />savvier you</h4>
-			<div class="sign-up-container">
-				<form class="sign-up" action="#" method="post" name="e-mail sign-up form">
-					<div class="input">
-						<input type="text" class="button" id="email" name="email" placeholder="Your e-mail address">
-						<input type="submit" class="button" id="submit" value="SIGN UP">
-					</div>
-				</form>
-			</div>
-		</section>
-		<div class="margin-container-blogs">
-			<h3 class="blog-header">Our Recent Blog Posts</h3>
-			<section class="container-12 blogs">
-				<div class="blog-post grid-4">
-						<h5>Skillcrush, a site for all the ladies who want to learn tech</h5>
-						<!-- dashed line -->
-						<hr />
-						<p class="byline">03.09.12 - by Adda Birnir</p>
-						<p class="post">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiseing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam...<a href="http://biancascura.com"><span> read more</span></a></p></p>
-					</div>
-					<div class="blog-post grid-4">
-						<h5>Women in tech naecenas faucibus mollis interdum</h5>
-						<!-- dashed line -->
-						<hr />
-						<p class="byline">03.09.12 - by Adda Birnir</p>
-						<p class="post">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiseing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna miollis ornare vel eu leo...<a href="http://biancascura.com"><span> read more</span></a></p>
-					</div>
-					<div class="blog-post grid-4">
-						<h5>Infographics: The World Wide Web v.s. Girls</h5>
-						<!-- dashed line -->
-						<hr />
-						<p class="byline">03.09.12 - by Adda Birnir</p>
-						<p class="post">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur...<a href="http://biancascura.com"><span> read more</span></a></p>
-					</div>
-			</section>
-		</div>
-		<div class="margin-container-about-contact">
-			<section class="container-12 about-contact">
-				<div class="about grid-6">
-					<h3 class="footer-headline">About skillcrush</h3>
-					<p class="footer-paragraph">Skillcrush is eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiseing elit. Cras justo odio, dapibus ae facilis in, egestas eget quam. Aenean lacinia bibendum nulla sed consectetur.</p>
-					<p class="footer-paragraph">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus portitor. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-				</div>
-				<div class="get-in-touch grid-6">
-					<h3 class="footer-headline">Get in Touch</h3>
-					<form class="contact" action="#" method="post" name="contact-us-form-beta">
-							<div class="contact-input">
-								<!-- name form field -->
-								<input type="text" class="contact-button" id="name" name="name" placeholder="Name">
-								<!-- e-mail address form field -->
-								<input type="text" class="contact-button" id="e-mail-address" name="e-mail" placeholder="E-mail address">
-								<!-- reason of contact form field -->
-								<input type="text" class="contact-button" id="subject" name="subject" placeholder="Reason of contact">
-								<!-- type your message here form field -->
-								<textarea name="message" cols="40" rows="5" class="contact-button" id="message" placeholder="Type your message here"></textarea>
-								<!-- Send Message button -->
-								<input type="submit" class="contact-button" id="contact-submit" value="Send Message">
-							</div>
-					</form>
-				</div>
-			</section>
-		</div>
-		<div class ="margin-container-footer">
-			<footer>
-			<div class="copyright-info">
-				<h6 class="copyright">&#0169;2016 Skillcrush. All Rights Reserved. Made in NYC. Development by Bianca Morales.</h6>
-			</div>
-			</footer>
-		</div>
-    </body>
+<!-- Responsive Skillcrush E-mail Sign-Up Page using:
+  Fluid Grids: http://1stwebdesigner.com/fluid-grid-layout/ 
+  CSS3 Flexbox layout mode
+  CSS3 Media Queries
+  Code syntax best practices: mdo.github.io/code-guide/ -->
+<html lang="en-us"> <!-- specifying language aids speech synthesis tools to determine what pronunciation to use, translation tools to determine what rules to use and so forth.-->
+  <head>
+    <meta charset="utf-8">
+    <!--Viewport meta tag sets webpage width equal to device width, rather than having awkward whitespace in the case the page is narrower than the device viewport or displaying only the top left corner of the page in the case that the page is wider than the viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skillcrush E-mail Fluid Grid with Fluid Columns</title>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css"> <!-- Per HTML5 spec, typically there is no need to specify a type when including CSS and JavaScript files as text/css and text/javascript are their respective defaults. -->
+    <!-- Import Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Noticia+Text" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Arimo:700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400italic" rel="stylesheet" type="text/css">
+    <!-- JavaScript -->
+    <script src="javascript.js">
+    </script>
+  </head>
+  <body>
+    <header class="container-12">
+      <img class="logo" src="images/e-mail-sign-up/logo.png" alt="Skillcrush logo">
+      <div class="ribbon-container">
+        <div class="left" id="left">
+          <div class="ribbon-end-left" id="ribbon-end-left">
+          </div>
+          <div class="ribbon-length-left" id="ribbon-length-left">
+          </div>
+        </div>
+        <div class="center" id="center">
+          <p class="slogan">the delightful, smart <br class="slogan-small">way to learn</p>
+        </div>
+        <div class="right" id="right">
+          <div class="ribbon-length-right" id="ribbon-length-right">
+          </div>
+          <div class="ribbon-end-right" id="ribbon-end-right">
+          </div>
+        </div>
+          <div class="clear-fix"></div>
+      </div>
+      <div class="headline">
+        <p>Whether you're conquering Tumblr, befriending CSS, or just getting a better handle of how the web works, Skillcrush has a path for you.<p>
+      </div>
+    </header>
+      <section class="container-12 sign-up">
+        <img class="paper-stack" src="images/e-mail-sign-up/paper-stack.png" alt="paper stack">
+        <div class="centering"> <!--added this class for Firefox browser, otherwise h3 class="newsletter" and h4 below are not centered correctly.-->
+          <h3 class="newsletter">Sign-up for our newsletter, <br class="newsletter-br"> launching April 1st.</h3>
+          <h4>30 days to a web-<br class="h4">savvier you</h4>
+        </div>
+        <div class="sign-up-container">
+          <form class="sign-up" name="e-mail sign-up form" action="#" method="post">
+            <div class="input">
+              <input class="button" id="email" name="email" type="text" placeholder="Your e-mail address">
+              <input class="button" id="submit" type="submit" value="SIGN UP">
+            </div>
+          </form>
+        </div>
+      </section>
+        <div class="margin-container-blogs">
+          <h3 class="blog-header">Our Recent Blog Posts</h3>
+          <section class="container-12 blogs">
+            <div class="blog-post grid-4">
+              <h5>Skillcrush, a site for all the ladies who want to learn tech</h5>
+              <!-- dashed line -->
+              <hr />
+              <p class="byline">03.09.12 - by Adda Birnir</p>
+              <p class="post">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiseing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam...<a href="http://biancascura.com"><span> read more</span></a></p>
+          </div>
+          <div class="blog-post grid-4">
+            <h5>Women in tech naecenas faucibus mollis interdum</h5>
+            <!-- dashed line -->
+            <hr />
+            <p class="byline">03.09.12 - by Adda Birnir</p>
+            <p class="post">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiseing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna miollis ornare vel eu leo...<a href="http://biancascura.com"><span> read more</span></a></p>
+          </div>
+          <div class="blog-post grid-4">
+            <h5>Infographics: The World Wide Web v.s. Girls</h5>
+            <!-- dashed line -->
+            <hr />
+            <p class="byline">03.09.12 - by Adda Birnir</p>
+            <p class="post">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur...<a href="http://biancascura.com"><span> read more</span></a></p>
+          </div>
+        </section>
+      </div>
+      <div class="margin-container-about-contact">
+        <section class="container-12 about-contact">
+          <div class="about grid-6">
+            <h3 class="footer-headline">About skillcrush</h3>
+            <p class="footer-paragraph">Skillcrush is eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiseing elit. Cras justo odio, dapibus ae facilis in, egestas eget quam. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p class="footer-paragraph">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus portitor. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          </div>
+          <div class="get-in-touch grid-6">
+            <h3 class="footer-headline">Get in Touch</h3>
+            <form class="contact" name="contact-us-form-beta" action="#" method="post">
+              <div class="contact-input">
+                <!-- name form field -->
+                <input class="contact-button" id="name" name="name" type="text" placeholder="Name">
+                <!-- e-mail address form field -->
+                <input class="contact-button" id="e-mail-address" name="e-mail" type="text" placeholder="E-mail address">
+                <!-- reason of contact form field -->
+                <input class="contact-button" id="subject" name="subject" type="text" placeholder="Reason of contact">
+                <!-- type your message here form field -->
+                <textarea class="contact-button" id="message" name="message" cols="40" rows="5" placeholder="Type your message here"></textarea>
+                <!-- Send Message button -->
+                <input class="contact-button" id="contact-submit" type="submit" value="Send Message">
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+      <div class ="margin-container-footer">
+        <footer>
+          <div class="copyright-info">
+            <h6 class="copyright">&#0169;2016 Skillcrush. All Rights Reserved. Made in NYC. Development by Bianca Morales.</h6>
+          </div>
+        </footer>
+      </div>
+  </body>
 </html>

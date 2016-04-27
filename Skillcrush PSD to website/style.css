@@ -1,25 +1,85 @@
-/* Fluid Grid Demo*/
-/* Source: Variable Grid System at http://1stwebdesigner.com/fluid-grid-layout/ */
-
-/* Uses a grid system with:
-- 12 evenly sized and spaced columns */
+/* <!-- Responsive Skillcrush E-mail Sign-Up Page using:
+  Fluid Grids: http://1stwebdesigner.com/fluid-grid-layout/ 
+  CSS3 Flexbox layout mode
+  CSS3 Media Queries
+  Code syntax best practices: mdo.github.io/code-guide/ -->*/
 
 /* Cross Browser Compatability CSS */
 /**
- * html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
- * v1.6.1 2010-09-17 | Authors: Eric Meyer & Richard Clark
- * html5doctor.com/html-5-reset-stylesheet/
- */
+* html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+* v1.6.1 2010-09-17 | Authors: Eric Meyer & Richard Clark
+* html5doctor.com/html-5-reset-stylesheet/
+*/
 
-html, body, div, span, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
-small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -28,699 +88,720 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section { display: block; }
+
+blockquote,
+q { quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 
-blockquote, q { quotes: none; }
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
 
-blockquote:before, blockquote:after,
-q:before, q:after { content: ""; content: none; }
-
-ins { background-color: #ff9; color: #000; text-decoration: none; }
-
-mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
 
 del { text-decoration: line-through; }
 
-abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
 
-table { border-collapse: collapse; border-spacing: 0; }
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 
-hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
 
-input, select { vertical-align: middle; }
+input,
+select { vertical-align: middle; }
 
-a {
-	text-decoration: none;
-	}
-	
+a { text-decoration: none; }
+  
 /*border-box: The width and height properties include the padding and border, but not the margin.*/
 *,
 *:before,
-*:after {
-  box-sizing: border-box;
-} /* "*" is a placeholder for ALL selectors/elements, very taxing on browser to use; only use sparingly.*/
+*:after { box-sizing: border-box; } /* "*" is a placeholder for ALL selectors/elements, very taxing on browser to use; only use sparingly.*/
 
 /* BEGIN FLUID GRID/Flexbox STYLES*/
 
-body {
-	background-image:url("images/background.jpg");
-}
+body { background-image:url("images/e-mail-sign-up/background.jpg"); }
 
 /* Largest container */
 .container-12 {
-	position: relative; /*only relevant if using positioning properties like left, right, top, bottom down the line*/
-	margin: 0 auto;
-	overflow: auto; /* because all children elements are floated*/
-	max-width: 960px; /* PSD is designed on a 960px system */
+  position: relative; /*only relevant if using positioning properties like left, right, top, bottom down the line*/
+  margin: 0 auto;
+  overflow: auto; /* because all children elements are floated*/
+  max-width: 960px; /* PSD is designed on a 960px system */
 }
 
 /*Each grid_n is a div n-columns wide. Ex: grid-5 is 5 columns wide*/
 /* Say if you have an image that is 7 columns wide, give it a class of grid-7 in the HTML */
-.grid-1,.grid-2,.grid-3,.grid-4,.grid-5,.grid-6,.grid-7,.grid-8,.grid-9,.grid-10,.grid-11,.grid-12 {
-	float:left;
-	margin-left:1%; /*left gutter width*/
-	margin-right:1%; /*right gutter width*/
+.grid-1,
+.grid-2,
+.grid-3,
+.grid-4,
+.grid-5,
+.grid-6,
+.grid-7,
+.grid-8,
+.grid-9,
+.grid-10,
+.grid-11,
+.grid-12 {
+  float:left;
+  margin-left:1%; /*left gutter width*/
+  margin-right:1%; /*right gutter width*/
 }
 
-.grid-1:first-child,.grid-2:first-child,.grid-3:first-child,.grid-4:first-child,.grid-5:first-child,.grid-6:first-child,.grid-7:first-child,.grid-8:first-child,.grid-9:first-child,.grid-10:first-child,.grid-11:first-child,.grid-12:first-child {
-	margin-left: 0;
-}
+/* enables the left most column to line up with the left-most edge of the grid with no gutter*/
+.grid-1:first-child,
+.grid-2:first-child,
+.grid-3:first-child,
+.grid-4:first-child,
+.grid-5:first-child,
+.grid-6:first-child,
+.grid-7:first-child,
+.grid-8:first-child,
+.grid-9:first-child,
+.grid-10:first-child,
+.grid-11:first-child,
+.grid-12:first-child { margin-left: 0; }
 
-.grid-1:last-child,.grid-2:last-child,.grid-3:last-child,.grid-4:last-child,.grid-5:last-child,.grid-6:last-child,.grid-7:last-child,.grid-8:last-child,.grid-9:last-child,.grid-10:last-child,.grid-11:last-child,.grid-12:last-child {
-	margin-right: 0;
-}
+/* enables the right most column to line up with the right-most edge of the grid with no gutter*/
+.grid-1:last-child,
+.grid-2:last-child,
+.grid-3:last-child,
+.grid-4:last-child,
+.grid-5:last-child,
+.grid-6:last-child,
+.grid-7:last-child,
+.grid-8:last-child,
+.grid-9:last-child,
+.grid-10:last-child,
+.grid-11:last-child,
+.grid-12:last-child { margin-right: 0; }
 
 /*Div that is 1 column wide*/
-.container-12 .grid-1 {
-	width:6.5%;
-}
+.container-12 .grid-1 { width: 6.5%; }
 
-/*Div that is 2 column wide*/
-.container-12 .grid-2 {
-	width:15%;
-}
+/*Div that is 2 columns wide*/
+.container-12 .grid-2 { width: 15%; }
 
-/*Div that is 3 column wide*/
-.container-12 .grid-3 {
-	width:23.5%;
-}
+/*Div that is 3 columns wide*/
+.container-12 .grid-3 { width: 23.5%; }
 
-/*Div that is 4 column wide*/
-.container-12 .grid-4 {
-	width:32%;
-}
+/*Div that is 4 columns wide*/
+.container-12 .grid-4 { width: 32%; }
 
-/*Div that is 5 column wide*/
-.container-12 .grid-5 {
-	width:40.5%;
-}
+/*Div that is 5 columns wide*/
+.container-12 .grid-5 { width: 40.5%; }
 
-/*Div that is 6 column wide*/
-.container-12 .grid-6  {
-	width:49%;
-}
+/*Div that is 6 columns wide*/
+.container-12 .grid-6 { width: 49%; }
 
 
-/*Div that is 7 column wide*/
-.container-12 .grid-7 {
-	width:57.5%;
-}
+/*Div that is 7 columns wide*/
+.container-12 .grid-7 { width: 57.5%; }
 
-/*Div that is 8 column wide*/
-.container-12 .grid-8 {
-	width:66%;
-}
+/*Div that is 8 columns wide*/
+.container-12 .grid-8 { width: 66%; }
 
-/*Div that is 9 column wide*/
-.container-12 .grid-9 {
-	width:74.5%;
-}
+/*Div that is 9 columns wide*/
+.container-12 .grid-9 { width: 74.5%; }
 
-/*Div that is 10 column wide*/
-.container-12 .grid-10 {
-	width:83%;
-}
+/*Div that is 10 columns wide*/
+.container-12 .grid-10 { width: 83%; }
 
-/*Div that is 11 column wide*/
-.container-12 .grid-11{ 
-	width:91.5%;
-}
+/*Div that is 11 columns wide*/
+.container-12 .grid-11 { width: 91.5%; }
 
-/*Div that is 12 column wide*/
-.container-12 .grid-12 {
-	/* width:98.0%; */
-	width: 100%;
+/*Div that is 12 columns wide*/
+.container-12 .grid-12 { width: 100%; }
+
+/*-----------------------HOSTED FONTS-----------------------*/
+
+@font-face { /* different browsers support different formats for fonts, so you will need to provide the font in several variations to reach all browsers: www.fontsquirrel.com/fontface/generator */
+  font-family: 'Wisdom Script';
+  src: url('fonts/Wisdom_Script.otf') format('opentype');
+  src: url('fonts/wisdom_script-webfont.eot') format('embedded-opentype');
+  src: url('fonts/wisdom_script-webfont.svg') format('svg');
+  src: url('fonts/wisdom_script-webfont.ttf') format('truetype');
+  src: url('fonts/wisdom_script-webfont.woff') format('woff');
+  src: url('fonts/wisdom_script-webfont.woff2') format('woff2');
 }
 
 /*-----------------------HEADER-----------------------*/
 
 header {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
 
-.logo, .ribbon, .headline {
-	margin-left: 0;
-	margin-right: 0;
+.logo,
+.ribbon,
+.headline {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .logo {
-	margin-top:2.5em; /*about 40px, based on the font-size of this element*/
-	font-size: 1em;
-	max-width: 100%;
+  margin-top: 2.5em; /*about 40px, based on the font-size of this element*/
+  font-size: 1em;
+  max-width: 100%;
 }
 
 .ribbon-container {
-	display: flex; /*CSS3 Flexible Box or "flexbox" property; makes container a flexible container and child elements flexible items*/
-	justify-content: center; /*CSS3 Flexible Box or "flexbox" property*/
-	margin-top: .75em;
-	min-width: 280px; /*beyond which ribbon breaks, segments start wrapping down*/
+  display: flex; /*CSS3 Flexible Box or "flexbox" property; makes container a flexible container and child elements flexible items*/
+  justify-content: center; /*CSS3 Flexible Box or "flexbox" property*/
+  margin-top: .75em;
+  min-width: 280px; /*beyond which ribbon breaks, segments start wrapping down*/
 }
 
 /*makes a "border-width by 2*border-width" ribbon end*/ 
 .ribbon-end-left {
-	float: left;
-	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
-	width: 0;
-	height: 0;
-	border-top: 18px solid #f6515d;
-	border-bottom: 18px solid #f6515d;
-	border-left: 18px solid transparent;
+  float: left;
+  display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+  width: 0;
+  height: 0;
+  border-top: 18px solid #f6515d;
+  border-bottom: 18px solid #f6515d;
+  border-left: 18px solid transparent;
 }
 
 /*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
 .ribbon-length-left {
-	float: left;
-	display: inline;
-	width: 0;
-	height: 0;
-	
-	border-width: 18px;
-	border-style: solid;
-	border-color: #f6515d;
-	margin-right: -20px; /*allows "center" div to overlap "left" div*/
+  float: left;
+  display: inline;
+  width: 0;
+  height: 0;
+  border: 18px solid #f6515d;
+  margin-right: -20px; /*allows "center" div to overlap "left" div*/
 }
 
 .center {
-	float: left;
-	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
-	position: relative;
-	margin-top: 7px;
-	background-color: #f6515d;
-	border: 2px solid #fefcf2; /*choose a color the same as the background color of the section or page, in this case, the body background-color*/
-	color: white;
-	font-family: sans-serif;
-	font-weight: 700;
-	font-style: italic;
-	font-size: 1em;
-	line-height: 1em;
+  float: left;
+  display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+  position: relative;
+  margin-top: 7px;
+  background-color: #f6515d;
+  border: 2px solid #fefcf2; /*choose a color the same as the background color of the section or page, in this case, the body background-color*/
+  color: white;
+  font-family: sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1em;
+  line-height: 1em;
 }
 
 p.slogan {
-	padding: .625em;
-	text-align: center;
+  padding: .625em;
+  text-align: center;
 }
 
 /*appends a "2*border-width by 2*border-width" square to the ribbon-end*/
 .ribbon-length-right {
-	float: left;
-	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
-	width: 0;
-	height: 0;
-	border: 18px solid #f6515d;
-	margin-left: -20px; /*allows "center" div to overlap "right" div*/
+  float: left;
+  display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+  width: 0;
+  height: 0;
+  border: 18px solid #f6515d;
+  margin-left: -20px; /*allows "center" div to overlap "right" div*/
 }
 
 /*makes a "border-width by 2*border-width" ribbon end*/ 
 .ribbon-end-right {
-	float: left;
-	display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
-	width: 0;
-	height: 0;
-	border-top: 18px solid #f6515d;
-	border-bottom: 18px solid #f6515d;
-	border-right: 18px solid transparent;
+  float: left;
+  display: inline; /* when you float an element, it automatically gets a display: block; applied to it, so to center this ribbon on the page, that needs to be overwritten to inline */
+  width: 0;
+  height: 0;
+  border-top: 18px solid #f6515d;
+  border-bottom: 18px solid #f6515d;
+  border-right: 18px solid transparent;
 }
 
-br.slogan-small {
-	display: none;
-}
+br.slogan-small { display: none; }
 
-.clear-fix {
-	clear: both;
-}
+.clear-fix { clear: both; }
 
 .headline {
-	margin-top: 2.3em; /*about 60 px with a font-size of 26 px, assuming default user font is 16px*/
-	font-family: Noticia Text;
-	font-size: 1.625em;
-	line-height: 2;
-	text-align: center;
-	font-weight:700;
-	color: #f6515d;
-}
-
-.headline {
-	width: 90%;
+  margin-top: 2.3em; /*about 60 px with a font-size of 26 px, assuming default user font is 16px*/
+  font-family: Noticia Text;
+  font-size: 1.625em;
+  line-height: 2;
+  text-align: center;
+  font-weight: 700;
+  color: #f6515d;
+  width: 90%;
 }
 
 @media (max-width:480px) {
 
-	header {
-		width: 90%
-	}
-	
-	br.slogan-small {
-		display: inline;
-		line-height: 1.2;
-	}
-	
-	.headline {
-		font-size: 1.1em;
-	}
+  header { width: 90% }
+  
+  br.slogan-small {
+    display: inline;
+    line-height: 1.2;
+  }
+  
+  .headline { font-size: 1.1em; }
 
 }
 
 /*-----------------------SIGN-UP SECTION-----------------------*/
 
 section.sign-up {
-	margin-top: 3em;
-	position: relative;
-	display: flex;
-	flex-flow: column wrap;
-	align-items: center;
-	overflow-x: hidden;
-	margin-left: auto;
+  margin-top: 3em;
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  overflow-x: hidden;
+  margin-left: auto;
 }
 
 img.paper-stack {
-	min-width: 960px;
-	max-width: 960px;
-	height: auto;
+  min-width: 960px;
+  max-width: 960px;
+  height: auto;
+}
+
+div.centering {
+  width: 100%;
 }
 
 h3 {
-	font-family:'Wisdom Script';
-	font-size: 1.625em; /*26px*/
-	line-height: 2;
-	text-shadow: 0 1px 1px black;/* offset-x | offset-y | blur-radius | color */
+  font-family:'Wisdom Script';
+  font-size: 1.625em; /*26px*/
+  line-height: 2;
+  text-shadow: 0 1px 1px black;/* offset-x | offset-y | blur-radius | color */
 }
 
 h3.newsletter {
-	position: absolute;
-	top: 7%;
-	width: 100%;
-	text-align: center;
+  position: absolute;
+  top: 7%;
+  width: 100%;
+  text-align: center;
 }
 
 br.newsletter-br {
-	display: none;
+  display: none;
 }
 
 h4 {
-	position: absolute;
-	top: 50%;
-	width: 100%;
-	text-align: center;
-	font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
-	z-index:1;
-	font-size: 1.875em; /*30 px*/
-	line-height: 1.4;
-	color: #f6515d;
-	text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
+  z-index:1;
+  font-size: 1.875em; /*30 px*/
+  line-height: 1.4;
+  color: #f6515d;
+  text-transform: uppercase;
 }
 
-br.h4 {
-	display: none;
-}
+br.h4 { display: none; }
 
 div.sign-up-container {
-	width: 75%;
-	position: absolute;
-	top: 70%;
-	left: 12.5%;
+  width: 75%;
+  position: absolute;
+  top: 70%;
+  left: 12.5%;
 }
 
 div.input {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
-	height: 2em;
-	border: none;
+  height: 2em;
+  border: none;
 }
 
 #email {
-	flex: 0 3 75%;
-	color: #333;
-	background: #fefcf2;
-	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	font-size: 1.5em;
-	letter-spacing: 1px;
-	text-indent: 5%;
-	border-radius: 5px 0 0 5px;
-	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+  flex: 0 3 75%;
+  color: #333;
+  background: #fefcf2;
+  font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+  font-size: 1.5em;
+  letter-spacing: 1px;
+  text-indent: 5%;
+  border-radius: 5px 0 0 5px;
+  box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #dcc199;
+/* WebKit, Blink, Edge */
+::-webkit-input-placeholder { color:#dcc199; }
+
+/* Mozilla Firefox 4 to 18 */
+:-moz-placeholder {
+  color:#dcc199;
+  opacity:1;
 }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #dcc199;
-   opacity:  1;
+
+/* Mozilla Firefox 19+ */
+::-moz-placeholder {
+  color:#dcc199;
+  opacity:1;
 }
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #dcc199;
-   opacity:  1;
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #dcc199;
-}
-:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
-  color:    #dcc199;
-}
+
+/* Internet Explorer 10-11 */
+:-ms-input-placeholder { color:#dcc199; }
+
+#email:-ms-input-placeholder { color:#dcc199;} /* added line otherwise e-mail subscription field is not the right placeholder text color in IE11*/
+
+/* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+:placeholder-shown { color: #dcc199; }
 
 #submit {
-	flex: 0 1 25%;
-	font-size: 1.5em;
-	background: #f6515d;
-	font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
-	line-height: 1.4;
-	color: #fffffe;
-	text-transform: uppercase;
-	font-weight: 700;
-	border-radius: 0 5px 5px 0;
-	box-shadow: inset 2px 2px 2px 0px #ffa4aa;
-	cursor: pointer;
-	transition: background .3s ease-in-out;
+  flex: 0 1 25%;
+  font-size: 1.5em;
+  background: #f6515d;
+  font-family: “HelveticaNeue-Bold”, “HelveticaNeueBold”, “Helvetica Neue Bold”, Arimo, Arial, sans-serif;
+  line-height: 1.4;
+  color: #fffffe;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 0 5px 5px 0;
+  box-shadow: inset 2px 2px 2px 0px #ffa4aa;
+  cursor: pointer;
+  transition: background .3s ease-in-out;
 }
 
-#submit:hover {
-  background: #e24246;
-}
-  
+#submit:hover { background: #e24246; }
+
 input:focus {
   outline: 1px solid #f6515d;
   box-shadow: 3px 3px 1px #dcc199;
 }
 
 @media (max-width:600px) {
-	section.sign-up {
-		flex-flow: column wrap;
-		width: 100%;
-	}
-	
-	h3.newsletter {
-		width: 90%;
-		font-size: 1.25em;
-		top: 10%;
-		left: 5%;
-	}
-	
-	h4 {
-		font-size: 1.5em;
-		width: 90%;
-		left: 5%;
-		top: 40%;
-	}
-	
-	br.h4 {
-		display: inline;
-	}
-	
-	div.sign-up-container {
-		top: 65%;
-	}
-	
-	div.input {
-		flex-flow: column wrap;
-	}
-	
-	.button {
-		height: 2em;
-	}
-	
-	#email {
-		width: 87.5%;
-		border-radius: 5px;
-	}
-	
-	#submit {
-		width: 25%;
-		min-width: 5em;
-		margin-top: .5em;
-		border-radius: 5px;
-	}
+  
+  section.sign-up {
+    flex-flow: column wrap;
+    width: 100%;
+  }
+  
+  h3.newsletter {
+    width: 90%;
+    font-size: 1.25em;
+    top: 10%;
+    left: 5%;
+  }
+  
+  h4 {
+    font-size: 1.5em;
+    width: 90%;
+    left: 5%;
+    top: 40%;
+  }
+  
+  br.h4 { display: inline; }
+  
+  div.sign-up-container { top: 65%; }
+  
+  div.input { flex-flow: column wrap; }
+  
+  .button { height: 2em; }
+  
+  #email {
+    width: 87.5%;
+    border-radius: 5px;
+  }
+  
+  #submit {
+    width: 25%;
+    min-width: 5em;
+    margin-top: .5em;
+    border-radius: 5px;
+  }
 }
 
 @media (max-width: 480px) {
-	
-	h3.newsletter {
-		width: 90%;
-		font-size: 1.25em;
-		top: 4%;
-		left: 5%;
-	}
-	
-	br.newsletter-br {
-		display: inline;
-	}
+  
+  h3.newsletter {
+    width: 90%;
+    font-size: 1.25em;
+    top: 4%;
+    left: 5%;
+  }
+  
+  br.newsletter-br { display: inline; }
+  
 }
 
 /*-----------------------BLOG SECTION-----------------------*/
 
 div.margin-container-blogs {
-	max-width: 1200px;
-	margin: 0 auto;
-	background-color: #f6515d;
-	overflow: auto;
-	padding-bottom: 1.5em;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f6515d;
+  overflow: auto;
+  padding-bottom: 1.5em;
 }
 
-section.blogs {
-	display: flex;
-}
+section.blogs { display: flex; }
 
 h3.blog-header {
-	text-align: center;
-	color: #333;
-	padding-top:2.3em; /*60px, since h3 font-size is 26px*/
+  text-align: center;
+  color: #333;
+  padding-top: 2.3em; /*60px, since h3 font-size is 26px*/
 }
 
 .blog-post {
-	margin-top: 2%;
-	margin-bottom: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 h5 {
-	font-family: Noticia Text;
-	font-weight: bold;
-	font-size: 1.25em; /*20px*/
-	line-height: 1.5;
-	color: #333;
+  font-family: Noticia Text;
+  font-weight: bold;
+  font-size: 1.25em; /*20px*/
+  line-height: 1.5;
+  color: #333;
 }
 
-hr {
-	border-top: 1px dashed #333;
-}
+hr { border-top: 1px dashed #333; }
 
 p.byline {
-	font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	font-size: .75em; /*12px*/
-	line-height: 1.8;
-	color: #333;
+  font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+  font-size: .75em; /*12px*/
+  line-height: 1.8;
+  color: #333;
 }
 
-p.post{
-	font-family: Georgia;
-	font-size: 1em; /* 16px */
-	line-height: 1.5;
-	color: #333;
+p.post {
+  font-family: Georgia;
+  font-size: 1em; /* 16px */
+  line-height: 1.5;
+  color: #333;
 }
 
 span {
-	color: #fefcf2;
-	font-style: italic;
-	text-transform: uppercase;
+  color: #fefcf2;
+  font-style: italic;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1040px) {
-	.blog-post.grid-4 {
-		width: 90%;
-		margin: 2.5%;
-	}
-	.blog-post:first-child {
-		margin-left: 5%;
-	}
-	.blog-post:last-child {
-		margin-right: 5%;
-	}
+  
+  .blog-post.grid-4 {
+    width: 90%;
+    margin: 2.5%;
+  }
+  .blog-post:first-child { margin-left: 5%; }
+  
+  .blog-post:last-child { margin-right: 5%; }
+  
 }
 
 @media (max-width:800px) {
-	section.blogs {
-		flex-flow: column wrap;
-		align-items: center;
-	}
-	.blog-post.grid-4 {
-		width: 90%;
-		margin: 5%;
-	}
-	.blog-post:first-child {
-		margin-bottom: 0;
-	}
-	.blog-post:last-child {
-		margin-top: 0;
-	}
+  
+  section.blogs {
+    flex-flow: column wrap;
+    align-items: center;
+  }
+  .blog-post.grid-4 {
+    width: 90%;
+    margin: 5%;
+  }
+  .blog-post:first-child { margin-bottom: 0; }
+  
+  .blog-post:last-child { margin-top: 0; }
+  
 }
 
 
 /*-----------------------ABOUT US/CONTACT SECTION-----------------------*/
 
 div.margin-container-about-contact {
-	max-width: 1200px;
-	margin: 0 auto;
-	background: #333;
-	padding-bottom: 1.5em;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #333;
+  padding-bottom: 1.5em;
 }
 
-.about, .get-in-touch {
-	margin-top: 2%;
-	margin-bottom: 2%;
+.about,
+.get-in-touch {
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
-section.about-contact {
-	display: flex;
-}
+section.about-contact { display: flex; }
 
-h3.footer-headline {
-	color: #fff0da;
-}
+h3.footer-headline { color: #fff0da; }
 
 .footer-paragraph {
-	font-family: Georgia;
-	font-size: 1em; /* 16px */
-	line-height: 1.5;
-	color: #fff0da;
-	margin-top: 1.25em;
+  font-family: Georgia;
+  font-size: 1em; /* 16px */
+  line-height: 1.5;
+  color: #fff0da;
+  margin-top: 1.25em;
 }
 
-#name, #e-mail-address, #subject {
-	height: 2em;
+#name,
+#e-mail-address,
+#subject { height: 2em; }
+
+#name,
+#e-mail-address {
+  width: 48%;
+  margin: 1%;
+  padding: 0;
+  margin-top: 1.25em;
 }
 
-#name, #e-mail-address {
-	width: 48%;
-	margin: 1%;
-	padding: 0;
-	margin-top: 1.25em;
+#name { margin-top: 1.25em; }
+
+#subject,
+#message {
+  width: 98%;
+  margin: 1%;
+  padding: 0;
 }
 
-#name {
-	margin-top: 1.25em;
-}
-
-#subject, #message {
-	width: 98%;
-	margin: 1%;
-	padding: 0;
-}
-
-#e-mail-address, #contact-submit {
-	float: right;
-}
+#e-mail-address,
+#contact-submit { float: right; }
 
 input.contact-button {
-	border: 1px solid #fff0da;
-	margin-top: 1em;
-	height: 1.5em;
-	text-indent: .5em;
-	background: #fefcf2;
-	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	font-size: 1.25em; /* 20px */
-	letter-spacing: 1px;
-	border-radius: 2px;
-	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+  border: 1px solid #fff0da;
+  margin-top: 1em;
+  height: 1.5em;
+  text-indent: .5em;
+  background: #fefcf2;
+  font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+  font-size: 1.25em; /* 20px */
+  letter-spacing: 1px;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
 }
 
 textarea {
-	border: 1px solid #fff0da;
-	border-radius: 2px;
-	resize: none; /*otherwise users can resize the box at the lower right-hand corner*/
-	text-indent: .5em;
-	background: #fefcf2;
-	font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	font-size: 1.25em; /* 20px */
-	line-height: 1.5em;
-	color: #333;
-	box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
+  border: 1px solid #fff0da;
+  border-radius: 2px;
+  resize: none; /*otherwise users can resize the box at the lower right-hand corner*/
+  text-indent: .5em;
+  background: #fefcf2;
+  font-family: “HelveticaNeue”, “HelveticaNeue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+  font-size: 1.25em; /* 20px */
+  line-height: 1.5em;
+  color: #333;
+  box-shadow: inset 1px 1px 2px 0px #dcc199;/* offset-x | offset-y | blur-radius | spread-radius | color */
 }
 
-textarea:focus {
-  outline: 1px solid #f6515d;
-}
+textarea:focus { outline: 1px solid #f6515d; }
 
 #contact-submit {
-	text-indent: 0; /*resets text indent of class "contact-button"*/
-	color: #333;
-	height: 2em;
-	background-color: #dcc199;
-	padding: 0 20px;
-	cursor: pointer;
-	transition: background .3s ease-in-out;
-	box-shadow: inset 2px 2px 2px 0px #ffeacc;
-	margin-top: 0;
+  text-indent: 0; /*resets text indent of class "contact-button"*/
+  color: #333;
+  height: 2em;
+  background-color: #dcc199;
+  padding: 0 20px;
+  cursor: pointer;
+  transition: background .3s ease-in-out;
+  box-shadow: inset 2px 2px 2px 0px #ffeacc;
+  margin-top: 0;
 }
-  
 
-#contact-submit:hover {
-  background: #c9b282;
-}
+
+#contact-submit:hover { background: #c9b282; }
 
 @media (max-width: 1040px) {
-	.about.grid-6, .get-in-touch.grid-6 {
-		width: 90%;
-		margin: 2.5%;
-	}
-	.about.grid-6 {
-		margin-left: 5%;
-	}
-	.get-in-touch.grid-6 {
-		margin-right: 5%;
-	}
+  
+  .about.grid-6,
+  .get-in-touch.grid-6 {
+    width: 90%;
+    margin: 2.5%;
+  }
+  .about.grid-6 { margin-left: 5%; }
+  
+  .get-in-touch.grid-6 { margin-right: 5%; }
+  
 }
 
 @media (max-width:800px) {
-	section.about-contact {
-		flex-flow: column wrap;
-		align-items: center;
-	}
-	.about.grid-6, .get-in-touch.grid-6 {
-		width: 90%;
-		margin: 5%;
-	}
-	.about.grid-6 {
-		margin-bottom: 0;
-	}
-	
-	#name, #e-mail-address {
-		width: 98%;
-		margin: 1%;
-		float: left;
-	}
-	
-	#name {
-		margin-top: 1.25em;
-	}
-	
-	#contact-submit {
-		margin-top: 1%;
-		margin-right: 1%;
-	}
+  
+  section.about-contact {
+    flex-flow: column wrap;
+    align-items: center;
+  }
+  
+  .about.grid-6,
+  .get-in-touch.grid-6 {
+    width: 90%;
+    margin: 5%;
+  }
+  .about.grid-6 { margin-bottom: 0; }
+  
+  #name,
+  #e-mail-address {
+    width: 98%;
+    margin: 1%;
+    float: left;
+  }
+  
+  #name { margin-top: 1.25em; }
+  
+  #contact-submit {
+    margin-top: 1%;
+    margin-right: 1%;
+  }
+  
 }
 
 /*-----------------------FOOTER-----------------------*/
 
 div.margin-container-footer {
-	max-width: 1200px;
-	margin: 0 auto;
-	background: #f6515d;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f6515d;
 }
 
 h6.copyright {
-	font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
-	color: #333;
-	font-size: .75em;
-	font-style: normal;
-	line-height: 1.2;
-	margin: 0 auto;
-	text-align: center;
-	padding: 1.5%;
+  font-family: “HelveticaNeue”, “Helvetica-Neue”, “Helvetica Neue”, Arimo, Arial, sans-serif;
+  color: #333;
+  font-size: .75em;
+  font-style: normal;
+  line-height: 1.2;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1.5%;
 }
