@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>To Do List: Make a To Do List or Three</title>
+      <meta name="description" content="Use this free web application to make up to three to do lists. No sign-up.">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="css/reset.css">
+      <link rel="stylesheet" href="css/normalize.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+      <div class="container">
+      <header>
+        <nav>
+        </nav>
+      </header>
+      <section>
+      <!-- Using modules per maintainableCSS.com -->
+        <div class="list">
+          <h1 class="list-title">List Name</h1>
+          <!-- the second class on <hr> is a modifier class to change color depending on which list is active-->
+          <hr class="list-titleRule list-titleRule-firstList" />
+          <div class="list-item">
+            <h2 class="list-itemTitle">Item title</h2>
+            <form action="" method="">
+              <input type="submit" class="list-deleteButton list-deleteButton-firstList" value="Delete">
+               <input type="submit" class="list-completeButton list-completeButton-firstList" value="Complete">
+               <hr class="list-itemRule list-itemRule-firstList" />
+            </form>
+          </div>
+        </div>
+      </section>
+      <footer>
+      </footer>
+      </div>
+      <script src="../javascript/script.js"></script>
+    </body>
+</html>

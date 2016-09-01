@@ -1,0 +1,59 @@
+/* To Do List Web Application CSS styles */
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  /*flexible 960px grid*/
+  background: url('../images/12-columns.png') repeat-y white;
+  background-size: cover;
+}
+
+header, footer {
+  background-color: #ecf0f1;
+  height: 125px;
+}
+
+section {
+  background: url('../images/crossword.png');
+  overflow: auto;
+}
+
+/* list module container (maintainableCSS.com) */
+.list {
+  max-width:780px;
+  width: 81.25%;
+  margin: 60px auto;
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+  height: 800px;
+  background: white;
+}
+
+@media (max-width: 600px) {
+  .list {
+    width: 100%;
+    border: none;
+    border-radius: none;
+    background: none;
+    box-shadow: none;
+  }
+}
+
+/* list module components (maintainableCSS.com)*/
+.list-title {}
+.list-titleRule {}
+.list-item {}
+.list-itemTitle {}
+.list-deleteButton {}
+.list-completeButton {}
+.list-itemRule {}
+
+/* list-item component states (maintainableCSS.com)*/
+.list-item-isActive {}
+
+/* list-item modifiers (maintainableCSS.com) */
+.list-titleRule-firstList {}
+.list-deleteButton-firstList {}
+.list-completeButton-firstList {}
+.list-itemRule-firstList {}
