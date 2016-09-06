@@ -14,7 +14,7 @@
     <body>
       <div class="body-container">
         <header>
-          <div class="header-container">
+          <div class="section-container">
             <a href="http://www.biancascura.com" target="_blank">
               <img class="logo" alt="Logo" src="../images/logo.svg">
             </a>
@@ -22,7 +22,7 @@
               <ul>
                 <li class="search">
                   <input class="text-box" name="search" type="search" placeholder="Search tasks...">
-                  <a href="" >
+                  <a href="">
                     <img class="icon" alt="Logo" src="../images/search-icon.svg">
                   </a>
                 </li>
@@ -49,27 +49,40 @@
         </header>
         <section>
         <!-- Using Block__Element--Modifier for class naming (getBEM.com) -->
-          <div class="list-container">
-            <h1 class="list__name">List Name</h1>
-            <hr class="list__name-hr">
-            <ul>
-              <li>
-                <input type="checkbox">
-                <span>
-                  List Item
-                </span>
-                <button>
-                  Delete
-                </button>
-                <hr class="list__item-hr">
-              </li>
-            </ul>
+          <div class="section-container">
+            <div class="main-container">
+              <a href="">
+                <img class="icon arrow first-list" alt="left-arrow" src="../images/arrow-left-icon.svg">
+              </a>
+              <div class="list-container">
+                <h1 class="list__name">List Name</h1>
+                <hr class="list__name-hr">
+                <ul>
+                  <li>
+                    <input type="checkbox">
+                    <span>
+                      List Item
+                    </span>
+                    <button>
+                      Delete
+                    </button>
+                    <hr class="list__item-hr">
+                  </li>
+                </ul>
+              </div>
+              <a href="">
+                <img class="icon arrow first-list" alt="right-arrow" src="../images/arrow-right-icon.svg">
+              </a>
+            </div>
+            <div class="completed-tasks">
+              <a href="#">View completed tasks</a>
+            </div>
           </div>
         </section>
         <footer>
-          <p>
+          <div class="section-container">
             <a class="link-text" href="http://biancascura.com" target="_blank">&#169; Bianca Danforth 2016</a>
-          </p>
+          </div>
          </footer>
         <div class="grid">
         </div>
