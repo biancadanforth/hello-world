@@ -20,10 +20,10 @@
             </a>
             <nav>
               <ul>
-                <li class="search" id="SearchButton">
+                <li class="search">
                   <input class="text-box" name="search" type="search" placeholder="Search tasks...">
                   <a href="" >
-                    <object class="icon first-list" type="image/svg+xml" data="../images/search-icon.svg">Your browser does not support SVG.</object>
+                    <img class="icon" alt="Logo" src="../images/search-icon.svg">
                   </a>
                 </li>
                 <li class="dropdown">
@@ -49,22 +49,27 @@
         </header>
         <section>
         <!-- Using Block__Element--Modifier for class naming (getBEM.com) -->
-          <div class="list">
-            <h1 class="list__title">List Name</h1>
-            <!-- the second class on <hr> is a modifier class to change color depending on which list is active-->
-            <hr class="list__title-rule first-list">
-            <div class="list__item">
-              <h2 class="list__item-title">Item title</h2>
-              <form action="" method="">
-                <input type="submit" class="list__delete-button first-list" value="Delete">
-                 <input type="submit" class="list__complete-button first-list" value="Complete">
-                 <hr class="list__item-rule first-list">
-              </form>
-            </div>
+          <div class="list-container">
+            <h1 class="list__name">List Name</h1>
+            <hr class="list__name-hr">
+            <ul>
+              <li>
+                <input type="checkbox">
+                <span>
+                  List Item
+                </span>
+                <button>
+                  Delete
+                </button>
+                <hr class="list__item-hr">
+              </li>
+            </ul>
           </div>
         </section>
-         <footer>
-         <p><a class="link-text first-list" href="http://biancascura.com" target="_blank"></a></p>
+        <footer>
+          <p>
+            <a class="link-text" href="http://biancascura.com" target="_blank">&#169; Bianca Danforth 2016</a>
+          </p>
          </footer>
         <div class="grid">
         </div>

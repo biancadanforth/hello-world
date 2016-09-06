@@ -44,7 +44,7 @@ body {
 /********************************************
 * HEADER
 ********************************************/
-header, footer {
+header {
   background-color: #ecf0f1;
 }
 
@@ -97,19 +97,19 @@ section {
 /********************************************
 * List block
 ********************************************/
-.list {
+.list-container {
   max-width:780px;
   width: 81.25%;
   margin: 60px auto;
-  border: 1px solid grey;
+  border: 1px solid #d6d6d6;
   border-radius: 5px;
   box-shadow: 1px 2px 4px rgba(0,0,0,0.2);
-  height: 800px;
   background: white;
+  padding: 5%;
 }
 
 @media (max-width: 600px) {
-  .list {
+  .list-container {
     width: 100%;
     border: 0;
     border-radius: 0;
@@ -119,23 +119,31 @@ section {
 }
 
 /* list block elements*/
-.list__title {}
-.list__title-rule {}
-.list__item {}
-.list__item-title {}
-.list__delete-button {}
-.list__complete-button {}
-.list__item-rule {}
+.list__name {}
+.list__name-hr {}
+.list__item-hr {}
 
-/* list__item--states*/
-.list__item--isActive {}
+.list-container ul {
+  list-style: none;
+  margin: 0 5%;
+  padding: 0;
+}
 
-/* list__item--modifiers*/
-.list__title-rule--first-list {}
-.list__delete-button--first-list {}
-.list__complete-button--first-list {}
-.list__item-rule--first-list {}
+.list-container input[type="checkbox"]:checked ~ span {	
+	color: #7e7e7e;
+	text-decoration: line-through;
+}
 
 /********************************************
 * FOOTER
 ********************************************/
+
+footer {
+  background-color: #ecf0f1;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+  padding: 40px 0;
+}
