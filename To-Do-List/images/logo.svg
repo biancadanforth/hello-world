@@ -12,9 +12,9 @@
    id="svg3336"
    version="1.1"
    inkscape:version="0.91 r13725"
-   width="75"
-   height="50"
-   viewBox="0 0 75 50"
+   width="50.000004"
+   height="35.116184"
+   viewBox="0 0 50.000004 35.116184"
    sodipodi:docname="logo.svg">
   <metadata
      id="metadata3342">
@@ -44,12 +44,16 @@
      id="namedview3338"
      showgrid="false"
      inkscape:zoom="17"
-     inkscape:cx="39.529412"
-     inkscape:cy="26.778823"
+     inkscape:cx="16.583527"
+     inkscape:cy="18.157647"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg3336" />
+     inkscape:current-layer="svg3336"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <path
      style="fill:#000000"
      d=""
@@ -57,7 +61,7 @@
      inkscape:connector-curvature="0" />
   <g
      id="g4210"
-     transform="matrix(1.0576415,0,0,1.0576415,-0.86150257,-2.3851357)">
+     transform="matrix(1.0576415,0,0,1.0576415,-15.807387,-8.6477751)">
     <text
        sodipodi:linespacing="125%"
        id="text3348"

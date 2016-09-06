@@ -5,37 +5,70 @@
       <title>To Do List: Make a To Do List or Three</title>
       <meta name="description" content="Use this free web application to make up to three to do lists. No sign-up.">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="css/reset.css">
-      <link rel="stylesheet" href="css/normalize.css">
+      <link rel="stylesheet" href="css/vendor/reset.css">
+      <link rel="stylesheet" href="css/vendor/normalize.css">
       <link rel="stylesheet" href="../css/style.css">
       <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
       <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     </head>
     <body>
-      <div class="container">
-      <header>
-        <nav>
-        </nav>
-      </header>
-      <section>
-      <!-- Using modules per maintainableCSS.com -->
-        <div class="list">
-          <h1 class="list-title">List Name</h1>
-          <!-- the second class on <hr> is a modifier class to change color depending on which list is active-->
-          <hr class="list-titleRule list-titleRule-firstList" />
-          <div class="list-item">
-            <h2 class="list-itemTitle">Item title</h2>
-            <form action="" method="">
-              <input type="submit" class="list-deleteButton list-deleteButton-firstList" value="Delete">
-               <input type="submit" class="list-completeButton list-completeButton-firstList" value="Complete">
-               <hr class="list-itemRule list-itemRule-firstList" />
-            </form>
+      <div class="body-container">
+        <header>
+          <div class="header-container">
+            <a href="http://www.biancascura.com" target="_blank">
+              <img class="logo" alt="Logo" src="../images/logo.svg">
+            </a>
+            <nav>
+              <ul>
+                <li class="search" id="SearchButton">
+                  <input class="text-box" name="search" type="search" placeholder="Search tasks...">
+                  <a href="" >
+                    <object class="icon first-list" type="image/svg+xml" data="../images/search-icon.svg">Your browser does not support SVG.</object>
+                  </a>
+                </li>
+                <li class="dropdown">
+                  <select name="lists">
+                  <option class="dropdown__option" value="first-list">First List</option>
+                  <option class="dropdown__option" value="second-list">Second List</option>
+                  <option class="dropdown__option" value="third-list">Third List</option>
+                  </select>
+                </li>
+                <li class="add-list">
+                  <a href="">
+                    <img class="icon first-list" alt="Add List" src="../images/add-icon.svg">
+                  </a>
+                </li>
+                <li class="settings">
+                  <a href="">
+                    <img class="icon first-list" alt="Settings" src="../images/settings-icon.svg">
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
+        </header>
+        <section>
+        <!-- Using Block__Element--Modifier for class naming (getBEM.com) -->
+          <div class="list">
+            <h1 class="list__title">List Name</h1>
+            <!-- the second class on <hr> is a modifier class to change color depending on which list is active-->
+            <hr class="list__title-rule first-list">
+            <div class="list__item">
+              <h2 class="list__item-title">Item title</h2>
+              <form action="" method="">
+                <input type="submit" class="list__delete-button first-list" value="Delete">
+                 <input type="submit" class="list__complete-button first-list" value="Complete">
+                 <hr class="list__item-rule first-list">
+              </form>
+            </div>
+          </div>
+        </section>
+         <footer>
+         <p><a class="link-text first-list" href="http://biancascura.com" target="_blank"></a></p>
+         </footer>
+        <div class="grid">
         </div>
-      </section>
-      <footer>
-      </footer>
       </div>
-      <script src="../javascript/script.js"></script>
+      <script src="../js/script.js"></script>
     </body>
 </html>

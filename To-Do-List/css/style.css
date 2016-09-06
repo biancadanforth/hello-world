@@ -1,24 +1,102 @@
-/* To Do List Web Application CSS styles */
+/* To Do List Web Application CSS styles using BEM (Block__Element--Modifier) Coding Style (getBEM.com)*/
 
-.container {
+/********************************************
+* GLOBAL
+********************************************/
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/*using a 960px grid*/
+.body-container {
   max-width: 960px;
   margin: 0 auto;
-  /*flexible 960px grid*/
-  background: url('../images/12-columns.png') repeat-y white;
+}
+
+.header-container {
+  padding: 40px 60px;
+  overflow: auto;
+}
+
+.grid {
+  position: absolute;
+  z-index: 1;
+  background: url('../images/12-columns.png') repeat-y;
   background-size: cover;
 }
 
-header, footer {
-  background-color: #ecf0f1;
-  height: 125px;
+/* Doesn't actually work, but this is my idea for having one central place for list colors */
+.first-list {
+  color: #73b2dc;
+  border-color: #73b2dc;
 }
 
+.first-list:hover {
+  fill: #73b2dc;
+}
+
+
+/********************************************
+* HEADER
+********************************************/
+header, footer {
+  background-color: #ecf0f1;
+}
+
+.logo {}
+
+/********************************************
+* Navigation block
+********************************************/
+nav {
+  float: right;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  float: left;
+  margin-left: 25px;
+}
+
+nav .icon {
+  width: 40px;
+}
+
+nav .search {}
+
+nav .search .text-box {
+  display: none;
+}
+
+nav .dropdown {}
+
+nav .dropdown .dropdown__option {}
+
+nav .add-list {}
+
+nav .settings {}
+
+/********************************************
+* LIST SECTION
+********************************************/
 section {
   background: url('../images/crossword.png');
   overflow: auto;
 }
 
-/* list module container (maintainableCSS.com) */
+/********************************************
+* List block
+********************************************/
 .list {
   max-width:780px;
   width: 81.25%;
@@ -33,27 +111,31 @@ section {
 @media (max-width: 600px) {
   .list {
     width: 100%;
-    border: none;
-    border-radius: none;
-    background: none;
-    box-shadow: none;
+    border: 0;
+    border-radius: 0;
+    background: 0;
+    box-shadow: 0;
   }
 }
 
-/* list module components (maintainableCSS.com)*/
-.list-title {}
-.list-titleRule {}
-.list-item {}
-.list-itemTitle {}
-.list-deleteButton {}
-.list-completeButton {}
-.list-itemRule {}
+/* list block elements*/
+.list__title {}
+.list__title-rule {}
+.list__item {}
+.list__item-title {}
+.list__delete-button {}
+.list__complete-button {}
+.list__item-rule {}
 
-/* list-item component states (maintainableCSS.com)*/
-.list-item-isActive {}
+/* list__item--states*/
+.list__item--isActive {}
 
-/* list-item modifiers (maintainableCSS.com) */
-.list-titleRule-firstList {}
-.list-deleteButton-firstList {}
-.list-completeButton-firstList {}
-.list-itemRule-firstList {}
+/* list__item--modifiers*/
+.list__title-rule--first-list {}
+.list__delete-button--first-list {}
+.list__complete-button--first-list {}
+.list__item-rule--first-list {}
+
+/********************************************
+* FOOTER
+********************************************/
