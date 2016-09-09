@@ -12,54 +12,68 @@
       <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     </head>
     <body>
-      <div class="body-container">
         <header>
-          <div class="section-container">
-            <a href="http://www.biancascura.com" target="_blank">
-              <img class="logo" alt="Logo" src="../images/logo.svg">
+          <div class="container">
+            <a href="http://www.biancascura.com" target="_blank" aria-label="Go to creator's website in a new window">
+              <i class="logo" aria-hidden="true">Logo Icon</i>
             </a>
             <nav>
               <ul>
                 <li class="search">
-                  <input class="text-box" name="search" type="search" placeholder="Search tasks...">
-                  <a href="">
-                    <img class="icon" alt="Logo" src="../images/search-icon.svg">
-                  </a>
-                </li>
-                <li class="dropdown">
-                  <select name="lists">
-                  <option class="dropdown__option" value="first-list">First List</option>
-                  <option class="dropdown__option" value="second-list">Second List</option>
-                  <option class="dropdown__option" value="third-list">Third List</option>
-                  </select>
-                </li>
-                <li class="add-list">
-                  <a href="">
-                    <img class="icon first-list" alt="Add List" src="../images/add-icon.svg">
+                  <!-- just use input[type="text"], input[type="search"] {} to style, no class needed -->
+                  <input name="search" type="search" placeholder="Search tasks...">
+                  <a href="" aria-label="Search">
+                    <i class="icon" aria-hidden="true" title="Search tasks">Search Icon</i>
                   </a>
                 </li>
                 <li class="settings">
-                  <a href="">
-                    <img class="icon first-list" alt="Settings" src="../images/settings-icon.svg">
+                  <a href="" aria-label="Settings">
+                    <i class="icon" aria-hidden="true" title="Settings">Settings Icon</i>
                   </a>
                 </li>
               </ul>
             </nav>
           </div>
         </header>
+        <!--- SUB-MENU -->
+        <section class="sub-menu">
+          <div class="container">
+            <ul>
+              <li class="dropdown">
+                <select name="lists" aria-label="My Lists Dropdown Menu">
+                  <option class="dropdown__option" value="my-lists">My Lists</option>
+                  <option class="dropdown__option" value="first-list">First List</option>
+                  <option class="dropdown__option" value="second-list">Second List</option>
+                  <option class="dropdown__option" value="third-list">Third List</option>
+                </select>
+              </li>
+              <li class="add-list">
+                <a href=""  aria-label="Add List">
+                  <i class="icon" aria-hidden="true" title="Add List">Add List Icon</i>
+                </a>
+              </li>
+              <li class="delete-list">
+                <a href="" aria-label="Delete List">
+                  <i class="icon" aria-hidden="true" title="Delete List">Delete List Icon</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </section>
         <section>
         <!-- Using Block__Element--Modifier for class naming (getBEM.com) -->
-          <div class="section-container">
+          <div class="container">
             <div class="main-container">
-              <a href="">
-                <img class="icon arrow first-list" alt="left-arrow" src="../images/arrow-left-icon.svg">
+              <a href="" aria-label="Move to previous list">
+                <i class="icon arrow" aria-hidden="true" title="Previous List">Left Arrow Icon</i>
               </a>
               <div class="list-container">
                 <h1 class="list__name">List Name</h1>
                 <hr class="list__name-hr">
                 <ul>
                   <li>
-                    <input type="checkbox">
+                    <!-- Use JS to update aria-label value with user input-->
+                    <input aria-label="Task that the user has entered in" type="checkbox">
                     <span>
                       List Item
                     </span>
@@ -70,17 +84,16 @@
                   </li>
                 </ul>
               </div>
-              <a href="">
-                <img class="icon arrow first-list" alt="right-arrow" src="../images/arrow-right-icon.svg">
+              <a href="" aria-label="Move to next list">
+                <i class="icon arrow" aria-hidden="true" title="Next List">Right Arrow Icon</i>
               </a>
             </div>
             <div class="completed-tasks">
               <a href="#">View completed tasks</a>
             </div>
-          </div>
         </section>
         <footer>
-          <div class="section-container">
+          <div class="container">
             <a class="link-text" href="http://biancascura.com" target="_blank">&#169; Bianca Danforth 2016</a>
           </div>
          </footer>
