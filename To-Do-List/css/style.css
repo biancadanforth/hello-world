@@ -1,12 +1,29 @@
-/* To Do List Web Application CSS styles using BEM (Block__Element--Modifier) Class Naming Style (getBEM.com)*/
+/* To Do List Web Application */
 
 /********************************************
-* Table of Contents
+* TABLE OF CONTENTS
 
 1.0 GLOBAL
 2.0 HEADER
 3.0 NAV
-4.0 ... (finish)
+4.0 SUB-MENU
+5.0 MAIN CONTENT
+6.0 FOOTER
+
+FONTS:
+font-family: 'Quattrocento', serif;
+font-family: 'Quattrocento Sans', sans-serif;
+
+COLORS:
+header/footer background & subheader icon default: #ecf0f1
+header icon-default & subheader background: #9e9e9e
+first list accent & first list icon hover: #2980b9
+second list accent & second list icon hover: #c0392b
+third list accent & third list icon hover: #27ae60
+list text default: #646464
+list text hover: #4a4a4a
+de emphasized text: #7e7e7e
+
 ********************************************/
 
 
@@ -22,9 +39,9 @@
 body {
   max-width: 100%;
   margin: 0 auto;
+  font-family: 'Quattrocento Sans', sans-serif;
 }
 
-/*using a 960px grid*/
 .container {
   max-width: 960px;
   margin: auto;
@@ -45,6 +62,11 @@ body {
   background-size: cover;
 }
 
+.icon {
+  height: 40px;
+  width: auto;
+}
+
 
 /********************************************
 * 2.0 HEADER
@@ -53,10 +75,17 @@ header {
   background-color: #ecf0f1;
 }
 
-.logo {}
+.logo {
+  fill: #2980b9;
+}
 
-.logo-svg {
-  stroke: white;
+.logo.arch {
+  fill: transparent;
+  stroke: #2980b9;
+}
+
+.settings {
+  fill: #9e9e9e;
 }
 
 /********************************************
@@ -77,11 +106,9 @@ nav ul li {
   margin-left: 40px;
 }
 
-.icon {
-  height: 40px;
+nav .search {
+  fill: #9e9e9e;
 }
-
-nav .search {}
 
 nav .search input[type="search"] {
   display: none;
@@ -96,11 +123,16 @@ nav .add-list {}
 nav .settings {}
 
 /********************************************
-* SUB-MENU
+* 4.0 SUB-MENU
 ********************************************/
 
-.sub-menu {
+section.sub-menu {
   background: #9e9e9e;
+}
+
+/*overrides 40px padding on .container in GLOBAL settings*/
+.container.sub-menu-container {
+  padding: 20px 0;
 }
 
 .sub-menu ul {
@@ -120,18 +152,28 @@ nav .settings {}
   margin-left: 40px;
 }
 
+/*can use the 'fill' and 'stroke' properties to edit the color of the add-list-icon.svg*/
+.add-list, .delete-list {
+  fill: #ecf0f1;
+  stroke: #ecf0f1;
+}
+
+/*edits the circular cut-out for the add-list icon plus sign sub-icon and delete-list icon trash bin sub-icon*/
+.add-list.cut-out, .delete-list.cut-out {
+  fill: #9e9e9e;
+  stroke: #9e9e9e;
+}
+
 /********************************************
-* LIST SECTION
+* 5.0 MAIN CONTENT
 ********************************************/
-section {
+
+section.main {
   background: url('../images/crossword.png');
   overflow: auto;
 }
 
-/********************************************
-* List block
-********************************************/
-.main-container {
+.inner-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -157,13 +199,15 @@ section {
     box-shadow: none;
   }
   
-  .arrow {
+  .left-arrow, .right-arrow {
     display: none;
   }
 }
 
-/* list block elements*/
-.list__name {}
+h1 {
+  font-family: 'Quattrocento', serif;
+}
+
 .list__name-hr {}
 .list__item-hr {}
 
@@ -181,6 +225,14 @@ hr.list__item-hr {
   width: 90%;
 }
 
+.left-arrow {
+  fill: #9e9e9e;
+}
+
+.right-arrow {
+  fill: #9e9e9e;
+}
+
 div.completed-tasks {
   padding-top: 20px;
   width: 81.25%;
@@ -188,7 +240,7 @@ div.completed-tasks {
 }
 
 /********************************************
-* FOOTER
+* 6.0 FOOTER
 ********************************************/
 
 footer {
