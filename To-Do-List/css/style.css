@@ -57,7 +57,12 @@ body {
 
 .grid {
   position: absolute;
-  z-index: 1;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 960px;
+  height: 100vh;
   background: url('../images/12-columns.png') repeat-y;
   background-size: cover;
 }
