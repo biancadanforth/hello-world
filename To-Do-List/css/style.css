@@ -75,17 +75,18 @@ body {
   background-size: cover;
 }*/
 
-.icon {}
+.icon-link {
+  display: inline-block;
+}
 
 /********************************************
 * 2.0 HEADER
 ********************************************/
-header {
+header[role="banner"] {
   background-color: #ecf0f1;
 }
 
-header a .logo {
-  display: inline-block;
+header[role="banner"] a .logo {
   /*IE11 styles, does not affect look in Chrome*/
   float: left;
   width: 50px;
@@ -103,21 +104,21 @@ header a .logo {
 /********************************************
 * 3.0 NAV
 ********************************************/
-nav {}
+header[role="banner"] nav {
+  display: inline-block;
+  float: right;
+}
 
 nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow: auto;
 }
 
 nav ul li {
   float: right;
   margin-left: 40px;
-}
-
-nav ul li a {
-  display: inline-block;
 }
 
 /*IE11 styles, does not affect look in Chrome*/
@@ -129,38 +130,28 @@ nav .search {
   fill: #9e9e9e;
 }
 
-nav .search input[type="search"] {
+nav fieldset[role="search"] {
   display: none;
 }
 
-nav .dropdown {}
-
-nav .dropdown .dropdown__option {}
-
-nav .add-list {}
-
 nav .settings {
   fill: #9e9e9e;
-}
 }
 
 /********************************************
 * 4.0 SUB-MENU
 ********************************************/
 
-section.sub-menu {
+header.sub-menu {
   background-color: #9e9e9e;
 }
 
 /*overrides 40px padding on .container in GLOBAL settings*/
-.container.sub-menu-container {
+nav.container.sub-menu-container {
   padding: 20px 0;
 }
 
 .sub-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,7 +185,7 @@ section.sub-menu {
 * 5.0 MAIN CONTENT
 ********************************************/
 
-section.main {
+section[role="main"] {
   background: url('../images/crossword.png');
   overflow: auto;
 }
