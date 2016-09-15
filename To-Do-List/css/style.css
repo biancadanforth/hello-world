@@ -20,6 +20,7 @@ COLORS:
 header/footer background & subheader icon default: #ecf0f1
 header icon-default & subheader background: #9e9e9e
 first list accent & first list icon hover: #2980b9
+first list notification background color: #e3f0f8
 second list accent & second list icon hover: #c0392b
 third list accent & third list icon hover: #27ae60
 list text default: #646464
@@ -79,6 +80,59 @@ body {
   display: inline-block;
 }
 
+fieldset {
+  display: flex;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+button {
+  margin: 0;
+}
+
+input {
+  margin: 0;
+  padding: 0;
+}
+
+input[type="search"], input[type="text"] {
+  flex: 0 3 75%;
+  border: 1px solid #9e9e9e;
+  height: 40px;
+  letter-spacing: 1px;
+  text-indent: 10px;
+  border-radius: 5px 0 0 5px;
+  box-shadow: inset 1px 1px 2px 0 #9e9e9e;/* offset-x | offset-y | blur-radius | spread-radius | color */
+}
+
+input[type="search"]:focus, input[type="text"]:focus {
+  outline: 1px solid #2980b9;
+}
+
+button {
+  flex: 0 1 25%;
+  height: 40px;
+  border: 0;
+  margin: 0;
+  border-radius: 0 5px 5px 0;
+  transition: background .3s ease-in-out;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+.search:hover, .settings:hover, .add-list:hover, .delete-list:hover, .left-arrow:hover, .right-arrow:hover {
+  fill: #2980b9;
+  stroke: #2980b9;
+}
+
+:placeholder-shown {
+  color: #9e9e9e;
+  text-indent: 10px;
+}
+
 /********************************************
 * 2.0 HEADER
 ********************************************/
@@ -104,12 +158,23 @@ header[role="banner"] a .logo {
 /********************************************
 * 3.0 NAV
 ********************************************/
+header[role="navigation"] {
+   /* flex container so logo is vertically centered with <nav> */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 header[role="banner"] nav {
+  /* <ul> inside <nav> is by default display: block; want <nav> inline with logo*/
   display: inline-block;
   float: right;
 }
 
 nav ul {
+  /* flex container so search box is vertically centered with settings icon */
+  display: flex;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -117,7 +182,6 @@ nav ul {
 }
 
 nav ul li {
-  float: right;
   margin-left: 40px;
 }
 
@@ -163,10 +227,6 @@ nav.container.sub-menu-container {
 
 .sub-menu ul li {
   margin-left: 40px;
-}
-
-.sub-menu ul li a {
-  display: inline-block;
 }
 
 /*can use the 'fill' and 'stroke' properties to edit the color of the add-list-icon.svg*/
@@ -239,16 +299,27 @@ h1 {
   padding: 0;
 }
 
+.list-container input[type="checkbox"] {
+  display: none;
+}
+
+.list-container span:before {
+  content: "";
+  margin: 0 .5em 0 0;
+  float: left;
+  width: 1em;
+  height: 1em;
+  background: #fff;
+  border: 1px solid #222;
+  border-radius: 3px;
+}
+
 .list-container input[type="checkbox"]:checked ~ span {	
 	text-decoration: line-through;
 }
 
 hr.list__item-hr {
   width: 90%;
-}
-
-.arrow-link {
-  display: inline-block;
 }
 
 .left-arrow {
