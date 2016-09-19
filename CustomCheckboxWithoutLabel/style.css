@@ -1,0 +1,42 @@
+/* Remove System Checkbox */
+input[type="checkbox"] {
+  display:none;
+}
+
+/* Fake checkbox made in CSS */
+.checkbox {
+  display:inline-block;
+  width:20px;
+  height:20px;
+  vertical-align: middle;
+  background: #ededed;
+  border: 1px solid #aeaeae;
+  border-radius: 4px;
+  margin: 0 .5em;
+}
+
+/* Set line-height of list-item equal to height of fake checkbox */
+.list-item {
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+/* Adding the checkmark when the checkbox is checked */
+input[type="checkbox"]:checked + span:after {
+/*Add a block-level blank space*/
+  content:"";
+  display:block;
+/*Make a small rectangle*/
+  width: 6px;
+  height: 18px;
+/*Add a border on the bottom and right, creating an 'L' */
+  border: solid #000000;
+  border-width: 0 4px 4px 0;
+/*Position it on top of the custom checkbox*/
+  position:absolute;
+  top: .2em;
+  left: 1.65em;
+/*Rotate the L to make it look like a checkmark*/
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
