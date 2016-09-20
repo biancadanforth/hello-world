@@ -8,7 +8,6 @@ function toggleClass() {
   searchIcon.classList.toggle("js-search-icon-active");
   searchButton.classList.toggle("search-button");
   searchButton.classList.toggle("js-search-button-active");
-  searchBox.classList.toggle("search-box");
   searchBox.classList.toggle("js-search-box-active");
   if (searchBox.classList.contains("js-search-box-active")) {
     searchBox.focus();

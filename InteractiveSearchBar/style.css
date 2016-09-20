@@ -37,17 +37,21 @@ fieldset {
 }
 
 .search-box {
-  display: none;
-  height:0;
-  transition: all .75s ease;
+  float: left;
+  height: 40px;
+  width: 0px;
+  outline: 0;
+  border: 0;
+  text-indent: 10px;
+  transition: width .75s ease;
 }
 
 .js-search-box-active {
-  float: left;
   display: inline;
-  height: 40px;
-  text-indent: 10px;
-  transition: all .75s ease;
+  width: 200px;
+  border: 1px solid black;
+  border-right: 0;
+  transition: width .75s ease;
 }
 
 .search-icon {
