@@ -1,3 +1,5 @@
+// Dynamically updates aria-label attribute value on input element based on content of <span> next to 'fake' checkbox
+
 var fakeCheckbox = document.getElementById("fake-checkbox");
 var realCheckbox = document.getElementById("real-checkbox");
 
@@ -12,8 +14,11 @@ function toggleCheckbox() {
 fakeCheckbox.onclick = toggleCheckbox;
 
 var listItemLabel = document.getElementById("list-item-label");
-var labelText = String(listItemLabel.innerHTML);
 
 function setAriaLabel() {
-  realCheckbox.setAttribute("aria-label", labelText);  
+  var labelText = listItemLabel.textContent;
+  realCheckbox.setAttribute('aria-label', labelText);
+  console.log(realCheckbox);
 }
+
+listItemLabel.onblur = setAriaLabel;
