@@ -1,0 +1,86 @@
+body {
+  background: grey;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.list-item-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 400px;
+  margin: 0 auto;
+  border: 1px black solid;
+  /* hide flex items when div is shrinking*/
+  overflow: hidden;
+  max-height: 1000px;
+  opacity: 1;
+  transition: all .5s ease;
+}
+
+.list-item-container-delete {
+  max-height: 0;
+  border: 0;
+  opacity: 0;
+  transition: all .5s ease;
+}
+
+/* Remove System Checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Fake checkbox made in CSS */
+.checkbox {
+  position: relative;
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin-left: 1em;
+  margin-top: 1em;
+  background-color: #ededed;
+  border: 1px solid #aeaeae;
+  border-radius: 4px;
+}
+
+.checkmark-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -70%);
+  display: inline-block;
+  visibility: hidden;
+  width: 30px;
+  height: auto;
+}
+
+.list-item {
+  margin: 1em 1em 1em 1.25em;
+  max-width: 70%;
+  line-height: 1.5;
+}
+
+a {
+  display: inline-block;
+}
+
+a:hover, .checkbox, .add-list {
+  cursor: pointer;
+}
+
+.delete-icon {
+  width: 20px;
+  height: auto;
+  margin-right: 1em;
+  margin-top: 1em;
+}
+
+.add-list {
+  justify-content: flex-start;
+}
+
+p {
+  margin-left: 1em;
+}

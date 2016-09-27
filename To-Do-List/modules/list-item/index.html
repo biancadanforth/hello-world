@@ -1,0 +1,121 @@
+<!doctype HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Modified codepen by Dave Odden ("Custom Check Boxes") to have a custom CSS checkbox and checkmark without a <label> element, so that clicking on the label does not toggle the checkbox. Also the value of the "aria-label" attribute on the input element live updates with the contents of the span#list-item-label element. -->
+  <div id="list-container">
+    <div class="list-item-container" id="list-item-container">
+        <input id="real-checkbox" type="checkbox">
+          <span class="checkbox" id="fake-checkbox">
+            <svg class="checkmark-icon" id="checkmark-icon" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" height="39.357" viewBox="0 0 50 39.357185" width="50" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata id="metadata14"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="g3" transform="matrix(.081699 0 0 .081699 0 -5.3214)"><g id="tick"><g id="g6"><path id="path8" d="m595.6 81.553c-21.892-21.891-57.362-21.891-79.253 0l-333.32 333.32-88.629-76.13c-21.592-21.593-56.596-21.593-78.207 0-21.592 21.592-21.592 56.614 0 78.206l132.41 113.73c21.592 21.593 56.596 21.593 78.207 0 2.167-2.166 3.979-4.576 5.716-6.985 0.317-0.299 0.672-0.505 0.99-0.804l362.09-362.1c21.871-21.872 21.871-57.361-0.001-79.233z"/></g></g></g></svg>
+          </span>
+          <span class="list-item" id="list-item-label" contenteditable="true">Custom CSS Check Box what happens if I keep on typing</span>
+          <a>  
+            <svg class="delete-icon" id="delete-icon"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:cc="http://creativecommons.org/ns#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns="http://www.w3.org/2000/svg"
+         xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+         xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+         version="1.1"
+         id="Capa_1"
+         x="0px"
+         y="0px"
+         viewBox="0 0 50.000001 50.000001"
+         xml:space="preserve"
+         inkscape:version="0.91 r13725"
+         sodipodi:docname="delete-icon.svg"
+         width="50"
+         height="50"><metadata
+           id="metadata73"><rdf:RDF><cc:Work
+               rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+                 rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           id="defs71" /><sodipodi:namedview
+           pagecolor="#ffffff"
+           bordercolor="#666666"
+           borderopacity="1"
+           objecttolerance="10"
+           gridtolerance="10"
+           guidetolerance="10"
+           inkscape:pageopacity="0"
+           inkscape:pageshadow="2"
+           inkscape:window-width="732"
+           inkscape:window-height="480"
+           id="namedview69"
+           showgrid="false"
+           inkscape:zoom="0.47981134"
+           inkscape:cx="184.89598"
+           inkscape:cy="184.89528"
+           inkscape:window-x="0"
+           inkscape:window-y="0"
+           inkscape:window-maximized="0"
+           inkscape:current-layer="Capa_1"
+           fit-margin-top="0"
+           fit-margin-left="0"
+           fit-margin-right="0"
+           fit-margin-bottom="0" /><g
+           id="g3"
+           transform="matrix(0.09560891,-0.09560903,0.09560891,0.09560903,-22.02615,25.000016)"><g
+             id="g5"><path
+               d="m 465.167,211.614 -184.922,0 0,-184.923 c 0,-8.424 -11.439,-26.69 -34.316,-26.69 -22.877,0 -34.316,18.267 -34.316,26.69 l 0,184.924 -184.923,0 C 18.267,211.614 0,223.053 0,245.929 c 0,22.876 18.267,34.316 26.69,34.316 l 184.924,0 0,184.924 c 0,8.422 11.438,26.69 34.316,26.69 22.878,0 34.316,-18.268 34.316,-26.69 l 0,-184.924 184.924,0 c 8.422,0 26.69,-11.438 26.69,-34.316 0,-22.878 -18.27,-34.315 -26.693,-34.315 z"
+               id="path7"
+               inkscape:connector-curvature="0" /></g><g
+             id="g9" /><g
+             id="g11" /><g
+             id="g13" /><g
+             id="g15" /><g
+             id="g17" /><g
+             id="g19" /><g
+             id="g21" /><g
+             id="g23" /><g
+             id="g25" /><g
+             id="g27" /><g
+             id="g29" /><g
+             id="g31" /><g
+             id="g33" /><g
+             id="g35" /><g
+             id="g37" /></g><g
+           id="g39"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g41"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g43"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g45"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g47"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g49"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g51"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g53"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g55"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g57"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g59"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g61"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g63"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g65"
+           transform="translate(-61.034013,-380.82527)" /><g
+           id="g67"
+           transform="translate(-61.034013,-380.82527)" /></svg>
+      </a>
+    </div>
+    <div class="list-item-container add-list" id="add-list-container">
+      <p id="add-list">+ Add list item</p>
+    </div>
+  </div>
+    <script src="script.js"></script>
+  </body>
+</html>

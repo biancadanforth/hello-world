@@ -43,6 +43,8 @@ body {
   max-width: 100%;
   margin: 0 auto;
   font-family: 'Quattrocento Sans', sans-serif;
+  font-size: 100%;
+  line-height: 1.25;
 }
 
 .container {
@@ -69,9 +71,14 @@ body {
   background-size: cover;
 }*/
 
-/* <ul> inside <nav> is by default display: block; want <nav> inline with logo in header[role="banner"]*/
+/* <ul> inside <nav> is by default display: block; want <nav> inline with logo in header .menu*/
 nav[role="navigation"],
 .icon-link { display: inline-block; }
+
+.icon-link:hover path, .icon-link:hover circle {
+  fill: #2980b9;
+  stroke: #2980b9;
+}
 
 ul {
   margin: 0;
@@ -80,18 +87,12 @@ ul {
   list-style: none;
 }
 
-li {
+nav li {
   float: left;
   margin: 0 20px;
 }
 
 svg { width: 40px; }
-
-/*Need to test: IE sometimes puts a default border around link elements*/
-a {
-  border: none;
-  outline: none;
-}
 
 :placeholder-shown {
   color: #9e9e9e;
@@ -101,7 +102,7 @@ a {
 /********************************************
 * 2.0 HEADER
 ********************************************/
-header[role="banner"] { background-color: #ecf0f1; }
+.menu { background-color: #ecf0f1; }
 
 .logo-icon {
   float: left;
@@ -109,7 +110,7 @@ header[role="banner"] { background-color: #ecf0f1; }
 }
 
 .logo-arch {
-  fill: transparent;
+  fill: transparent !important;
   stroke: #2980b9;
 }
 
@@ -119,7 +120,7 @@ header[role="banner"] { background-color: #ecf0f1; }
 * 3.0 NAV
 ********************************************/
 
-header[role="banner"] nav { float: right; }
+.menu-nav { float: right; }
 
 fieldset[role="search"] { display: none; }
 
@@ -151,10 +152,10 @@ fieldset[role="search"] { display: none; }
 }
 
 /********************************************
-* 5.0 MAIN CONTENT
+* 5.0 MAIN CONTENT (LIST)
 ********************************************/
 
-section[role="main"] {
+.list {
   overflow: auto;
   background-image: url('../images/crossword.png');
 }
@@ -176,16 +177,15 @@ section[role="main"] {
   padding-bottom: 0;
 }
 
-h1 { font-family: 'Quattrocento', serif; }
+.list-name { font-family: 'Quattrocento', serif; }
 
 .list-name-hr {}
 
 .list-item-hr {}
 
-.arrow { width: 20px; }
+.list-arrow { width: 20px; }
 
-.left-arrow,
-.right-arrow { fill: #9e9e9e; }
+.list-arrow path { fill: #9e9e9e; }
 
 @media (max-width: 600px) {
   .list-container {
@@ -196,10 +196,10 @@ h1 { font-family: 'Quattrocento', serif; }
     box-shadow: none;
   }
   
-  .arrow { display: none; }
+  .list-arrow { display: none; }
 }
 
-.completed-tasks {
+.list-completed-tasks {
   width: 81.25%;
   margin: 0 auto; 
   padding-top: 20px;

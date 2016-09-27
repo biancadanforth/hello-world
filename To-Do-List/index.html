@@ -14,7 +14,7 @@
       <link href="https://fonts.googleapis.com/css?family=Montserrat|Quattrocento" rel="stylesheet">
     </head>
     <body>
-      <header role="banner">
+      <header class="menu" role="banner">
         <div class="container">
           <a class="icon-link" href="http://www.biancascura.com" target="_blank" aria-label="Go to creator's website in a new window">
             <!-- used <span> instead of <i> for logo.svg because this SVG has text and <i> renders it in italics -->
@@ -36,7 +36,7 @@
               </svg>
             </span>
           </a>
-          <nav role="navigation">
+          <nav class="menu-nav" role="navigation">
             <ul>
               <li>
                 <!-- just use input[type="text"], input[type="search"] {} to style, no class needed -->
@@ -64,7 +64,7 @@
       <!-- HTML5 spec describes <header> as a container for "a group of introductory or navigational aids", so it's used for the main menu and the sub-menu-->
       <header class="sub-menu">
         <div class="container sub-menu-container">
-          <nav role="navigation">
+          <nav class="sub-menu-nav" role="navigation">
             <ul>
               <li class="dropdown">
                 <select name="lists" aria-label="My Lists Dropdown Menu">
@@ -92,16 +92,16 @@
           </nav>
         </div>
       </header>
-      <section role="main">
+      <section class="list" role="main">
         <div class="container">
           <div class="list-carousel">
             <a class="icon-link" href="#" aria-label="Move to previous list">
               <span aria-hidden="true" title="Previous List">
-                <svg class="arrow" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" height="87.714" viewBox="0 0 49.999999 87.713611" width="50" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata id="metadata41"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="g3" transform="matrix(-.19412 0 0 -.19412 68.857 87.714)"><path class="left-arrow" id="path5" d="m345.44 248.29-194.29 194.28c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744l171.92-171.91-171.91-171.9c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.29 194.28c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"/></g></svg>
+                <svg class="list-arrow" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" height="87.714" viewBox="0 0 49.999999 87.713611" width="50" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata id="metadata41"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="g3" transform="matrix(-.19412 0 0 -.19412 68.857 87.714)"><path class="left-arrow" id="path5" d="m345.44 248.29-194.29 194.28c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744l171.92-171.91-171.91-171.9c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.29 194.28c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"/></g></svg>
               </span>
             </a>
             <div class="list-container">
-              <h1>List Name</h1>
+              <h1 class="list-name">List Name</h1>
               <hr class="list-name-hr">
               <ul>
                 <li>
@@ -119,11 +119,11 @@
             </div>
             <a class="icon-link" href="#" aria-label="Move to next list">
               <span title="Next List" aria-hidden="true">
-                <svg class="arrow" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" height="103.5" viewBox="0 0 58.999999 103.50206" width="59" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata id="metadata41"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="g3" transform="matrix(.22906 0 0 .22906 -22.251 .000057266)"><path class="right-arrow" id="path5" d="m345.44 248.29-194.29 194.28c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744l171.92-171.91-171.91-171.9c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.29 194.28c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"/></g></svg>
+                <svg class="list-arrow" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" height="103.5" viewBox="0 0 58.999999 103.50206" width="59" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata id="metadata41"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="g3" transform="matrix(.22906 0 0 .22906 -22.251 .000057266)"><path class="right-arrow" id="path5" d="m345.44 248.29-194.29 194.28c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744l171.92-171.91-171.91-171.9c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.29 194.28c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"/></g></svg>
               </span>
             </a>
           </div>
-          <div class="completed-tasks">
+          <div class="list-completed-tasks">
           <!-- Use :target pseudoelement here http://modernweb.com/2014/07/30/5-things-wont-believe-built-css/ target show/hide section-->
             <a href="#">View completed tasks</a>
           </div>
