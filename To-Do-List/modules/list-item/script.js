@@ -1,61 +1,58 @@
-// Toggle input checkbox element to display checkmark in CSS and strikethrough list item when checked
-
-var fakeCheckbox = document.getElementById("fake-checkbox");
-var realCheckbox = document.getElementById("real-checkbox");
-var checkmarkIcon = document.getElementById("checkmark-icon");
-
-function toggleCheckbox() {
-  if (realCheckbox.checked == false) {
-    realCheckbox.checked = true;
-    listItemLabel.style.textDecoration = "line-through";
-    checkmarkIcon.style.visibility = "visible";
-  } else {
-    realCheckbox.checked = false;
-    listItemLabel.style.textDecoration = "none";
-    checkmarkIcon.style.visibility = "hidden";
-  }
-}
-
-fakeCheckbox.onclick = toggleCheckbox;
-
-// Dynamically update aria-label value on input element to match list item span element text content
-
-var listItemLabel = document.getElementById("list-item-label");
-
-function setAriaLabel() {
-  var labelText = listItemLabel.textContent;
-  realCheckbox.setAttribute('aria-label', labelText);
-}
-
-listItemLabel.onblur = setAriaLabel;
-
-// Deleting a task
-
-var deleteIcon = document.getElementById("delete-icon");
-var listItemContainer = document.getElementById("list-item-container");
-
-deleteIcon.onclick = deleteItem;
-
-function deleteItem() {
-  listItemContainer.classList.add("list-item-container-delete");
-  setTimeout(removeListItemFromDOM, 1500);
-}
-
-function removeListItemFromDOM() {
-  listItemContainer.remove();
-}
-
 // Adding a task
-
+var row = 0;
+var addTaskContainer = document.getElementById("add-task-container");
 var listContainer = document.getElementById("list-container");
-var addListLink = document.getElementById("add-list");
-var listItemContainerPrime = listItemContainer.cloneNode(true);
-  var addListContainer = document.getElementById("add-list-container");
-  var addListContainerPrime = addListContainer.cloneNode(true);
 
-addListLink.onclick = addItem;
+addTaskContainer.addEventListener("click", addTask);
 
-function addItem() {
-  addListContainer = listContainer.replaceChild(listItemContainerPrime, addListContainer);
-  listContainer.appendChild(addListContainerPrime);
+function addTask() {
+  
+  //create a new, unique list-item-container div
+  var containerNode = document.createElement("div");
+  containerNode.setAttribute("id", "list-item-container-" + row);
+  containerNode.setAttribute("class", "list-item-container");
+  // put the new element in the DOM at a specific location
+  listContainer.appendChild(containerNode);
+  
+  //create a new, unique -real- checkbox inside list-item-container div
+  var realCheckbox = document.createElement("input");
+  realCheckbox.setAttribute("type", "checkbox");
+  realCheckbox.setAttribute("id", "real-checkbox-" + row);
+  containerNode.appendChild(realCheckbox);
+  
+  //create a new, unique -fake- checkbox inside list-item-container div
+  var fakeCheckbox = document.createElement("span");
+  fakeCheckbox.setAttribute("class", "checkbox");
+  fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
+  containerNode.appendChild(fakeCheckbox);
+  
+  //create a new, unique checkmark icon inside fake-checkbox span
+  var checkmarkIcon = new XMLHttpRequest();
+  checkmarkIcon.open("GET", "/images/checkmark.svg", true);
+  checkmarkIcon.overrideMimeType("image/svg+xml");
+  checkmarkIcon.onreadystatechange = function() {
+    if (checkmarkIcon.readyState === XMLHttpRequest.DONE && checkmarkIcon.status === 200) {
+      fakeCheckbox.appendChild(checkmarkIcon.responseXML.documentElement);
+    }
+  }
+  checkmarkIcon.send();
+  checkmarkIcon.setAttribute("class", "checkmark-icon");
+  checkmarkIcon.setAttribute("id", "checkmark-icon-" + row);
+  fakeCheckbox.appendChild(checkmarkIcon);
+  
+  // create a new, unique input text field  inside list-item-container div
+  var inputNode = document.createElement("input");
+  inputNode.setAttribute("type", "text");
+  inputNode.setAttribute("id", "list-item-label-" + row);
+  inputNode.setAttribute("class", "list-item");
+  // add node to DOM at a particular location
+  containerNode.appendChild(inputNode);
+  
+  //create a new, unique delete icon inside list-item-container div
+  var deleteIcon = document.createElement("svg");
+  deleteIcon.setAttribute("class", "delete-icon");
+  deleteIcon.setAttribute("id", "delete-icon-" + row);
+  containerNode.appendChild(deleteIcon);
+  
+  row++;
 }

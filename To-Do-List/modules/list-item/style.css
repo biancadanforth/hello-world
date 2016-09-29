@@ -8,7 +8,7 @@ body {
 
 .list-item-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   width: 400px;
   margin: 0 auto;
@@ -58,15 +58,17 @@ input[type="checkbox"] {
 
 .list-item {
   margin: 1em 1em 1em 1.25em;
-  max-width: 70%;
+  max-width: 80%;
   line-height: 1.5;
+  text-indent: 10px;
+  flex-grow: 1;
 }
 
 a {
   display: inline-block;
 }
 
-a:hover, .checkbox, .add-list {
+a:hover, .checkbox, .add-task-container {
   cursor: pointer;
 }
 
@@ -77,8 +79,8 @@ a:hover, .checkbox, .add-list {
   margin-top: 1em;
 }
 
-.add-list {
-  justify-content: flex-start;
+.add-task-container {
+  display: block;
 }
 
 p {
