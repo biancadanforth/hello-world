@@ -81,6 +81,9 @@ a:hover, .checkbox, .add-task-container {
 
 .add-task-container {
   display: block;
+  width: 400px;
+  margin: 0 auto;
+  border: 1px black solid;
 }
 
 p {
