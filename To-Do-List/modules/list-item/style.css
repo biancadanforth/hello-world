@@ -44,8 +44,8 @@ input[type="checkbox"] {
   border: 1px solid #aeaeae;
   border-radius: 4px;
 }
-
-.checkmark-icon {
+/* checkmark svg is added with JS, cannot add class/id to it easily, so target with descendant selector*/
+.checkbox svg {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -72,7 +72,7 @@ a:hover, .checkbox, .add-task-container {
   cursor: pointer;
 }
 
-.delete-icon {
+.list-item-container svg {
   width: 20px;
   height: auto;
   margin-right: 1em;

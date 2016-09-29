@@ -1,4 +1,4 @@
-// Adding a task
+// !----------ADDING A TASK----------!
 var row = 0;
 var addTaskContainer = document.getElementById("add-task-container");
 var listContainer = document.getElementById("list-container");
@@ -6,7 +6,7 @@ var listContainer = document.getElementById("list-container");
 addTaskContainer.addEventListener("click", addTask);
 
 function addTask() {
-  
+  addTaskContainer.style.borderTopWidth = "0";
   //create a new, unique list-item-container div
   var containerNode = document.createElement("div");
   containerNode.setAttribute("id", "list-item-container-" + row);
@@ -27,6 +27,7 @@ function addTask() {
   containerNode.appendChild(fakeCheckbox);
   
   //create a new, unique checkmark icon inside fake-checkbox span
+  //This requires obtaining the svg XML element from the web server
   var checkmarkIcon = new XMLHttpRequest();
   checkmarkIcon.open("GET", "/images/checkmark.svg", true);
   checkmarkIcon.overrideMimeType("image/svg+xml");
@@ -36,9 +37,7 @@ function addTask() {
     }
   }
   checkmarkIcon.send();
-  checkmarkIcon.setAttribute("class", "checkmark-icon");
-  checkmarkIcon.setAttribute("id", "checkmark-icon-" + row);
-  fakeCheckbox.appendChild(checkmarkIcon);
+  //Cannot add classes/ids in JS on an XML resource; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
   
   // create a new, unique input text field  inside list-item-container div
   var inputNode = document.createElement("input");
@@ -49,10 +48,17 @@ function addTask() {
   containerNode.appendChild(inputNode);
   
   //create a new, unique delete icon inside list-item-container div
-  var deleteIcon = document.createElement("svg");
-  deleteIcon.setAttribute("class", "delete-icon");
-  deleteIcon.setAttribute("id", "delete-icon-" + row);
-  containerNode.appendChild(deleteIcon);
+ //This requires obtaining the svg XML element from the web server
+  var deleteIcon = new XMLHttpRequest();
+  deleteIcon.open("GET", "/images/delete-icon.svg", true);
+  deleteIcon.overrideMimeType("image/svg+xml");
+  deleteIcon.onreadystatechange = function() {
+    if (deleteIcon.readyState === XMLHttpRequest.DONE && deleteIcon.status === 200) {
+      containerNode.appendChild(deleteIcon.responseXML.documentElement);
+    }
+  }
+  deleteIcon.send();
+  //Cannot [at least easily] add classes/ids in JS on an XML resource; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
   
   row++;
 }
