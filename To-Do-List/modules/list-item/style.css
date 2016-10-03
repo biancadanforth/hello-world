@@ -51,9 +51,9 @@ input[type="checkbox"] {
   left: 50%;
   transform: translate(-30%, -70%);
   display: inline-block;
-  visibility: hidden;
   width: 30px;
   height: auto;
+  visibility: hidden;
 }
 
 .list-item {
@@ -72,7 +72,7 @@ a:hover, .checkbox, .add-task-container {
   cursor: pointer;
 }
 
-.list-item-container svg {
+.list-item-container a svg {
   width: 20px;
   height: auto;
   margin-right: 1em;

@@ -76,9 +76,30 @@ function addTask() {
     deleteTask(rowNum);
   }
   
+  // !----------CHECKBOX FUNCTIONALITY----------!
+  fakeCheckbox.onclick = function() {
+    toggleCheckbox(rowNum);
+  };
+  
   row++;
 }
 
 function deleteTask(idNum) {
   document.getElementById("list-item-container-" + idNum).remove();
   };
+
+// !----------CHECKBOX FUNCTIONALITY----------!
+// Simulate checkbox behavior on fake checkbox
+
+function toggleCheckbox(idNum) {
+  var realCheckbox = document.getElementById("real-checkbox-" + idNum);
+  var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
+  var checkmark = fakeCheckbox.firstChild;
+  if (realCheckbox.checked == false) {
+    realCheckbox.checked = true;
+    checkmark.style.visibility = "visible";
+  } else {
+    realCheckbox.checked = false;
+    checkmark.style.visibility = "hidden";
+  }
+}
