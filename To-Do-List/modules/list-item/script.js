@@ -49,6 +49,7 @@ function addTask() {
   inputNode.setAttribute("class", "list-item");
   // add node to DOM at a particular location
   containerNode.appendChild(inputNode);
+  inputNode.focus();
   
   // create a new, unique anchor tag to wrap the delete icon svg inside the list-item-container div
   var svgWrapper = document.createElement("a");
@@ -81,6 +82,17 @@ function addTask() {
     toggleCheckbox(rowNum);
   };
   
+  // !----------SUBMITTING TASK FUNCTIONALITY----------!
+  // Listen for when user presses the 'Enter' key
+  inputNode.onkeyup = function(event) {
+    var userInput = inputNode.value;
+    console.log(rowNum);
+    if (event.keyCode == 13) {
+      console.log("enter key pressed");
+      submitTask(userInput, rowNum); 
+    }
+  };
+  
   row++;
 }
 
@@ -103,3 +115,22 @@ function toggleCheckbox(idNum) {
     checkmark.style.visibility = "hidden";
   }
 }
+
+// !----------SUBMITTING TASK FUNCTIONALITY----------!
+ function submitTask(input, idNum) {
+   console.log(idNum);
+   console.log(input);
+   if (input === "") {
+    console.log("Please enter a task into the field.");
+    // disable triggering addTask()
+    } else { // make a span element with the userInput value as text content
+      // create a new, unique p element to replace the input element inside list-item-container div
+      var submittedTask = document.createElement("p");
+      submittedTask.setAttribute("id", "list-item-label-" + idNum);
+      submittedTask.setAttribute("class", "list-item");
+      submittedTask.textContent = input;
+      // grab <input> and replace it with <p>
+      var inputElement = document.getElementById("list-item-label-" + idNum);
+      inputElement.parentNode.replaceChild(submittedTask, inputElement);
+    }
+  }
