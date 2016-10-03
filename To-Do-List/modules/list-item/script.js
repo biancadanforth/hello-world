@@ -1,4 +1,4 @@
-// !----------ADDING A TASK----------! reference: http://jsfiddle.net/g79ssyqv/12/
+// !----------ADD A TASK----------! reference: http://jsfiddle.net/g79ssyqv/12/
 var row = 0;
 var addTaskContainer = document.getElementById("add-task-container");
 var listContainer = document.getElementById("list-container");
@@ -40,7 +40,7 @@ function addTask() {
     }
   }
   checkmarkIcon.send();
-  //Cannot add classes/ids in JS on an XML resource; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
+  //Cannot add classes/ids in JS on an external XML resource using setAttribute like the others; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
   
   // create a new, unique input text field  inside list-item-container div
   var inputNode = document.createElement("input");
@@ -67,8 +67,14 @@ function addTask() {
   deleteIcon.send();
   //Cannot [at least easily] add classes/ids in JS on an XML resource; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
   
-  // DELETE A TASK---------- reference: http://jsfiddle.net/g79ssyqv/12/
-  svgWrapper.setAttribute("onclick", "deleteTask(" + row.toString() + ");");
+// !----------DELETING A TASK----------!
+  //storing the current value of row into the variable rowNum takes a snapshot of the value, so it passes in 0 the first time the delete icon is clicked, instead of 1, which would be the value of row after exiting the addTask function (and would throw an error that the element to remove was null).
+  var rowNum = row;
+
+  // I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
+  svgWrapper.onclick = function() {
+    deleteTask(rowNum);
+  }
   
   row++;
 }
