@@ -6,9 +6,10 @@ var listContainer = document.getElementById("list-container");
 addTaskContainer.addEventListener("click", addTask);
 
 function addTask() {
-  // disable addTask() until previous task's input text field has an entered value and has been submitted by hitting enter
-  //checks for this by making sure a previous task is present (first condition) and that the submitTask function has executed, thus replacing the <input type="text"> with a <p> (second condition)
-  if (row > 0 && document.getElementById("list-item-label-" + (row-1)).nodeName === "INPUT") {
+  // disable addTask() until previous task's input text field has an entered value and has been submitted by hitting 'Enter'
+  //checks for this by making sure the previous task exists (first condition returns truthy if the element exists in the DOM and falsy if it does not (returns null which is a falsy value)) and that the submitTask function has executed, thus there is a <p> element where there once was an <input> element.
+  //The first condition, the existence check, is necessary so that the addTask function executes even in the case where the user has deleted the previous task. Without it, the second condition would throw an error: "Uncaught TypeError: Cannot read property 'nodeName' of null", and would stop executing the rest of the script.
+  if (document.getElementById("list-item-label-" + (row-1)) && document.getElementById("list-item-label-" + (row-1)).nodeName === "INPUT") {
     return;
   }
   
@@ -61,6 +62,7 @@ function addTask() {
   
   // create a new, unique anchor tag to wrap the delete icon svg inside the list-item-container div; this allows me to target the delete icon without needing to change the contents of the svg XML document.
   var svgWrapper = document.createElement("a");
+  svgWrapper.setAttribute("id", "delete-wrapper-" + row);
   containerNode.appendChild(svgWrapper);
   
   //create a new, unique delete icon inside anchor tag
@@ -104,6 +106,9 @@ function addTask() {
     }
   };
   
+  // !----------EDITING TASK FUNCTIONALITY----------!
+  
+  
   row++;
 }
 
@@ -128,7 +133,7 @@ function toggleCheckbox(idNum) {
 }
 
 // !----------SUBMITTING TASK FUNCTIONALITY----------!
-// This function makes a p element with the userInput value as text content and replace it with the input element 
+// This function makes a p element with the userInput value as text content and replaces the input element
 function submitTask(input, idNum) {
   // create a new, unique p element to replace the input element inside list-item-container div
   var submittedTask = document.createElement("p");
@@ -138,8 +143,42 @@ function submitTask(input, idNum) {
   // grab <input> and replace it with <p>
   var inputElement = document.getElementById("list-item-label-" + idNum);
   inputElement.parentNode.replaceChild(submittedTask, inputElement);
-
-  //submittedTask.onclick = editTask(input, idNum);
+  
+  submittedTask.onclick = function() {
+    console.log("You clicked the <p>!");
+    editTask(input, idNum);
+  }
 }
 
 // !----------EDITING TASK FUNCTIONALITY----------!
+function editTask(input, idNum) {
+  //grab fake checkbox and delete icon elements from DOM and hide them
+  var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
+  var svgWrapper = document.getElementById("delete-wrapper-" + idNum);
+  fakeCheckbox.style.visibility = "hidden";
+  svgWrapper.style.visibility = "hidden";
+  
+  // create a new, unique <input> element with the userInput value as text content and replaces the <p> element
+  var editedTask = document.createElement("input");
+  editedTask.setAttribute("type", "text");
+  editedTask.setAttribute("id", "list-item-label-" + idNum);
+  editedTask.setAttribute("class", "list-item");
+  editedTask.value = input;
+  
+  // grab <p> and replace it with <input>
+  var pElement = document.getElementById("list-item-label-" + idNum);
+  pElement.parentNode.replaceChild(editedTask, pElement);
+  editedTask.focus();
+  
+  // This new <input> element needs to have the same behavior as the initial <input> element when addTask initially created it, so this code is the same as for inputNode inside addTask() above. If the input is non-empty and the user hits enter, submit it!
+  editedTask.onkeyup = function(event) {
+    var userInput = editedTask.value;
+    if (userInput != "" && event.keyCode == 13) {
+      submitTask(userInput, idNum);   
+      
+      //user can't interact with delete icon or checkbox until they've entered and submitted a task
+      fakeCheckbox.style.visibility = "visible";
+      svgWrapper.style.visibility = "visible";
+    }
+  };
+}
