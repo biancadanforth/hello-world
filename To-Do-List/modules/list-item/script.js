@@ -6,6 +6,12 @@ var listContainer = document.getElementById("list-container");
 addTaskContainer.addEventListener("click", addTask);
 
 function addTask() {
+  // disable addTask() until previous task's input text field has an entered value and has been submitted by hitting enter
+  //checks for this by making sure a previous task is present (first condition) and that the submitTask function has executed, thus replacing the <input type="text"> with a <p> (second condition)
+  if (row > 0 && document.getElementById("list-item-label-" + (row-1)).nodeName === "INPUT") {
+    return;
+  }
+  
   //create a new, unique list-item-container div
   var containerNode = document.createElement("div");
   containerNode.setAttribute("id", "list-item-container-" + row);
@@ -27,6 +33,8 @@ function addTask() {
   var fakeCheckbox = document.createElement("span");
   fakeCheckbox.setAttribute("class", "checkbox");
   fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
+  // user can't interact with checkbox until they've entered a task
+  fakeCheckbox.style.visibility = "hidden";
   containerNode.appendChild(fakeCheckbox);
   
   //create a new, unique checkmark icon inside fake-checkbox span
@@ -51,7 +59,7 @@ function addTask() {
   containerNode.appendChild(inputNode);
   inputNode.focus();
   
-  // create a new, unique anchor tag to wrap the delete icon svg inside the list-item-container div
+  // create a new, unique anchor tag to wrap the delete icon svg inside the list-item-container div; this allows me to target the delete icon without needing to change the contents of the svg XML document.
   var svgWrapper = document.createElement("a");
   containerNode.appendChild(svgWrapper);
   
@@ -67,11 +75,13 @@ function addTask() {
   }
   deleteIcon.send();
   //Cannot [at least easily] add classes/ids in JS on an XML resource; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
+  // user can't interact with delete icon until they've entered a task
+  svgWrapper.style.visibility = "hidden";
   
-// !----------DELETING A TASK----------!
-  //storing the current value of row into the variable rowNum takes a snapshot of the value, so it passes in 0 the first time the delete icon is clicked, instead of 1, which would be the value of row after exiting the addTask function (and would throw an error that the element to remove was null).
+  //storing the current value of row into the variable rowNum takes a snapshot of the value, so it passes in 0 the first time the delete icon is clicked (or the checkbox is clicked, or a value is entered into the input field, etc...), instead of 1, which would be the value of row after exiting the addTask function (and would throw an error that the element to remove was null).
   var rowNum = row;
 
+  // !----------DELETING A TASK----------!
   // I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
   svgWrapper.onclick = function() {
     deleteTask(rowNum);
@@ -86,23 +96,24 @@ function addTask() {
   // Listen for when user presses the 'Enter' key
   inputNode.onkeyup = function(event) {
     var userInput = inputNode.value;
-    console.log(rowNum);
-    if (event.keyCode == 13) {
-      console.log("enter key pressed");
+    if (userInput != "" && event.keyCode == 13) {
       submitTask(userInput, rowNum); 
+      //user can't interact with delete icon or checkbox until they've entered and submitted a task
+      fakeCheckbox.style.visibility = "visible";
+      svgWrapper.style.visibility = "visible";
     }
   };
   
   row++;
 }
 
+// !----------DELETING A TASK----------!
 function deleteTask(idNum) {
   document.getElementById("list-item-container-" + idNum).remove();
   };
 
 // !----------CHECKBOX FUNCTIONALITY----------!
 // Simulate checkbox behavior on fake checkbox
-
 function toggleCheckbox(idNum) {
   var realCheckbox = document.getElementById("real-checkbox-" + idNum);
   var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
@@ -117,20 +128,18 @@ function toggleCheckbox(idNum) {
 }
 
 // !----------SUBMITTING TASK FUNCTIONALITY----------!
- function submitTask(input, idNum) {
-   console.log(idNum);
-   console.log(input);
-   if (input === "") {
-    console.log("Please enter a task into the field.");
-    // disable triggering addTask()
-    } else { // make a span element with the userInput value as text content
-      // create a new, unique p element to replace the input element inside list-item-container div
-      var submittedTask = document.createElement("p");
-      submittedTask.setAttribute("id", "list-item-label-" + idNum);
-      submittedTask.setAttribute("class", "list-item");
-      submittedTask.textContent = input;
-      // grab <input> and replace it with <p>
-      var inputElement = document.getElementById("list-item-label-" + idNum);
-      inputElement.parentNode.replaceChild(submittedTask, inputElement);
-    }
-  }
+// This function makes a p element with the userInput value as text content and replace it with the input element 
+function submitTask(input, idNum) {
+  // create a new, unique p element to replace the input element inside list-item-container div
+  var submittedTask = document.createElement("p");
+  submittedTask.setAttribute("id", "list-item-label-" + idNum);
+  submittedTask.setAttribute("class", "list-item");
+  submittedTask.textContent = input;
+  // grab <input> and replace it with <p>
+  var inputElement = document.getElementById("list-item-label-" + idNum);
+  inputElement.parentNode.replaceChild(submittedTask, inputElement);
+
+  //submittedTask.onclick = editTask(input, idNum);
+}
+
+// !----------EDITING TASK FUNCTIONALITY----------!
