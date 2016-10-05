@@ -20,7 +20,7 @@ function addTask() {
   //create a new, unique list-item-container div
   var containerNode = document.createElement("div");
   containerNode.setAttribute("id", "list-item-container-" + row);
-  containerNode.setAttribute("class", "list-item-container");
+  containerNode.setAttribute("class", "list-item-container hidden");
   // remove border around containerNode permanently when at least one instance of it is present.
   if (row >= 0) {
     containerNode.style.borderBottom = "0";
@@ -125,6 +125,11 @@ function addTask() {
     var userInput = submittedTask.textContent;
     toggleSubmitEditTask(userInput, rowNum);
   }
+  
+  // Now that all of the elements for the "list-item-container-x" parent element have been added to the DOM, we can add a transition!
+  setTimeout(function() {
+    containerNode.classList.remove("hidden");
+  }, 500);
   
   row++;
 }

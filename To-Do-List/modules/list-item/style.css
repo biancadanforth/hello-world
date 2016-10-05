@@ -6,6 +6,15 @@ body {
   box-sizing: border-box;
 }
 
+.list-item-container.hidden {
+  max-height: 0;
+  border: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: all 1s ease;
+}
+
 .list-item-container {
   display: flex;
   justify-content: space-between;
@@ -15,9 +24,10 @@ body {
   border: 1px black solid;
   /* hide flex items when div is shrinking*/
   overflow: hidden;
-  /*max-height: 1000px;*/
+  max-height: 1000px;
   opacity: 1;
-  transition: all .5s ease;
+  visibility: visible;
+  transition: all 1s ease;
 }
 
 .list-item-container-delete {
