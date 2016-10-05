@@ -3,6 +3,10 @@ var row = 0;
 var addTaskContainer = document.getElementById("add-task-container");
 var listContainer = document.getElementById("list-container");
 
+//Store deleted and completed tasks to enable Undo functionality.
+var deletedTasksArray = [];
+var completedTasksArray = [];
+
 addTaskContainer.addEventListener("click", addTask);
 
 function addTask() {
@@ -89,19 +93,22 @@ function addTask() {
   
   //storing the current value of row into the variable rowNum takes a snapshot of the value, so it passes in 0 the first time the delete icon is clicked (or the checkbox is clicked, or a value is entered into the input field, etc...), instead of 1, which would be the value of row after exiting the addTask function (and would throw an error that the element to remove was null).
   var rowNum = row;
-
-  // !----------DELETING A TASK----------!
+  
   // I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
   svgWrapper.onclick = function() {
-    deleteTask(rowNum);
+    // when flag is true, task has been completed. when flag is false, task has been deleted.
+    var flag = false;
+    deleteOrCompleteTask(rowNum, flag);
   }
   
-  // !----------CHECKBOX FUNCTIONALITY----------!
   fakeCheckbox.onclick = function() {
+    // when flag is true, task has been completed. when flag is false, task has been deleted.
+    var flag = true;
     toggleCheckbox(rowNum);
+    deleteOrCompleteTask(rowNum, flag);
+    
   };
   
-  // !----------SUBMITTING TASK FUNCTIONALITY----------!
   // Listen for when user presses the 'Enter' key, if input has a non-empty value, grab the <input> element, 'inputNode' and replace it with the <p> element, 'submittedTask'.
   inputNode.onkeyup = function(event) {
     var userInput = inputNode.value;
@@ -112,8 +119,7 @@ function addTask() {
       svgWrapper.style.visibility = "visible";
     }
   };
-  
-  // !----------EDITING TASK FUNCTIONALITY----------!
+
   // grab <p> element, 'submittedTask' and replace it with <input> element 'inputNode', without removing either from the DOM.
   submittedTask.onclick = function() {
     var userInput = submittedTask.textContent;
@@ -123,8 +129,17 @@ function addTask() {
   row++;
 }
 
-// !----------DELETING A TASK----------!
-function deleteTask(idNum) {
+// !----------DELETING OR COMPLETING A TASK----------!
+function deleteOrCompleteTask(idNum, flag) {
+  //store value of <p> element (aka submitted task) in a string
+  var taskString = document.getElementById("list-item-label-" + idNum).textContent.toString();
+  if (flag) {
+    // when flag is true, task has been completed.
+    completedTasksArray.push(taskString);
+  } else {
+    //when flag is false, task has been deleted.
+    deletedTasksArray.push(taskString);
+  }
   document.getElementById("list-item-container-" + idNum).remove();
   };
 
@@ -143,7 +158,7 @@ function toggleCheckbox(idNum) {
   }
 }
 
-// !----------SUBMITTING TASK FUNCTIONALITY----------!
+// !----------SUBMITTING OR EDITING A TASK FUNCTIONALITY----------!
 function toggleSubmitEditTask(input, idNum) {
   var pElement = document.getElementById("list-item-label-" +idNum);
   var inputElement = document.getElementById("list-item-input-" + idNum);
