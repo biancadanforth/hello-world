@@ -15,7 +15,7 @@ body {
   border: 1px black solid;
   /* hide flex items when div is shrinking*/
   overflow: hidden;
-  max-height: 1000px;
+  /*max-height: 1000px;*/
   opacity: 1;
   transition: all .5s ease;
 }
@@ -56,12 +56,25 @@ input[type="checkbox"] {
   visibility: hidden;
 }
 
+p.list-item {
+  text-indent: 0;
+}
+
 .list-item {
   margin: 1em 1em 1em 1.25em;
   max-width: 80%;
   line-height: 1.5;
   text-indent: 10px;
   flex-grow: 1;
+  visibility: visible;
+  overflow: hidden;
+}
+
+.list-item-hidden {
+  max-width: 0;
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
 }
 
 a {
@@ -87,5 +100,3 @@ a:hover, .checkbox, .add-task-container {
 }
 
 p { margin-left: 1em; }
-
-p.list-item { text-indent: 0; }
