@@ -36,10 +36,9 @@ function addTask() {
   
   //create a new, unique -fake- checkbox inside list-item-container div
   var fakeCheckbox = document.createElement("span");
-  fakeCheckbox.setAttribute("class", "checkbox");
-  fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
   // user can't interact with checkbox until they've entered a task
-  fakeCheckbox.style.visibility = "hidden";
+  fakeCheckbox.setAttribute("class", "checkbox hidden");
+  fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
   containerNode.appendChild(fakeCheckbox);
   
   //create a new, unique checkmark icon inside fake-checkbox span
@@ -74,6 +73,8 @@ function addTask() {
   // create a new, unique anchor tag to wrap the delete icon svg inside the list-item-container div; this allows me to target the delete icon without needing to change the contents of the svg XML document.
   var svgWrapper = document.createElement("a");
   svgWrapper.setAttribute("id", "delete-wrapper-" + row);
+  // user can't interact with delete icon until they've entered a task
+  svgWrapper.setAttribute("class", "hidden");
   containerNode.appendChild(svgWrapper);
   
   //create a new, unique delete icon inside anchor tag
@@ -88,8 +89,6 @@ function addTask() {
   }
   deleteIcon.send();
   //Cannot [at least easily] add classes/ids in JS on an XML resource; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
-  // user can't interact with delete icon until they've entered a task
-  svgWrapper.style.visibility = "hidden";
   
   //storing the current value of row into the variable rowNum takes a snapshot of the value, so it passes in 0 the first time the delete icon is clicked (or the checkbox is clicked, or a value is entered into the input field, etc...), instead of 1, which would be the value of row after exiting the addTask function (and would throw an error that the element to remove was null).
   var rowNum = row;
@@ -114,9 +113,9 @@ function addTask() {
     var userInput = inputNode.value;
     if (userInput != "" && event.keyCode == 13) {
       toggleSubmitEditTask(userInput, rowNum); 
-      //user can't interact with delete icon or checkbox until they've entered and submitted a task
-      fakeCheckbox.style.visibility = "visible";
-      svgWrapper.style.visibility = "visible";
+      //user can now interact with delete icon and checkbox
+      fakeCheckbox.classList.remove("hidden");
+      svgWrapper.classList.remove("hidden");
     }
   };
 
@@ -141,12 +140,17 @@ function deleteOrCompleteTask(idNum, flag) {
   if (flag) {
     // when flag is true, task has been completed.
     completedTasksArray.push(taskString);
+    document.getElementById("list-item-label-" + idNum).classList.add("complete");
   } else {
     //when flag is false, task has been deleted.
     deletedTasksArray.push(taskString);
   }
-  document.getElementById("list-item-container-" + idNum).remove();
-  };
+  document.getElementById("list-item-container-" + idNum).classList.add("hidden");
+  // delay on setTimeout must be longer than the transition duration and any transition delay set in CSS
+  setTimeout(function() {
+    document.getElementById("list-item-container-" + idNum).remove();
+  }, 2500);
+}
 
 // !----------CHECKBOX FUNCTIONALITY----------!
 // Simulate checkbox behavior on fake checkbox

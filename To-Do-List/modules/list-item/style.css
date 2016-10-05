@@ -6,35 +6,19 @@ body {
   box-sizing: border-box;
 }
 
-.list-item-container.hidden {
-  max-height: 0;
-  border: 0;
-  opacity: 0;
-  overflow: hidden;
-  visibility: hidden;
-  transition: all 1s ease;
-}
-
 .list-item-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 400px;
   margin: 0 auto;
-  border: 1px black solid;
   /* hide flex items when div is shrinking*/
   overflow: hidden;
   max-height: 1000px;
+  border: 1px black solid;
   opacity: 1;
   visibility: visible;
-  transition: all 1s ease;
-}
-
-.list-item-container-delete {
-  max-height: 0;
-  border: 0;
-  opacity: 0;
-  transition: all .5s ease;
+  transition: all 2s ease;
 }
 
 /* Remove System Checkbox */
@@ -53,6 +37,8 @@ input[type="checkbox"] {
   background-color: #ededed;
   border: 1px solid #aeaeae;
   border-radius: 4px;
+  opacity: 1;
+  transition: opacity 1s ease;
 }
 /* checkmark svg is added with JS, cannot add class/id to it easily, so target with descendant selector*/
 .checkbox svg {
@@ -78,6 +64,8 @@ p.list-item {
   flex-grow: 1;
   visibility: visible;
   overflow: hidden;
+  text-decoration: none;
+  transition: text-decoration 1s ease;
 }
 
 .list-item-hidden {
@@ -87,8 +75,15 @@ p.list-item {
   visibility: hidden;
 }
 
+.list-item.complete {
+  text-decoration: line-through;
+  transition: text-decoration 1s ease;
+}
+
 a {
   display: inline-block;
+  opacity: 1;
+  transition: opacity 1s ease;
 }
 
 a:hover, .checkbox, .add-task-container {
@@ -110,3 +105,12 @@ a:hover, .checkbox, .add-task-container {
 }
 
 p { margin-left: 1em; }
+
+.hidden {
+  max-height: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 1s ease 1s;
+}
