@@ -6,19 +6,21 @@ body {
   box-sizing: border-box;
 }
 
+.section-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 .list-item-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 400px;
-  margin: 0 auto;
-  /* hide flex items when div is shrinking*/
-  overflow: hidden;
   max-height: 1000px;
-  border: 1px black solid;
+  /* hide flex items when this element is collapsing*/
+  overflow: hidden;
   opacity: 1;
   visibility: visible;
-  transition: all 2s ease;
+  transition: opacity 1s ease, max-height 5s ease;
 }
 
 /* Remove System Checkbox */
@@ -40,7 +42,8 @@ input[type="checkbox"] {
   opacity: 1;
   transition: opacity 1s ease;
 }
-/* checkmark svg is added with JS, cannot add class/id to it easily, so target with descendant selector*/
+
+/* The checkmark svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
 .checkbox svg {
   position: absolute;
   top: 50%;
@@ -48,36 +51,28 @@ input[type="checkbox"] {
   transform: translate(-30%, -70%);
   display: inline-block;
   width: 30px;
-  height: auto;
+  height: 23.61px;
   visibility: hidden;
-}
-
-p.list-item {
-  text-indent: 0;
 }
 
 .list-item {
-  margin: 1em 1em 1em 1.25em;
-  max-width: 80%;
-  line-height: 1.5;
-  text-indent: 10px;
   flex-grow: 1;
+  margin: 1em;
+  line-height: 1.5;
+  padding-left: 10px;
   visibility: visible;
   overflow: hidden;
-  text-decoration: none;
-  transition: text-decoration 1s ease;
+  opacity: 1;
+  transition: opacity 1s ease;
 }
 
-.list-item-hidden {
-  max-width: 0;
-  margin: 0;
-  padding: 0;
-  visibility: hidden;
+p.list-item {
+  padding-left: 0;
 }
 
 .list-item.complete {
   text-decoration: line-through;
-  transition: text-decoration 1s ease;
+  /*Note: text-decoration is not an animatable property: https://www.w3.org/TR/css3-transitions/*/
 }
 
 a {
@@ -90,27 +85,67 @@ a:hover, .checkbox, .add-task-container {
   cursor: pointer;
 }
 
+/* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
 .list-item-container a svg {
   width: 20px;
-  height: auto;
+  height: 20px;
   margin-right: 1em;
   margin-top: 1em;
 }
 
-.add-task-container {
-  display: block;
-  width: 400px;
-  margin: 0 auto;
-  border: 1px black solid;
-}
-
-p { margin-left: 1em; }
-
 .hidden {
   max-height: 0;
   padding: 0;
-  border: 0;
   opacity: 0;
-  visibility: hidden;
-  transition: all 1s ease 1s;
+  transition:  opacity 1s ease, max-height 1s ease .5s;
+}
+
+/* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/
+p.hidden, a.hidden, input.hidden {
+  max-width: 0;
+  margin: 0;
+  border: 0;
+}
+
+.bounce {
+  outline: 1px solid red;
+  animation-name: bounce;
+  animation-duration: .5s;
+  animation-delay: 0.25s;
+}
+
+/*Approximates a critically damped sinusoidal function centered around zero. Inspiration: easeInOutBounce timing-function from easings.net*/
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-out;
+  }
 }
