@@ -4,8 +4,8 @@ var app = app? app : {
   store: { 
     // The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter'), with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
     submittedTasks: {},
-    // The lastCompletedTask object only ever has one property in it for the most recently completed task. It is of the form row-x: "Task content string".
-    lastCompletedTask: {},
+    // The completedTasks object  is appended with a new property every time the user completes a task (by clicking the checkbox), with key: value pairs of the form: row-x: "Task content string". These tasks can be viewed underneath the to do list and restored to the list.
+    completedTasks: {},
     // The lastDeletedTask object only ever has one property in it for the most recently deleted task. It is of the form row-x: "Task content string".
     lastDeletedTask: {}
   }
@@ -13,21 +13,8 @@ var app = app? app : {
 
 
 // ---------------------------------------------------------
-// !----------CUSTOM EVENT DISPATCHERS/LISTENERS ----------!
+// !----------CUSTOM EVENT LISTENERS/DISPATCHERS ----------!
 // ---------------------------------------------------------
-// Add these custom event listeners to the appropriate module for cross-module notification when events fire!
-document.body.addEventListener("complete", function() {
-  // put code here
-  console.log("complete event fired!");
-  }
-);
-
-document.body.addEventListener("delete", function() {
-  // put code here
-  console.log("delete event fired!");
-  }
-);
-
 document.body.addEventListener("undo", function() {
   // put code here
   console.log("undo event fired!");

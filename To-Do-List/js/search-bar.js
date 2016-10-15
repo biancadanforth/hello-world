@@ -4,8 +4,8 @@ var app = app? app : {
   store: { 
     // The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter'), with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
     submittedTasks: {},
-    // The lastCompletedTask object only ever has one property in it for the most recently completed task. It is of the form row-x: "Task content string".
-    lastCompletedTask: {},
+    // The completedTasks object  is appended with a new property every time the user completes a task (by clicking the checkbox), with key: value pairs of the form: row-x: "Task content string". These tasks can be viewed underneath the to do list and restored to the list.
+    completedTasks: {},
     // The lastDeletedTask object only ever has one property in it for the most recently deleted task. It is of the form row-x: "Task content string".
     lastDeletedTask: {}
   }

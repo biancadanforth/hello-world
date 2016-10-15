@@ -4,8 +4,8 @@ var app = app? app : {
   store: { 
     // The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter'), with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
     submittedTasks: {},
-    // The lastCompletedTask object only ever has one property in it for the most recently completed task. It is of the form row-x: "Task content string".
-    lastCompletedTask: {},
+    // The completedTasks object  is appended with a new property every time the user completes a task (by clicking the checkbox), with key: value pairs of the form: row-x: "Task content string". These tasks can be viewed underneath the to do list and restored to the list.
+    completedTasks: {},
     // The lastDeletedTask object only ever has one property in it for the most recently deleted task. It is of the form row-x: "Task content string".
     lastDeletedTask: {}
   }
@@ -207,7 +207,7 @@ var app = app? app : {
     }
     app.store.lastDeletedTask["row-" + idNum] = taskString;
     // If a task is deleted, dispatch the 'delete' event
-    var deleteEvent = new Event('delete');
+    var deleteEvent = new CustomEvent('delete', { 'detail': { 'row': idNum, 'task': taskString } });
     document.body.dispatchEvent(deleteEvent);
     // Note: The delay on setTimeout must be longer than the transition duration and any transition delay set in CSS
     setTimeout(function() {
@@ -228,15 +228,9 @@ var app = app? app : {
     var taskString = document.getElementById("list-item-label-" + idNum).textContent.toString();
       // remove task key:value pair from app.store.submittedTasks object
     delete app.store.submittedTasks["row-" + idNum];
-    // update lastCompletedTask inside app.store global nested object for notify-undo.js module.
-    //first remove the previous property; this can be done with a for...in loop breaking after the first iteration.
-    for (var prop in app.store.lastCompletedTask) {
-      delete app.store.lastCompletedTask[prop];
-      break;
-    }
-    app.store.lastCompletedTask["row-" + idNum] = taskString;
-    // If a task is completed, dispatch the 'complete' event.
-    var completeEvent = new Event('complete');
+    app.store.completedTasks["row-" + idNum] = taskString;
+    // If a task is completed, dispatch the 'complete' event, passing in additional details
+    var completeEvent = new CustomEvent('complete', { 'detail': { 'row': idNum, 'task': taskString } });
     document.body.dispatchEvent(completeEvent);
     document.getElementById("list-item-label-" + idNum).classList.add("complete");
     // Note: The delay on setTimeout must be longer than the transition duration and any transition delay set in CSS
