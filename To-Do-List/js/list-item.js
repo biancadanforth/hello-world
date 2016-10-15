@@ -210,9 +210,9 @@ var app = app? app : {
     var deleteEvent = new CustomEvent('delete', { 'detail': { 'row': idNum, 'task': taskString } });
     document.body.dispatchEvent(deleteEvent);
     // Note: The delay on setTimeout must be longer than the transition duration and any transition delay set in CSS
-    setTimeout(function() {
+  /*   setTimeout(function() {
       document.getElementById("list-item-container-" + idNum).remove();
-    }, 2200);
+    }, 2200);*/
   }
 
   // ----------------------------------------

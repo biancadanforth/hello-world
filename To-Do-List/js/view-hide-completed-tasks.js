@@ -13,9 +13,7 @@ var app = app? app : {
 
 // Listen for when a task from the list-item module has been completed
 document.body.addEventListener("complete", function(event) {
-  console.log("complete event fired!");
    // receive the row number (rowNum) and task string (taskString) from list-item module for the most recently completed task
-  var completeInfo = event.detail;
-  console.log(completeInfo);
+  var taskInfo = event.detail;
   }
 );
