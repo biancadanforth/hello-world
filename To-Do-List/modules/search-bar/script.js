@@ -19,5 +19,5 @@ function toggleClass() {
 searchButton.onclick = toggleClass;
 
 // return to initial state
-searchBox.onblur = toggleClass;
+//searchBox.onblur = toggleClass;
 
