@@ -18,6 +18,8 @@ var app = app? app : {
   "rectangle");
   var dismissLink = document.getElementById("dismiss");
   var undoLink = document.getElementById("undo");
+  // If user spam deletes a bunch of tasks, want to make sure those are permanently deleted (i.e. removed from the DOM). Store task numbers in rowArray.
+  var rowArray = [];
 
   // Listen for when a task from the list-item module has been deleted.
   document.body.addEventListener("delete", function(event) {
@@ -25,9 +27,10 @@ var app = app? app : {
     // receive the row number (rowNum) and task string (taskString) from list-item module for the most recently deleted task
     var taskInfo = event.detail;
     var rowNum = taskInfo.row;
+    rowArray.push(rowNum);
     var taskString = taskInfo.task;
     // show notification bar
-    showRectangle();
+    showRectangle(rowNum);
     // if the user clicks undo, restore the task to the list in its original location
     undoLink.onclick = function() {
       undo(rowNum, taskString);
@@ -48,10 +51,12 @@ var app = app? app : {
   //setTimeout needs to reset each time a task is deleted or completed
   var timerId;
 
-  function showRectangle() {
+  function showRectangle(rowNum) {
     window.clearTimeout(timerId);
     rectangle.classList.remove("hidden");
-    timerId = setTimeout(hideRectangle, 60000);
+    timerId = setTimeout(function() {
+      hideRectangle(rowNum, false)
+    }, 6000);
   }
 
   function hideRectangle(rowNum, flag) {
