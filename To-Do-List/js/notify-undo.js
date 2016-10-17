@@ -20,14 +20,15 @@ var app = app? app : {
   var undoLink = document.getElementById("undo");
   // If user spam deletes a bunch of tasks, want to make sure those are permanently deleted (i.e. removed from the DOM). Store task numbers in rowArray.
   var rowArray = [];
+  // Remove spam-deleted tasks after a certain amount of time
+  var deleteClickTimer;
 
   // Listen for when a task from the list-item module has been deleted.
   document.body.addEventListener("delete", function(event) {
-    console.log("delete event fired!");
+    clearTimeout(deleteClickTimer);
     // receive the row number (rowNum) and task string (taskString) from list-item module for the most recently deleted task
     var taskInfo = event.detail;
     var rowNum = taskInfo.row;
-    rowArray.push(rowNum);
     var taskString = taskInfo.task;
     // show notification bar
     showRectangle(rowNum);
@@ -37,15 +38,34 @@ var app = app? app : {
     }
     // if the user clicks dismiss, hide notification bar
     dismissLink.onclick = function() {
-      hideRectangle(rowNum, false);
+      hideRectangle(rowNum);
     };
+    // If the user spam deletes a number of tasks at once, capture the rowNum for each task in rowArray and remove each element from the DOM.
+    rowArray.push(rowNum);
+    // Remove spam-deleted tasks after a certain amount of time; amount of time must be longer than the amount of time the user has to interact with the notification bar (because they could undo the task, which means that task shouldn't be removed from the DOM.
+    // Run clearDeleteBacklog only if no tasks have been deleted in a while.
+    deleteClickTimer = setTimeout(clearDeleteBacklog, 10000);
   }
   );
-
+  
+  
+  // Run this function only if no tasks have been deleted in a while.
+  function clearDeleteBacklog() {
+    // capture the value of rowArray statically in 'arrayLength', so value doesn't change when splicing the array.
+    var arrayLength = rowArray.length;
+    for (var i = 0; i <= arrayLength-1; i++) {
+      let taskNum = rowArray[i];
+      removeFromDOM(taskNum);
+    }
+  }
+    
   function undo(rowNum, taskString) {
     var listNode = document.getElementById("list-item-container-" + rowNum);
     listNode.classList.remove("hidden");
-    hideRectangle(rowNum, true);
+    hideRectangle(rowNum);
+    //remove task number (rowNum) from rowArray, so it isn't removed from the DOM when clearDeleteBacklog is executed.
+    var index = rowArray.indexOf(rowNum);
+    rowArray.splice(index, 1);
   }
 
   //setTimeout needs to reset each time a task is deleted or completed
@@ -59,15 +79,13 @@ var app = app? app : {
     }, 6000);
   }
 
-  function hideRectangle(rowNum, flag) {
+  function hideRectangle(rowNum) {
     rectangle.classList.add("hidden");
-    //if flag is true, then the user clicked 'undo' if false, the user clicked 'dismiss'
-    if (!flag) {
-      listNode = document.getElementById("list-item-container-" + rowNum);
-      setTimeout(function() {
-        listNode.remove();
-      }, 2200); 
-    }
+  }
+  
+  function removeFromDOM(rowNum) {
+    listNode = document.getElementById("list-item-container-" + rowNum);
+    listNode.remove();
   }
   
 }());
