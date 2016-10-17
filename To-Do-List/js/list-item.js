@@ -6,8 +6,6 @@ var app = app? app : {
     submittedTasks: {},
     // The completedTasks object  is appended with a new property every time the user completes a task (by clicking the checkbox), with key: value pairs of the form: row-x: "Task content string". These tasks can be viewed underneath the to do list and restored to the list.
     completedTasks: {},
-    // The lastDeletedTask object only ever has one property in it for the most recently deleted task. It is of the form row-x: "Task content string".
-    lastDeletedTask: {}
   }
 };
 
@@ -199,13 +197,6 @@ var app = app? app : {
     var taskString = document.getElementById("list-item-label-" + idNum).textContent.toString();
     // remove task key:value pair from app.store.submittedTasks object
     delete app.store.submittedTasks["row-" + idNum];
-    // update lastDeletedTask inside app.store global nested object for notify-undo.js module.
-    //first remove the previous property; this can be done with a for...in loop breaking after the first iteration.
-    for (var prop in app.store.lastDeletedTask) {
-      delete app.store.lastDeletedTask[prop];
-      break;
-    }
-    app.store.lastDeletedTask["row-" + idNum] = taskString;
     // If a task is deleted, dispatch the 'delete' event
     var deleteEvent = new CustomEvent('delete', { 'detail': { 'row': idNum, 'task': taskString } });
     document.body.dispatchEvent(deleteEvent);
