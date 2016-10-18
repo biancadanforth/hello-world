@@ -8,9 +8,6 @@ var app = app? app : {
     */
     submittedTasks: {},
     /*
-    The completedTasks object is appended with a new property every time the user completes a task (by clicking the checkbox), with key: value pairs of the form: row-x: "Task content string". These tasks can be viewed underneath the to do list and restored to the list.
-    */
-    completedTasks: {},
   }
 };
 //Wrap entire module in an immediately invoked function so global variables in this module don't pollute the global namespace for the application.

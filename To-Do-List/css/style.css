@@ -105,7 +105,13 @@ input, input[type="search"] {
   max-height: 30px;
   line-height: 30px;
   overflow: hidden;
-  transition: max-height 1s ease;
+  transition: max-height .5s ease;
+}
+
+.notify.hidden {
+  /* opacity to override .hidden opacity of 0 */
+  opacity: 1;
+  transition: max-height .5s ease;
 }
 
 .notify > p {
@@ -241,7 +247,9 @@ fieldset {
 
 .list-name { font-family: 'Quattrocento', serif; }
 
-.list-name-hr {}
+.list-name-hr {
+  margin: 0;
+}
 
 .list-item-hr {}
 
@@ -260,8 +268,11 @@ fieldset {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   max-height: 1000px;
+  border-bottom-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
   /* hide flex items when this element is collapsing*/
   overflow: hidden;
   opacity: 1;
@@ -280,8 +291,6 @@ input[type="checkbox"] {
   display:inline-block;
   min-width:20px;
   height:20px;
-  margin-left: 1em;
-  margin-top: 1em;
   background-color: #ededed;
   border: 1px solid #aeaeae;
   border-radius: 4px;
@@ -317,6 +326,7 @@ p.list-item {
 }
 
 .list-item.complete {
+  color: #9e9e9e;
   text-decoration: line-through;
   /*Note: text-decoration is not an animatable property: https://www.w3.org/TR/css3-transitions/*/
 }
@@ -332,11 +342,14 @@ a:hover, .checkbox, .add-task-container {
 }
 
 /* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
-.list-item-container a svg {
+.list-item-container a, .list-item-container a svg {
   width: 20px;
   height: 20px;
-  margin-right: 1em;
-  margin-top: 1em;
+}
+
+input[type="text"], input[type="text"]:focus {
+  outline: 0;
+  border-width: 0;
 }
 
 /* .hidden style block must be placed AFTER .list-item block to override its opacity property setting*/
@@ -344,6 +357,7 @@ a:hover, .checkbox, .add-task-container {
   max-height: 0;
   padding: 0;
   opacity: 0;
+  border-bottom-width: 0;
   transition:  opacity 1s ease, max-height 1s ease .5s;
 }
 
@@ -354,7 +368,7 @@ p.hidden, a.hidden, input.hidden {
   border: 0;
 }
 
-.bounce {
+input[type="text"]:focus.bounce {
   outline: 1px solid red;
   animation-name: bounce;
   animation-duration: .5s;

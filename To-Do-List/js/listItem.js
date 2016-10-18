@@ -7,10 +7,6 @@ var app = app? app : {
     The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter') in the list-item.js module, with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
     */
     submittedTasks: {},
-    /*
-    The completedTasks object is appended with a new property every time the user completes a task (by clicking the checkbox), with key: value pairs of the form: row-x: "Task content string". These tasks can be viewed underneath the to do list and restored to the list.
-    */
-    completedTasks: {},
   }
 };
 
@@ -132,9 +128,9 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     // user can't interact with checkbox until they've submitted a task
     fakeCheckbox.setAttribute("class", "checkbox hidden");
     fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
+    fakeCheckbox.setAttribute("title", "Complete task");
     fakeCheckbox.style.display = "none";
     fakeCheckbox.onclick = function() {
-      toggleCheckbox(rowNum);
       completeTask(rowNum);
     };
     return fakeCheckbox;
@@ -234,6 +230,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     // user can't interact with delete icon until they've entered a task
     deleteIconWrapper.setAttribute("class", "hidden");
     deleteIconWrapper.setAttribute("id", "delete-icon-wrapper-" + row);
+    deleteIconWrapper.setAttribute("title", "Delete task");
     deleteIconWrapper.style.display = "none";
     /*
     I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
@@ -273,50 +270,20 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   */ 
   
   /*
-  Completes a task in two steps: 1) collapsing the task container, listNode, with a transition by adding the "hidden" class. 2) removing the task container, listNode, from the DOM once the transition has taken place. Also stores all completed tasks as strings in an array, so they can be accessed for an Undo feature. idNum is a number.
+  Simulates checkbox behavior on fakeCheckbox while updating the realCheckbox 'checked' state. Applies different styles to the completed task. idNum is a number.
   */
   function completeTask(idNum) {
-    var listContainer = document.getElementById("list-container");
-    var listNode = document.getElementById("list-item-container-" + idNum);
-    listNode.classList.add("hidden");
-    //store value of <p> element (aka submitted task) in a string
-    var taskString = document.getElementById("list-item-label-" + idNum).textContent.toString();
-    // remove task key:value pair from app.store.submittedTasks object
-    delete app.store.submittedTasks["row-" + idNum];
-    app.store.completedTasks["row-" + idNum] = taskString;
-    /*
-    If a task is completed, dispatch the 'complete' event, passing in additional details
-    */
-    var completeEvent = new CustomEvent('complete', { 'detail': { 'row': idNum, 'task': taskString } });
-    document.body.dispatchEvent(completeEvent);
-    document.getElementById("list-item-label-" + idNum).classList.add("complete");
-    /*
-    Note: The delay on setTimeout must be longer than the transition duration and any transition delay set in CSS
-    */
-    setTimeout(function() {
-      document.getElementById("list-item-container-" + idNum).remove();
-    }, 2200);
-  }
-
-  /*
-  ---------------------------------------------
-  !----------CHECKBOX FUNCTIONALITY ----------!
-  ---------------------------------------------
-  */  
-  
-  /*
-  Simulates checkbox behavior on fakeCheckbox while updating the realCheckbox 'checked' state. idNum is a number.
-  */
-  function toggleCheckbox(idNum) {
     var realCheckbox = document.getElementById("real-checkbox-" + idNum);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
     var checkmark = fakeCheckbox.firstChild;
     if (realCheckbox.checked === false) {
       realCheckbox.checked = true;
       checkmark.style.visibility = "visible";
+      document.getElementById("list-item-label-" + idNum).classList.add("complete");
     } else {
       realCheckbox.checked = false;
       checkmark.style.visibility = "hidden";
+      document.getElementById("list-item-label-" + idNum).classList.remove("complete");
     }
   }
 
