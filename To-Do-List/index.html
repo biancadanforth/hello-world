@@ -24,7 +24,6 @@
         <div class="container">
           <a class="icon-link" href="http://www.biancascura.com" target="_blank" aria-label="Go to creator's website in a new window">
             <!-- used <span> instead of <i> for logo.svg because this SVG has text and <i> renders it in italics -->
-            <span aria-hidden="true">
               <svg class="logo-icon" id="svg3336" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="35.116" viewBox="0 0 50.000004 35.116184" width="50" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
                <metadata id="metadata3342">
                 <rdf:RDF>
@@ -40,33 +39,27 @@
                 <path class="logo-arch" id="path3366" d="m25.583 23.139a13 13 0 0 1 13 -12.963 13 13 0 0 1 13 12.963" stroke="#000" stroke-width="4" fill="none"/>
                </g>
               </svg>
-            </span>
           </a>
           <nav role="navigation">
-            <!-- just use input[type="text"], input[type="search"] {} to style, no class needed -->
-            <fieldset role="search">
-              <input class="search-box" name="search" type="search" placeholder="Search tasks...">
-              <button class="search-button" type="submit" title="Search tasks">
+              <a id="search-link" href="javascript:void(0);" class="icon-link" title="Search tasks" role="search">
                 <svg class="search-icon" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 49.999999 49.999999" width="50" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata id="metadata40"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="Search" transform="scale(.19975)"><path class="search" id="path4" fill-rule="evenodd" clip-rule="evenodd" d="m244.19 214.6-54.379-54.378c-0.289-0.289-0.628-0.491-0.93-0.76 10.7-16.231 16.945-35.66 16.945-56.554 0-56.835-46.07-102.91-102.91-102.91-56.835 0-102.91 46.075-102.91 102.91s46.074 102.91 102.91 102.91c20.895 0 40.323-6.245 56.554-16.945 0.269 0.301 0.47 0.64 0.759 0.929l54.38 54.38c8.169 8.168 21.413 8.168 29.583 0 8.168-8.169 8.168-21.413 0-29.582zm-141.28-44.45c-37.134 0-67.236-30.102-67.236-67.235 0-37.134 30.103-67.236 67.236-67.236 37.132 0 67.235 30.103 67.235 67.236s-30.103 67.235-67.235 67.235z"/></g></svg>
-              </button>
-            </fieldset>
+              </a>
+              <input id="search-box" class="search-box" name="search" type="search" placeholder="Search tasks...">
           </nav>
         </div>
       </header>
-      <section class="list" id="list-section" role="main">
-        <div class="container">
-            <div class="list-background">
-              <h1 class="list-name">To Do List</h1>
-              <hr class="list-name-hr">
-              <div id="list-container">
+      <main role="main">
+        <section class="list" id="list-section">
+          <div class="container">
+              <div class="list-background">
+                <h1 class="list-name">To Do List</h1>
+                <hr class="list-name-hr">
+                <div id="list-container">
+                </div>
               </div>
             </div>
-          <div class="list-completed-tasks">
-          <!-- Make this div position: fixed at the bottom of the screen, so it's accessible at all times, same with search icon at the top of the page -->
-            <a href="#">View completed tasks</a>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
       <footer role="contentinfo">
         <div class="container">
           <a class="link-text" href="http://biancascura.com" target="_blank">&#169; Bianca Danforth 2016</a>

@@ -11,7 +11,7 @@ var app = app? app : {
     /*
     The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter') in the list-item.js module, with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
     */
-    submittedTasks: {},
+    submittedTasks: {}
   }
 };
 
