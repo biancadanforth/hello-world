@@ -76,7 +76,7 @@ body {
 }
 
 /* Use padding-left instead of text-indent since Edge 38 has a bug*/
-input, input[type="search"] {
+input {
   padding: 0 0 0 10px;
 }
 
@@ -138,10 +138,6 @@ a > svg {
   align-items: center;
 }
 
-.logo-icon {
-  width: 50px;
-}
-
 .logo-arch {
   fill: transparent !important;
   stroke: #2980b9;
@@ -155,12 +151,21 @@ a > svg {
 
 /* Keeps header from changing height when search icon is clicked; for some reason nav's height was 45px instead of 40px naturally with no margin, padding or border...*/
 nav {
+  position: relative;
   height: 40px;
-  width: 75%;
-  padding-left: 9.25%;
+  width: 100%;
+  margin-left: 8.5%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+nav .icon-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
 }
 
 .search-link-active {
@@ -179,26 +184,30 @@ nav {
 .search-box {
   height: 40px;
   width: 0;
+  padding: 0;
   outline: 0;
   border: 0;
-  opacity: 0;
-  /* If user hovers over small area where the search box is 'hiding', they will get a text cursor; don't want that*/
-  cursor: none;
+  /* Don't want the text cursor until input field is active*/
+  cursor: default;
   background-color: transparent;
-  transition: width .75s ease 0s;
+  transition: width .75s ease;
 }
 
 .search-box-active {
-  width: 80%;
-  margin-left: .5em;
-  border: 1px solid #9e9e9e;
+  border: 1px solid #d6d6d6;
   border-radius: 5px;
   background-color: white;
-  opacity: 1;
-  transition: width .75s ease, opacity .5s ease;
+  width: 83.5%;
+  padding-left: 40px;
+  box-shadow: inset 1px 1px 1px rgba(0,0,0,.2);
+  transition: width .75s ease;
 }
 
 .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
   transition: width .75s ease;
@@ -342,6 +351,10 @@ input[type="text"], input[type="text"]:focus {
   opacity: 0;
   border-bottom-width: 0;
   transition:  opacity 1s ease, max-height 1s ease .5s;
+}
+
+.hidden.search {
+  transition: max-height .5s;
 }
 
 /* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/

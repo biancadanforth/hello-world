@@ -99,6 +99,10 @@ Wrap entire module in an immediately invoked function so global variables in thi
     */
     var index = deletedTaskNums.indexOf(taskNum);
     deletedTaskNums.splice(index, 1);
+    /*
+    Add task back to submittedTasks object
+    */
+    app.store.submittedTasks["row-" + taskNum] = taskString;
   }
 
   /*
