@@ -23,14 +23,14 @@ var app = app? app : {
 
   function showSearchBar() {
     searchLink.classList.add("search-link-active");
-    searchBox.classList.add("search-box-active");
+    searchBox.classList.remove("hidden");
     searchBox.focus();
   }
   
   function hideSearchBar() {
     if (searchBox.value === "") {
       searchLink.classList.remove("search-link-active");
-      searchBox.classList.remove("search-box-active"); 
+      searchBox.classList.add("hidden"); 
     }
   }
 
@@ -38,10 +38,16 @@ var app = app? app : {
   searchLink.onclick = showSearchBar;
 
   // return to initial state
- //searchBox.onblur = hideSearchBar;
+  searchBox.onblur = hideSearchBar;
 
 // Any time the value of the input changes, filter the list
 searchBox.oninput = filterList;
+
+/*
+Any time the user deletes an item or returns an item to the list from deletion, filter the list again.
+*/
+document.body.addEventListener("delete", filterList);
+document.body.addEventListener("undo", filterList);
 
 // Updates the list contents to only display the tasks that contain the substring input by the user. If the input field is empty, all tasks are visible. If the user input does not match any tasks, no tasks are shown and the user is notified that there are no matching results.
 function filterList() {             
@@ -56,7 +62,7 @@ function filterList() {
     if (string.indexOf(subString) === -1 && subString !== "") {
       // substring is not contained in the string
       taskElem.classList.add("hidden");
-      // adding an additional search class when toggling hidden state, to remove transitions in CSS when user is searching tasks. (.hidden.search {} in CSS)
+      // adding an additional search class when toggling hidden state, to alter transitions in CSS when user is searching tasks. (.hidden.search {} in CSS)
       taskElem.classList.add("search");
     } else {
       taskElem.classList.remove("hidden");
@@ -68,18 +74,15 @@ function filterList() {
     }
   }
   // If the user input does not match any of the tasks, there are no matching results, no tasks are shown, and and a notification message is displayed to that effect.
-  checkResults();
+  checkResults(subString);
 }
 
 // Checks to see if there are any matching results to the user's input. If at least one result matches (i.e. it is currently visible in the list and does not have the "hidden" class applied), then don't show the 'no results' notification in place of the list. Otherwise, if there are no matching results, display the notification in place of the list.
-function checkResults() {
-  console.log("Entered checkResults...");
+function checkResults(subString) {
   //don't check the last child, since that's the blank input element automatically generated upon submitting a task.
+  console.log(listContainer.children.length-1);
   for (let i = 0; i < listContainer.children.length-1; i++) {
-    console.log("Entered 'for' loop...");
-    console.log(listContainer.children.item(i).classList.contains("hidden"));
     if (!listContainer.children.item(i).classList.contains("hidden")) {
-      console.log("at least one task still matches search query.");
       noResults.classList.add("hidden");
       noResults.classList.add("search");
       listContainer.classList.remove("hidden");
@@ -87,7 +90,14 @@ function checkResults() {
       return;
     }
   }
-  console.log("no tasks match search query");
+  //Check if there are any submitted tasks on the list and if the input field is blank to remove noResults
+  if (listContainer.children.length-1 === 0 && subString === "") {
+    noResults.classList.add("hidden");
+    noResults.classList.add("search");
+    listContainer.classList.remove("hidden");
+    listContainer.classList.remove("search");
+    return;
+  }
   noResults.classList.remove("hidden");
   noResults.classList.remove("search");
   listContainer.classList.add("hidden");

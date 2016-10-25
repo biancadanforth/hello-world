@@ -103,6 +103,11 @@ Wrap entire module in an immediately invoked function so global variables in thi
     Add task back to submittedTasks object
     */
     app.store.submittedTasks["row-" + taskNum] = taskString;
+    
+    /* Create custom 'undo' event and dispatch it to all modules (specifically, to the searchBar module).
+    */
+    var undoEvent = new Event('undo');
+    document.body.dispatchEvent(undoEvent);
   }
 
   /*

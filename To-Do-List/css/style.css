@@ -67,10 +67,6 @@ body {
 
 .icon-link { display: inline-block; }
 
-.icon-link path {
-  fill: #646464;
-}
-
 .icon-link svg {
   display: block;
 }
@@ -78,6 +74,10 @@ body {
 /* Use padding-left instead of text-indent since Edge 38 has a bug*/
 input {
   padding: 0 0 0 10px;
+}
+
+input:focus {
+  outline: 0;
 }
 
 :placeholder-shown {
@@ -192,18 +192,6 @@ nav .icon-link {
 
 .search-box {
   height: 40px;
-  width: 0;
-  padding: 0;
-  outline: 0;
-  border: 0;
-  margin-right: 5%;
-  /* Don't want the text cursor until input field is active*/
-  cursor: default;
-  background-color: transparent;
-  transition: width .75s ease;
-}
-
-.search-box-active {
   border: 1px solid #d6d6d6;
   border-radius: 5px;
   background-color: white;
@@ -216,6 +204,18 @@ nav .icon-link {
   transition: width .75s ease, border .75s ease;
 }
 
+.search-box.hidden {
+  width: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  margin-right: 5%;
+  /* Don't want the text cursor until input field is active*/
+  cursor: default;
+  background-color: transparent;
+  transition: width .75s ease;
+}
+
 .search-icon {
   position: absolute;
   top: 50%;
@@ -223,6 +223,7 @@ nav .icon-link {
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
+  fill: #2980b9;
   transition: width .75s ease;
 }
 
@@ -231,7 +232,7 @@ nav .icon-link {
     margin-right: 0;
     max-width: 75%;
   }
-  .search-box-active {
+  .search-box {
     margin-right: 0;
   }
 }
@@ -272,6 +273,11 @@ nav .icon-link {
     background: 0;
     box-shadow: none;
   }
+}
+
+.list-container {
+  opacity: 1;
+  transition: opacity .5s;
 }
 
 .list-item-container {
@@ -323,8 +329,8 @@ input[type="checkbox"] {
 
 .list-item {
   flex-grow: 1;
-  margin: 1em;
-  line-height: 1.5;
+  margin: .5em;
+  line-height: 2;
   padding-left: 10px;
   visibility: visible;
   overflow: hidden;
@@ -367,6 +373,10 @@ input[type="text"], input[type="text"]:focus {
   border-width: 0;
 }
 
+.list-container.hidden.search {
+  transition: none;
+}
+
 /* .hidden style block must be placed AFTER .list-item block to override its opacity property setting*/
 .hidden {
   max-height: 0;
@@ -377,7 +387,7 @@ input[type="text"], input[type="text"]:focus {
 }
 
 .hidden.search {
-  transition: max-height .5s;
+  transition: opacity .5s, max-height 1s;
 }
 
 /* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/
