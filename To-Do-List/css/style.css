@@ -134,8 +134,18 @@ a > svg {
 }
 
 .menu .container {
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+/* targets logo icon only as first direct descendant */
+.logo-link {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .logo-arch {
@@ -152,18 +162,17 @@ a > svg {
 /* Keeps header from changing height when search icon is clicked; for some reason nav's height was 45px instead of 40px naturally with no margin, padding or border...*/
 nav {
   position: relative;
-  height: 40px;
-  width: 100%;
-  margin-left: 8.5%;
   display: flex;
+  height: 40px;
+  /* want expanded search bar to line up with .list-background*/
+  width: 81.25%;
+  margin: 0 auto;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 nav .icon-link {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 40px;
   height: 40px;
 }
@@ -187,6 +196,7 @@ nav .icon-link {
   padding: 0;
   outline: 0;
   border: 0;
+  margin-right: 5%;
   /* Don't want the text cursor until input field is active*/
   cursor: default;
   background-color: transparent;
@@ -197,10 +207,13 @@ nav .icon-link {
   border: 1px solid #d6d6d6;
   border-radius: 5px;
   background-color: white;
-  width: 83.5%;
-  padding-left: 40px;
+  /* return cursor to default for input field now that it's visible */
+  cursor: text;
+  width: 100%;
+  /* Leave enough room before placeholder text for search icon */
+  padding-left: 10px;
   box-shadow: inset 1px 1px 1px rgba(0,0,0,.2);
-  transition: width .75s ease;
+  transition: width .75s ease, border .75s ease;
 }
 
 .search-icon {
@@ -211,6 +224,16 @@ nav .icon-link {
   width: 30px;
   height: 30px;
   transition: width .75s ease;
+}
+
+@media (max-width: 600px) {
+  nav {
+    margin-right: 0;
+    max-width: 75%;
+  }
+  .search-box-active {
+    margin-right: 0;
+  }
 }
 
 
