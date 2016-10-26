@@ -57,8 +57,8 @@ function filterList() {
   }
   var subString = searchBox.value.toLowerCase();
   for (let prop in app.store.submittedTasks) {
-    //get row number from keys in submittedTasks object
-    var rowNum = prop.charAt(prop.length-1);
+    //get row number from keys in submittedTasks object, keys of form "row-x".
+    var rowNum = prop.split("-")[1];
     let string = app.store.submittedTasks[prop].toLowerCase();
     let taskElem = document.getElementById("list-item-container-" + rowNum);
     //indexOf returns -1 if the substring is not contained in the string

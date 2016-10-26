@@ -169,7 +169,9 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         return;
       }
       if (inputNode.value === "" && inputNode.classList.toString() === "list-item") {
-        deleteTask(rowNum);
+        // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
+        var flag = false;
+        deleteTask(rowNum, flag);
       }
     };
     /*
@@ -236,7 +238,8 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
     */
     deleteIconWrapper.onclick = function() {
-      deleteTask(rowNum);
+      var flag = true;
+      deleteTask(rowNum, flag);
     }
     return deleteIconWrapper;
   }
@@ -248,9 +251,11 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   */
 
   /*
-  Deletes a task in two steps: 1) collapsing the task container, listNode, with a transition by adding the "hidden" class. 2) removing the task container, listNode, from the DOM once the transition has taken place. Also stores all deleted tasks as strings in an array, so they can be accessed for an Undo feature. idNum is a number.
+  Deletes a task in two steps: 1) collapsing the task container, listNode, with a transition by adding the "hidden" class. 2) removing the task container, listNode, from the DOM once the transition has taken place. Also stores all deleted tasks as strings in an array, so they can be accessed for an Undo feature.
+  When flag is false, don't dispatch 'delete' event inside deleteTask to the notifyUndo module. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
+  idNum is a number. Flag is a boolean.
   */
-  function deleteTask(idNum) {
+  function deleteTask(idNum, flag) {
     var listContainer = document.getElementById("list-container");
     var listNode = document.getElementById("list-item-container-" + idNum);
     listNode.classList.add("hidden");
@@ -259,8 +264,10 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     // remove task key:value pair from app.store.submittedTasks object
     delete app.store.submittedTasks["row-" + idNum];
     // If a task is deleted, dispatch the 'delete' event
-    var deleteEvent = new CustomEvent('delete', { 'detail': { 'row': idNum, 'task': taskString } });
-    document.body.dispatchEvent(deleteEvent);
+    if (flag) {
+      var deleteEvent = new CustomEvent('delete', { 'detail': { 'row': idNum, 'task': taskString } });
+      document.body.dispatchEvent(deleteEvent);
+    }
   }
 
   /*

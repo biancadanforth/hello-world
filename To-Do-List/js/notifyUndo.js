@@ -47,8 +47,8 @@ Wrap entire module in an immediately invoked function so global variables in thi
     var taskInfo = event.detail;
     var taskNum = taskInfo.row;
     var taskString = taskInfo.task;
-
-    showNotifyBar(taskNum);
+   
+    showNotifyBar(taskNum); 
     
     /*
     If the user clicks undo, hide the notification bar and restore the task to the list in its original location.

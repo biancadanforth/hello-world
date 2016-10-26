@@ -44,7 +44,7 @@ body {
 .container {
   max-width: 960px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 30px 0;
   overflow: hidden;
 }
 
@@ -96,12 +96,13 @@ input:focus {
   left: 0;
   z-index: 1;
   width: 100%;
-  background-color: black;
-  color: white;
+  background-color: #e3f0f8;
+  color: #646464;
   text-align: center;
   height: 30px;
   max-height: 30px;
   line-height: 30px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,.2);
   overflow: hidden;
   transition: max-height .5s ease;
 }
@@ -117,7 +118,8 @@ input:focus {
 }
 
 .notify-link {
-  margin-left: 1em;
+  margin-left: .5em;
+  margin-right: .5em;
 }
 
 /* I want to ensure that when the delete icon is clicked, its wrapping <a> is the element that receives the click event, not the <svg> or a <path> or anything else inside the <svg> Source: https://css-tricks.com/links-inline-svg-staying-target-events/*/
@@ -129,6 +131,7 @@ a > svg {
 * 2.0 HEADER
 ********************************************/
 .menu {
+  width: 100%;
   background-color: #ecf0f1;
   overflow: hidden;
 }
@@ -148,12 +151,15 @@ a > svg {
   transform: translateY(-50%);
 }
 
+
 .logo-arch {
   fill: transparent !important;
   stroke: #2980b9;
 }
 
-.logo-text { fill: #2980b9; }
+.logo-text { 
+  fill: url(#linear-primary);
+  } 
 
 /********************************************
 * 3.0 NAV
@@ -221,7 +227,7 @@ nav .icon-link {
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
-  fill: #2980b9;
+  fill: url(#linear-primary);
   transition: width .75s ease;
 }
 
@@ -261,7 +267,9 @@ nav .icon-link {
   margin: 0;
 }
 
-.list-item-hr {}
+.list-item-hr {
+  
+}
 
 @media (max-width: 600px) {
   .list-background {
@@ -306,7 +314,7 @@ input[type="checkbox"] {
   display:inline-block;
   min-width:20px;
   height:20px;
-  background-color: #ededed;
+  background-color: transparent;
   border: 1px solid #aeaeae;
   border-radius: 4px;
   opacity: 1;
@@ -327,7 +335,7 @@ input[type="checkbox"] {
 
 .list-item {
   flex-grow: 1;
-  margin: .5em;
+  margin: 1em 2em;
   line-height: 2;
   padding-left: 10px;
   visibility: visible;
@@ -357,13 +365,14 @@ a:hover, .checkbox, .add-task-container {
 }
 
 /* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
-.list-item-container a, .list-item-container a svg {
-  width: 20px;
-  height: 20px;
+.list-item-container svg {
+  fill: url(#linear-secondary);
 }
 
-.list-item-container svg {
-  fill: #646464;
+/* delete icon only, checkmark icon is inside a <span>*/
+.list-item-container a svg {
+  width: 20px;
+  height: 20px;
 }
 
 input[type="text"], input[type="text"]:focus {
