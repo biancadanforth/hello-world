@@ -51,6 +51,10 @@ document.body.addEventListener("undo", filterList);
 
 // Updates the list contents to only display the tasks that contain the substring input by the user. If the input field is empty, all tasks are visible. If the user input does not match any tasks, no tasks are shown and the user is notified that there are no matching results.
 function filterList() {             
+    // if search box is not active, don't filter list.
+  if (searchBox.classList.contains("hidden")) {
+    return;
+  }
   var subString = searchBox.value.toLowerCase();
   for (let prop in app.store.submittedTasks) {
     //get row number from keys in submittedTasks object
@@ -80,7 +84,6 @@ function filterList() {
 // Checks to see if there are any matching results to the user's input. If at least one result matches (i.e. it is currently visible in the list and does not have the "hidden" class applied), then don't show the 'no results' notification in place of the list. Otherwise, if there are no matching results, display the notification in place of the list.
 function checkResults(subString) {
   //don't check the last child, since that's the blank input element automatically generated upon submitting a task.
-  console.log(listContainer.children.length-1);
   for (let i = 0; i < listContainer.children.length-1; i++) {
     if (!listContainer.children.item(i).classList.contains("hidden")) {
       noResults.classList.add("hidden");
@@ -90,7 +93,7 @@ function checkResults(subString) {
       return;
     }
   }
-  //Check if there are any submitted tasks on the list and if the input field is blank to remove noResults
+   //Check if there are any submitted tasks on the list and if the input field is blank to remove noResults
   if (listContainer.children.length-1 === 0 && subString === "") {
     noResults.classList.add("hidden");
     noResults.classList.add("search");
