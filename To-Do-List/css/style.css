@@ -198,22 +198,20 @@ nav .icon-link {
   /* return cursor to default for input field now that it's visible */
   cursor: text;
   width: 100%;
-  /* Leave enough room before placeholder text for search icon */
-  padding-left: 10px;
+  text-indent: 10px;
   box-shadow: inset 1px 1px 1px rgba(0,0,0,.2);
-  transition: width .75s ease, border .75s ease;
+  transition: width 1s ease;
 }
 
 .search-box.hidden {
+  /* Need to override max-height: 0, max-width:0, and opacity: 0 of .hidden class */
+  max-height: 40px;
+  max-width: 100%;
+  opacity: 1;
   width: 0;
-  padding: 0;
-  outline: 0;
-  border: 0;
-  margin-right: 5%;
   /* Don't want the text cursor until input field is active*/
   cursor: default;
-  background-color: transparent;
-  transition: width .75s ease;
+  transition: width 1s ease;
 }
 
 .search-icon {
@@ -338,7 +336,7 @@ input[type="checkbox"] {
   transition: opacity 1s ease;
 }
 
-p.list-item {
+.list-item-container p.list-item {
   padding-left: 0;
 }
 
@@ -388,6 +386,21 @@ input[type="text"], input[type="text"]:focus {
 
 .hidden.search {
   transition: opacity .5s, max-height 1s;
+}
+
+.no-results {
+  margin: 0;
+  margin-left: .5em;
+  padding: .5em;
+  padding-left: 10px;
+  border-bottom-width: 1px;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.no-results.hidden {
+  border: 0;
+  padding: 0;
 }
 
 /* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/
