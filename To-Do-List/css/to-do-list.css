@@ -1,0 +1,488 @@
+/* To Do List Web Application */
+
+/********************************************
+* TABLE OF CONTENTS
+0.0 GLOBAL
+1.0 NOTIFY/UNDO BAR
+2.0 HEADER
+3.0 NAV
+4.0 MAIN CONTENT
+5.0 FOOTER
+FONTS:
+font-family: 'Quattrocento', serif;
+font-family: 'Quattrocento Sans', sans-serif;
+(logo)
+font-family: 'Montserrat', sans-serif;
+COLORS:
+header/footer background: #cfd8dc
+header icon-default: #9e9e9e
+first list accent & first list icon hover: #2980b9
+first list notification background color: #e3f0f8
+list text default: #646464
+list text hover: #4a4a4a
+de emphasized text: #9e9e9e
+********************************************/
+
+
+
+/********************************************
+* 0.0 GLOBAL
+********************************************/
+
+/* Overwriting normalize.css vendor style on input search field */
+*, input[type="search"] { box-sizing: border-box; }
+
+body {
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Quattrocento Sans', sans-serif;
+  color: #646464;
+  font-size: 100%;
+  line-height: 1.25;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 30px 0;
+  overflow: hidden;
+}
+
+@media (max-width: 1000px) {
+  .container { margin: auto 5%; }
+}
+
+/* Background image grid to check for column alignment periodically*/
+/* .grid {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 960px;
+  height: 100vh;
+  background: url('../images/12-columns.png') repeat-y;
+  background-size: cover;
+} */
+
+.icon-link { display: inline-block; }
+
+.icon-link svg {
+  display: block;
+}
+
+/* Use padding-left instead of text-indent since Edge 38 has a bug*/
+input {
+  padding: 0 0 0 10px;
+}
+
+input:focus {
+  outline: 0;
+}
+
+:placeholder-shown {
+  color: #9e9e9e;
+}
+
+
+
+/********************************************
+* 1.0 NOTIFY/UNDO BAR
+********************************************/
+
+.notify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: #e3f0f8;
+  color: #646464;
+  text-align: center;
+  height: 30px;
+  max-height: 30px;
+  line-height: 30px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,.2);
+  overflow: hidden;
+  transition: max-height .5s ease;
+}
+
+.notify.hidden {
+  /* opacity to override .hidden opacity of 0 */
+  opacity: 1;
+  transition: max-height .5s ease;
+}
+
+.notify > p {
+  margin: 0;
+}
+
+.notify-link {
+  margin-left: .5em;
+  margin-right: .5em;
+}
+
+/* I want to ensure that when the delete icon is clicked, its wrapping <a> is the element that receives the click event, not the <svg> or a <path> or anything else inside the <svg> Source: https://css-tricks.com/links-inline-svg-staying-target-events/*/
+a > svg {
+  pointer-events: none;
+}
+
+/********************************************
+* 2.0 HEADER
+********************************************/
+.menu {
+  width: 100%;
+  background-color: #cfd8dc;
+  overflow: hidden;
+}
+
+.menu .container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* targets logo icon only as first direct descendant */
+.logo-link {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.logo-arch {
+  fill: transparent !important;
+  stroke: #2980b9;
+}
+
+.logo-text { 
+  fill: url(#linear-primary);
+  } 
+
+/********************************************
+* 3.0 NAV
+********************************************/
+
+/* Keeps header from changing height when search icon is clicked; for some reason nav's height was 45px instead of 40px naturally with no margin, padding or border...*/
+nav {
+  position: relative;
+  flex: 0 1 75%;
+  display: flex;
+  height: 40px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+nav .icon-link {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.search-link-active {
+  visibility: hidden;
+}
+
+/* IE11 bug workaround to toggle class names for search icon svg, since element.classList doesn't work on SVGs. *sigh* */
+.search-link-active .search-icon {
+  width: 20px;
+  height: 20x;
+  /* overrides visibility: hidden on wrapper <a> to allow the mouse to become an arrow instead of a pointer, since the link is disabled in this state*/
+  visibility: visible;
+  transition: width .75s ease;
+}
+
+.search-box {
+  height: 40px;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  background-color: white;
+  /* return cursor to default for input field now that it's visible */
+  cursor: text;
+  width: 100%;
+  text-indent: 10px;
+  box-shadow: inset 1px 1px 1px rgba(0,0,0,.2);
+  transition: width 1s ease;
+}
+
+.search-box.hidden {
+  /* Need to override max-height: 0, max-width:0, and opacity: 0 of .hidden class */
+  max-height: 40px;
+  max-width: 100%;
+  opacity: 1;
+  width: 0;
+  /* Don't want the text cursor until input field is active*/
+  cursor: default;
+  transition: width 1s ease;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  fill: url(#linear-primary);
+  transition: width .75s ease;
+}
+
+/********************************************
+* 4.0 MAIN CONTENT (LIST)
+********************************************/
+
+.list {
+  overflow: auto;
+  background-image: url('../images/crossword.png');
+}
+
+.list-background {
+  width: 81.25%;
+  margin: 0 auto;
+  padding: 5%;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  box-shadow: 1px 2px 4px rgba(0,0,0,.2);
+  background-color: white;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 895px) {
+  .list-name {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 675px) {
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+   nav {
+    width: 100%;
+    justify-content: flex-start;
+    margin: 2% 0;
+  }
+}
+
+.list-name {
+  display: inline-block;
+  flex: 1 0 25%;
+  margin: 2% 0;
+  font-family: 'Quattrocento', serif;
+  }
+
+.list-name-hr {
+  margin: 0;
+}
+
+.list-item-hr {
+  
+}
+
+@media (max-width: 600px) {
+  .list-background {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background: 0;
+    box-shadow: none;
+  }
+}
+
+.list-container {
+  opacity: 1;
+  transition: opacity .5s;
+}
+
+.list-item-container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 1000px;
+  border-bottom-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
+  /* hide flex items when this element is collapsing*/
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease, max-height 5s ease;
+}
+
+/* Remove System Checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Fake checkbox made in CSS */
+.checkbox {
+  position: relative;
+  display:inline-block;
+  min-width:20px;
+  height:20px;
+  background-color: transparent;
+  border: 1px solid #aeaeae;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+/* The checkmark svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
+.checkbox svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -70%);
+  display: inline-block;
+  width: 30px;
+  height: 23.61px;
+  visibility: hidden;
+}
+
+.list-item {
+  flex-grow: 1;
+  margin: 1em 2em;
+  line-height: 2;
+  padding-left: 10px;
+  visibility: visible;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.list-item-container p.list-item {
+  padding-left: 0;
+}
+
+.list-item.complete {
+  color: #9e9e9e;
+  text-decoration: line-through;
+  /*Note: text-decoration is not an animatable property: https://www.w3.org/TR/css3-transitions/*/
+}
+
+a {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+a:hover, .checkbox, .add-task-container {
+  cursor: pointer;
+}
+
+/* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
+.list-item-container svg {
+  fill: url(#linear-secondary);
+}
+
+/* delete icon only, checkmark icon is inside a <span>*/
+.list-item-container a svg {
+  width: 20px;
+  height: 20px;
+}
+
+input[type="text"], input[type="text"]:focus {
+  outline: 0;
+  border-width: 0;
+}
+
+.list-container.hidden.search {
+  transition: none;
+}
+
+/* .hidden style block must be placed AFTER .list-item block to override its opacity property setting*/
+.hidden {
+  max-height: 0;
+  padding: 0;
+  opacity: 0;
+  border-bottom-width: 0;
+  transition:  opacity 1s ease, max-height 1s ease .5s;
+}
+
+.hidden.search {
+  transition: opacity .5s, max-height 1s;
+}
+
+.no-results {
+  margin: 0;
+  margin-left: .5em;
+  padding: .5em;
+  padding-left: 10px;
+  border-bottom-width: 1px;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.no-results.hidden {
+  border: 0;
+  padding: 0;
+}
+
+/* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/
+p.hidden, a.hidden, input.hidden {
+  max-width: 0;
+  margin: 0;
+  border: 0;
+}
+
+input[type="text"]:focus.bounce {
+  outline: 1px solid red;
+  animation-name: bounce;
+  animation-duration: .5s;
+  animation-delay: 0.25s;
+}
+
+/*Approximates a critically damped sinusoidal function centered around zero. Inspiration: easeInOutBounce timing-function from easings.net*/
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-out;
+  }
+}
+
+/********************************************
+* 5.0 FOOTER
+********************************************/
+
+footer {
+  background-color: #cfd8dc;
+  text-align: center;
+}
