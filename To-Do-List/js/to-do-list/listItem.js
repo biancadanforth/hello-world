@@ -161,13 +161,42 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     inputNode.setAttribute("id", "list-item-input-" + row);
     inputNode.setAttribute("class", "list-item");
     inputNode.setAttribute("placeholder", "Write task here. Hit 'Enter' to submit.");
-    /*
-    Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
+   
+    /* **********************
+    CLICK AWAY TO SUBMIT IN CREATE MODE
+    ********************************
     */
-    inputNode.onblur = function() {
+    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputNode onblur event. When submitTask is true, the 'enter' key has been hit
+    var submitFired = false;
+    document.body.addEventListener('submit', function() {
+      submitFired = true;
+    });
+   
+    inputNode.onblur = function() { 
+      var userInput = inputNode.value;
+       /*
+      If user clicks away from the field with a non-empty task, submit the task.
+      */
+      if (userInput !== "" && !submitFired) {
+        // reset submitFired flag
+        submitFired = false;
+        submitTask(userInput, rowNum);
+        //Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = rowNum? If so, the submitted task is the last task on the list, so add a new task.
+        // First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
+        var idString = listContainer.lastChild.id;
+        //id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
+        var lastId = idString.split("-")[3];
+        //rowNum is a number, lastId is a string
+        if (rowNum.toString() === lastId) {
+          addTask();
+        }
+      }
       if (listContainer.children.length === 1 || listContainer.lastChild === listNode) {
         return;
       }
+      /*
+      Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
+      */
       if (inputNode.value === "" && inputNode.classList.toString() === "list-item") {
         // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
         var flag = false;
@@ -176,35 +205,13 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     };
     
     /*
-    If user clicks away from the field with a non-empty task, submit the task.
-    */
-    inputNode.onblur = function() {
-      var userInput = inputNode.value;
-      if (userInput !== "") {
-        submitTask(userInput, rowNum);
-        /*
-        Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = rowNum? If so, the submitted task is the last task on the list, so add a new task.
-        First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
-        */
-        var idString = listContainer.lastChild.id;
-        /*
-        id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
-        */
-        var lastId = idString.split("-")[3];
-        //rowNum is a number, lastId is a string
-        if (rowNum.toString() === lastId) {
-          addTask();
-        }
-      }
-    }
-    
-    
-    /*
     Listen for when user presses the 'Enter' key, if input has a non-empty value, submitTask... If it's the last task, add a new task. If the submitted task is empty, add keyframes bounce animation.
     */
     inputNode.onkeyup = function(event) {
       var userInput = inputNode.value;
       if (userInput !== "" && event.keyCode === 13) {
+        var submitEvent = new CustomEvent('submit');
+        document.body.dispatchEvent(submitEvent);
         submitTask(userInput, rowNum);
         /*
         Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = rowNum? If so, the submitted task is the last task on the list, so add a new task.
@@ -369,6 +376,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var inputElement = document.getElementById("list-item-input-" + idNum);
     var deleteIcon = document.getElementById("delete-icon-wrapper-" + idNum);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
+   
     inputElement.value = input;
     deleteIcon.style.display = "none";
     fakeCheckbox.style.display = "none";
@@ -377,5 +385,41 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     pElement.classList.toggle("hidden");
     inputElement.classList.toggle("hidden");
     inputElement.focus();
+    
+    /* **********************
+    CLICK AWAY TO SUBMIT IN EDIT MODE
+    ********************************
+    */
+    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputNode onblur event. When submitTask is true, the 'enter' key has been hit
+    var submitFired = false;
+    document.body.addEventListener('submit', function() {
+      submitFired = true;
+    });
+   
+    inputElement.onblur = function() {
+      
+      var userInput = inputElement.value;
+       /*
+      If user clicks away from the field with a non-empty task, submit the task.
+      */
+      if (userInput !== "" && !submitFired) {
+        // reset submitFired flag
+        submitFired = false;
+        submitTask(userInput, idNum);
+        /*
+        Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = idNum? If so, the submitted task is the last task on the list, so add a new task.
+        First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
+        */
+        var idString = listContainer.lastChild.id;
+        /*
+        id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
+        */
+        var lastId = idString.split("-")[3];
+        //idNum is a number, lastId is a string
+        if (idNum.toString() === lastId) {
+          addTask();
+        }
+      }
+    }
   }
 }());

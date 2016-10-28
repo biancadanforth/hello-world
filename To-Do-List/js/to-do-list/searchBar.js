@@ -38,7 +38,7 @@ var app = app? app : {
   searchLink.onclick = showSearchBar;
 
   // return to initial state
-  //searchBox.onblur = hideSearchBar;
+  searchBox.onblur = hideSearchBar;
 
   // Any time the value of the input changes, filter the list
   searchBox.oninput = filterList;
