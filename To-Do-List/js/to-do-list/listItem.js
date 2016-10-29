@@ -122,7 +122,6 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var realCheckbox = document.createElement("input");
     realCheckbox.setAttribute("type", "checkbox");
     realCheckbox.setAttribute("id", "real-checkbox-" + row);
-    realCheckbox.setAttribute("aria-hidden", "true");
     return realCheckbox;
   }
 
@@ -136,6 +135,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
     fakeCheckbox.setAttribute("title", "Complete task");
     fakeCheckbox.setAttribute("aria-hidden", "true");
+    fakeCheckbox.setAttribute("aria-label", "Complete");
     fakeCheckbox.style.display = "none";
     fakeCheckbox.onclick = function() {
       completeTask(rowNum);
@@ -275,6 +275,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     deleteIconWrapper.setAttribute("id", "delete-icon-wrapper-" + row);
     deleteIconWrapper.setAttribute("title", "Delete task");
     deleteIconWrapper.setAttribute("aria-hidden", "true");
+    deleteIconWrapper.setAttribute("aria-label", "Delete");
     deleteIconWrapper.style.display = "none";
     /*
     I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
@@ -351,6 +352,13 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var inputElement = document.getElementById("list-item-input-" + idNum);
     var deleteIcon = document.getElementById("delete-icon-wrapper-" + idNum);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
+    var realCheckbox = document.getElementById("real-checkbox-" + idNum);
+    
+    /*
+    Add aria-label attribute value to the real checkbox <input type="checkbox" ...>
+    */
+    realCheckbox.setAttribute("aria-label", input);
+    
     /*
     Keep pElement empty of text until it's visible, otherwise it stretches the container div height with the value inside the input field.
     */
