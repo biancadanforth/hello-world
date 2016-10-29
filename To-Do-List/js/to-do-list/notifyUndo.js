@@ -20,8 +20,7 @@ var app = app? app : {
 Wrap entire module in an immediately invoked function so global variables in this module don't pollute the global namespace for the application.
 */
 !(function () {
-  var notifyBar = document.getElementById(
-  "notify-bar");
+  var notifyBar = document.getElementById("notify-bar");
   var dismissLink = document.getElementById("dismiss-link");
   var undoLink = document.getElementById("undo-link");
   /*
@@ -116,6 +115,7 @@ Wrap entire module in an immediately invoked function so global variables in thi
   function showNotifyBar(taskNum) {
     window.clearTimeout(notifyTimer);
     notifyBar.classList.remove("hidden");
+    notifyBar.removeAttribute("aria-hidden");
     notifyTimer = setTimeout(function() {
       hideNotifyBar(taskNum);
     }, 60000);
@@ -126,6 +126,7 @@ Wrap entire module in an immediately invoked function so global variables in thi
   */
   function hideNotifyBar(taskNum) {
     notifyBar.classList.add("hidden");
+    notifyBar.setAttribute("aria-hidden", "true");
   }
   
   /*

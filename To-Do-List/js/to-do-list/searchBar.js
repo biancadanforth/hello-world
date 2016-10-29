@@ -24,6 +24,7 @@ var app = app? app : {
   function showSearchBar() {
     searchLink.classList.add("search-link-active");
     searchBox.classList.remove("hidden");
+    searchBox.removeAttribute("aria-hidden");
     searchBox.focus();
   }
   
@@ -31,6 +32,7 @@ var app = app? app : {
     if (searchBox.value === "") {
       searchLink.classList.remove("search-link-active");
       searchBox.classList.add("hidden"); 
+      searchBox.setAttribute("aria-hidden", "true");
     }
   }
 
@@ -66,14 +68,17 @@ var app = app? app : {
       if (string.indexOf(subString) === -1 && subString !== "") {
         // substring is not contained in the string
         taskElem.classList.add("hidden");
+        taskElem.setAttribute("aria-hidden", "true");
         // adding an additional search class when toggling hidden state, to alter transitions in CSS when user is searching tasks. (.hidden.search {} in CSS)
         taskElem.classList.add("search");
       } else {
         taskElem.classList.remove("hidden");
+        taskElem.removeAttribute("aria-hidden");
         taskElem.classList.remove("search");
       }
       if (subString === "") {
         taskElem.classList.remove("hidden");
+        taskElem.removeAttribute("aria-hidden");
         taskElem.classList.remove("search");
       }
     }
@@ -87,8 +92,10 @@ var app = app? app : {
     for (let i = 0; i < listContainer.children.length-1; i++) {
       if (!listContainer.children.item(i).classList.contains("hidden")) {
         noResults.classList.add("hidden");
+        noResults.setAttribute("aria-hidden", "true");
         noResults.classList.add("search");
         listContainer.classList.remove("hidden");
+        listContainer.removeAttribute("aria-hidden");
         listContainer.classList.remove("search");
         return;
       }
@@ -96,14 +103,18 @@ var app = app? app : {
      //Check if there are any submitted tasks on the list and if the input field is blank to remove noResults
     if (listContainer.children.length-1 === 0 && subString === "") {
       noResults.classList.add("hidden");
+      noResults.setAttribute("aria-hidden", "true");
       noResults.classList.add("search");
       listContainer.classList.remove("hidden");
+      listContainer.removeAttribute("aria-hidden");
       listContainer.classList.remove("search");
       return;
     }
     noResults.classList.remove("hidden");
+    noResults.removeAttribute("aria-hidden");
     noResults.classList.remove("search");
     listContainer.classList.add("hidden");
+    listContainer.setAttribute("aria-hidden", "true");
     listContainer.classList.add("search");
   }
   

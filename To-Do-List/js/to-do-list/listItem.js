@@ -21,7 +21,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
 
   // Creates the first editable task on the screen
   addTask();
-
+  
   /* 
   -------------------------------------
   !----------ADDING A TASK  ----------!
@@ -30,6 +30,9 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   //reference: http://jsfiddle.net/g79ssyqv/12/
   function addTask() {
 
+    // Auto scroll to bottom of list when it is extended by adding a new task
+    autoScroll();
+  
     /*
     Creates a new, unique id#list-item-container-x <div> inside the id#list-container <div> to wrap each task in
     */
@@ -91,6 +94,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     */
     setTimeout(function() {
       listNode.classList.remove("hidden");
+      listNode.removeAttribute("aria-hidden");
     }, 50);
 
     row++;
@@ -109,6 +113,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var listNode = document.createElement("div");
     listNode.setAttribute("id", "list-item-container-" + rowNum);
     listNode.setAttribute("class", "list-item-container hidden");
+    listNode.setAttribute("aria-hidden", "true");
     return listNode;
   }
 
@@ -117,6 +122,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var realCheckbox = document.createElement("input");
     realCheckbox.setAttribute("type", "checkbox");
     realCheckbox.setAttribute("id", "real-checkbox-" + row);
+    realCheckbox.setAttribute("aria-hidden", "true");
     return realCheckbox;
   }
 
@@ -129,6 +135,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     fakeCheckbox.setAttribute("class", "checkbox hidden");
     fakeCheckbox.setAttribute("id", "fake-checkbox-" + row);
     fakeCheckbox.setAttribute("title", "Complete task");
+    fakeCheckbox.setAttribute("aria-hidden", "true");
     fakeCheckbox.style.display = "none";
     fakeCheckbox.onclick = function() {
       completeTask(rowNum);
@@ -146,6 +153,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     iconRequest.onreadystatechange = function() {
       if (iconRequest.readyState === XMLHttpRequest.DONE && iconRequest.status === 200) {
         var icon = iconRequest.responseXML.documentElement;
+        icon.setAttribute("aria-hidden", "true");
         parentElement.appendChild(icon);
       }
     }
@@ -246,6 +254,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var submittedTask = document.createElement("p");
     submittedTask.setAttribute("id", "list-item-label-" + rowNum);
     submittedTask.setAttribute("class", "list-item hidden");
+    submittedTask.setAttribute("aria-hidden", "true");
     /*
     grab <p> element, 'submittedTask' and replace it with <input> element 'inputNode', without removing either from the DOM.
     */
@@ -265,6 +274,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     deleteIconWrapper.setAttribute("class", "hidden");
     deleteIconWrapper.setAttribute("id", "delete-icon-wrapper-" + row);
     deleteIconWrapper.setAttribute("title", "Delete task");
+    deleteIconWrapper.setAttribute("aria-hidden", "true");
     deleteIconWrapper.style.display = "none";
     /*
     I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
@@ -291,6 +301,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var listContainer = document.getElementById("list-container");
     var listNode = document.getElementById("list-item-container-" + idNum);
     listNode.classList.add("hidden");
+    listNode.classList.setAttribute("aria-hidden", "true");
     //store value of <p> element (aka submitted task) in a string
     var taskString = document.getElementById("list-item-label-" + idNum).textContent.toString();
     // remove task key:value pair from app.store.submittedTasks object
@@ -356,10 +367,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     */
     setTimeout(function() {
       deleteIcon.classList.toggle("hidden");
+      deleteIcon.removeAttribute("aria-hidden");
       fakeCheckbox.classList.toggle("hidden");
+      fakeCheckbox.removeAttribute("aria-hidden");
     }, 25);
     pElement.classList.toggle("hidden");
+    pElement.removeAttribute("aria-hidden");
     inputElement.classList.toggle("hidden");
+    inputElement.setAttribute("aria-hidden", "true");
   }
 
   /*
@@ -381,9 +396,13 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     deleteIcon.style.display = "none";
     fakeCheckbox.style.display = "none";
     deleteIcon.classList.toggle("hidden");
+    deleteIcon.setAttribute("aria-hidden", "true");
     fakeCheckbox.classList.toggle("hidden");
+    fakeCheckbox.setAttribute("aria-hidden", "true");
     pElement.classList.toggle("hidden");
+    pElement.setAttribute("aria-hidden", "true");
     inputElement.classList.toggle("hidden");
+    inputElement.removeAttribute("aria-hidden");
     inputElement.focus();
     
     /* **********************
@@ -422,4 +441,15 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
       }
     }
   }
+   /*
+  ---------------------------------------
+  !----------AUTO-SCROLL LIST ----------!
+  ---------------------------------------
+  */
+  // Scroll to the bottom of the document
+  function autoScroll() {
+    window.scrollTo(0,document.body.scrollHeight);
+  }
+    
+  
 }());
