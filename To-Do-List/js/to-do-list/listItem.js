@@ -182,7 +182,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
    
     inputNode.onblur = function() { 
       var userInput = inputNode.value;
-       /*
+      /*
       If user clicks away from the field with a non-empty task, submit the task.
       */
       if (userInput !== "" && !submitFired) {
@@ -202,6 +202,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
       if (listContainer.children.length === 1 || listContainer.lastChild === listNode) {
         return;
       }
+
       /*
       Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
       */
@@ -302,7 +303,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var listContainer = document.getElementById("list-container");
     var listNode = document.getElementById("list-item-container-" + idNum);
     listNode.classList.add("hidden");
-    listNode.classList.setAttribute("aria-hidden", "true");
+    listNode.setAttribute("aria-hidden", "true");
     //store value of <p> element (aka submitted task) in a string
     var taskString = document.getElementById("list-item-label-" + idNum).textContent.toString();
     // remove task key:value pair from app.store.submittedTasks object
@@ -399,6 +400,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var inputElement = document.getElementById("list-item-input-" + idNum);
     var deleteIcon = document.getElementById("delete-icon-wrapper-" + idNum);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
+    var listNode = document.getElementById("list-item-container-" + idNum);
    
     inputElement.value = input;
     deleteIcon.style.display = "none";
@@ -446,6 +448,18 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         if (idNum.toString() === lastId) {
           addTask();
         }
+      }
+      if (listContainer.children.length === 1 || listContainer.lastChild === listNode) {
+        return;
+      }
+
+      /*
+      Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
+      */
+      if (userInput === "" && inputElement.classList.toString() === "list-item") {
+        // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
+        var flag = false;
+        deleteTask(idNum, flag);
       }
     }
   }

@@ -14,7 +14,7 @@ font-family: 'Quattrocento Sans', sans-serif;
 (logo)
 font-family: 'Montserrat', sans-serif;
 COLORS:
-header/footer background: #cfd8dc
+header/footer background: #rgb(207,216,220)
 header icon-default: #9e9e9e
 first list accent & first list icon hover: #2980b9
 first list notification background color: #e3f0f8
@@ -127,7 +127,7 @@ a > svg {
 ********************************************/
 .menu {
   width: 100%;
-  background-color: #cfd8dc;
+  background-color: rgba(207,216,220, .7);
   overflow: hidden;
 }
 
@@ -135,14 +135,14 @@ a > svg {
   text-align: center;
 }
 
+.logo-text {
+  fill: #2980b9;
+}
+
 .logo-arch {
   fill: transparent !important;
   stroke: #2980b9;
 }
-
-.logo-text { 
-  fill: url(#linear-primary);
-  } 
 
 /********************************************
 * 3.0 NAV
@@ -183,26 +183,27 @@ nav .icon-link {
   height: 40px;
   border: 1px solid #d6d6d6;
   outline: 0;
-  padding: 0;
   border-radius: 5px;
   background-color: white;
   /* return cursor to default for input field now that it's visible */
   cursor: text;
   width: 100%;
-  text-indent: 10px;
+  /* using padding left instead of text-indent because of MS Edge 38 text-indent bug*/
+  padding-left: 10px;
   box-shadow: inset 1px 1px 1px rgba(0,0,0,.2);
-  transition: width 1s ease;
+  transition: width 1s ease, padding-left 1s ease;
 }
 
 .search-box.hidden {
   /* Need to override max-height: 0, max-width:0, and opacity: 0 of .hidden class */
   max-height: 40px;
   border-color: transparent;
+  padding-left: 0;
   opacity: 1;
   width: 0;
   /* Don't want the text cursor until input field is active*/
   cursor: default;
-  transition: width 1s ease;
+  transition: width 1s ease, padding-left 1s ease;
 }
 
 .search-icon {
@@ -212,7 +213,7 @@ nav .icon-link {
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
-  fill: url(#linear-primary);
+  fill: #2980b9;
   transition: width .75s ease;
 }
 
@@ -239,11 +240,15 @@ nav .icon-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 2% 0;
 }
 
 @media (max-width: 895px) {
   .list-name {
     font-size: 1.5em;
+  }
+  nav .icon-link {
+    width: 20px;
   }
 }
 
@@ -255,14 +260,13 @@ nav .icon-link {
    nav {
     width: 100%;
     justify-content: flex-start;
-    margin: 2% 0;
   }
 }
 
 .list-name {
   display: inline-block;
   flex: 1 0 25%;
-  margin: 2% 0;
+  margin: 0;
   font-family: 'Quattrocento', serif;
   }
 
@@ -345,7 +349,12 @@ input[type="checkbox"] {
   transition: opacity 1s ease;
 }
 
-.list-item-container p.list-item {
+input.list-item {
+  margin-left: 2em;
+  padding-left: 20px;
+}
+
+.list-item-container p.list-item, input.list-item.hidden {
   padding-left: 0;
 }
 
@@ -367,7 +376,7 @@ a:hover, .checkbox, .add-task-container {
 
 /* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
 .list-item-container svg {
-  fill: url(#linear-secondary);
+  fill: #646464;
 }
 
 .list-item-container a {
@@ -474,6 +483,6 @@ input[type="text"]:focus.bounce {
 ********************************************/
 
 footer {
-  background-color: #cfd8dc;
+  background-color: rgba(207,216,220, .7);
   text-align: center;
 }
