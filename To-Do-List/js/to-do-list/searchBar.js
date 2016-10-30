@@ -53,7 +53,8 @@ var app = app? app : {
 
   // Updates the list contents to only display the tasks that contain the substring input by the user. If the input field is empty, all tasks are visible. If the user input does not match any tasks, no tasks are shown and the user is notified that there are no matching results.
   function filterList() {             
-      // if search box is not active, don't filter list.
+    console.log("entered filterList()");
+    // if search box is not active, don't filter list.
     if (searchBox.classList.contains("hidden")) {
       return;
     }
@@ -61,6 +62,7 @@ var app = app? app : {
     for (let prop in app.store.submittedTasks) {
       //get row number from keys in submittedTasks object, keys of form "row-x".
       var rowNum = prop.split("-")[1];
+      console.log(rowNum);
       let string = app.store.submittedTasks[prop].toLowerCase();
       let taskElem = document.getElementById("list-item-container-" + rowNum);
       //indexOf returns -1 if the substring is not contained in the string
@@ -88,6 +90,7 @@ var app = app? app : {
 
   // Checks to see if there are any matching results to the user's input. If at least one result matches (i.e. it is currently visible in the list and does not have the "hidden" class applied), then don't show the 'no results' notification in place of the list. Otherwise, if there are no matching results, display the notification in place of the list.
   function checkResults(subString) {
+    console.log(listContainer.children.length-1);
     //don't check the last child, since that's the blank input element automatically generated upon submitting a task.
     for (let i = 0; i < listContainer.children.length-1; i++) {
       if (!listContainer.children.item(i).classList.contains("hidden")) {
@@ -100,8 +103,8 @@ var app = app? app : {
         return;
       }
     }
-     //Check if there are any submitted tasks on the list and if the input field is blank to remove noResults
-    if (listContainer.children.length-1 === 0 && subString === "") {
+     //Check if the input field is blank to remove noResults
+    if (subString === "") {
       noResults.classList.add("hidden");
       noResults.setAttribute("aria-hidden", "true");
       noResults.classList.add("search");

@@ -168,7 +168,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     inputNode.setAttribute("type", "text");
     inputNode.setAttribute("id", "list-item-input-" + row);
     inputNode.setAttribute("class", "list-item");
-    inputNode.setAttribute("placeholder", "Write task here. Hit 'Enter' to submit.");
+    inputNode.setAttribute("placeholder", "Enter task here.");
    
     /* **********************
     CLICK AWAY TO SUBMIT IN CREATE MODE
