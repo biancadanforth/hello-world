@@ -1,14 +1,7 @@
 /*
 Using a ternary operator to declare variable 'app' as an empty object regardless of which script is run first. Pseudocode: If app already exists (first condition), then do nothing. If it doesn't, then create it as an object with a nested store object.
 */
-var app = app? app : {
-  store: { 
-    /*
-    The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter') in the list-item.js module, with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
-    */
-    submittedTasks: {}
-  }
-};
+var app = app ? app : {};
 
 //Wrap entire module in an immediately invoked function so global variables in this module don't pollute the global namespace for the application.
 !(function () {
@@ -59,12 +52,11 @@ var app = app? app : {
       return;
     }
     var subString = searchBox.value.toLowerCase();
-    for (let prop in app.store.submittedTasks) {
-      //get row number from keys in submittedTasks object, keys of form "row-x".
-      var rowNum = prop.split("-")[1];
-      console.log(rowNum);
-      let string = app.store.submittedTasks[prop].toLowerCase();
-      let taskElem = document.getElementById("list-item-container-" + rowNum);
+    var tasks = app.store.getTasks();
+    for (let taskId in tasks) {
+      console.log(taskId);
+      let string = tasks[taskId].text.toLowerCase();
+      let taskElem = document.getElementById("list-item-container-" + taskId);
       //indexOf returns -1 if the substring is not contained in the string
       //indexOf is case sensitive, so convert tasks to lowercase to check if all lowercase characters have been entered into the search field.
       if (string.indexOf(subString) === -1 && subString !== "") {

@@ -6,15 +6,7 @@ When the user deletes a task, a notification bar slides down from the top, givin
 /*
 Using a ternary operator to declare variable 'app' as an empty object regardless of which script is run first. Pseudocode: If app already exists (first condition), then do nothing. If it doesn't, then create it as an object with a nested store object.
 */
-var app = app? app : {
-  store: { 
-    /*
-    The submittedTasks object is appended with a new property every time the user submits a task (by hitting 'Enter') in the list-item.js module, with key: value pairs of the form: row-x: "Task content string". Deleting or completing a task removes the corresponding property from this object.
-    */
-    submittedTasks: {}
-  }
-};
-
+var app = app ? app : {};
 
 /*
 Wrap entire module in an immediately invoked function so global variables in this module don't pollute the global namespace for the application.
@@ -43,26 +35,23 @@ Wrap entire module in an immediately invoked function so global variables in thi
     /*
     Receive the unique task number (taskNum) and task string (taskString) from list-item module for the most recently deleted task
     */
-    var taskInfo = event.detail;
-    var taskNum = taskInfo.row;
-    var taskString = taskInfo.task;
-   
-    showNotifyBar(taskNum); 
+    var task = event.detail.task;
+    showNotifyBar(task.id); 
     
     /*
     If the user clicks undo, hide the notification bar and restore the task to the list in its original location.
     */
     undoLink.onclick = function() {
-      undo(taskNum, taskString);
+      undo(task);
     }
     // If the user clicks dismiss, hide the notification bar.
     dismissLink.onclick = function() {
-      hideNotifyBar(taskNum);
+      hideNotifyBar(task.id);
     };
     /*
-    If the user spam deletes a number of tasks at once, capture the taskNum for each task in deletedTaskNums and remove each element from the DOM.
+    If the user spam deletes a number of tasks at once, capture the task.id for each task in deletedTaskNums and remove each element from the DOM.
     */
-    deletedTaskNums.push(taskNum);
+    deletedTaskNums.push(task.id);
     
     /*
     Run clearDeleteBacklog only if no tasks have been deleted in a while. The delay must exceed the delay on notifyTimer
@@ -89,19 +78,20 @@ Wrap entire module in an immediately invoked function so global variables in thi
   /*
   If the user clicks the 'undo' link, hide the notification bar and restore the task to the list in its original location. taskNum is a number, taskString is a string.
   */
-  function undo(taskNum, taskString) {
-    var listNode = document.getElementById("list-item-container-" + taskNum);
+  function undo(task) {
+    var listNode = document.getElementById("list-item-container-" + task.id);
     listNode.classList.remove("hidden");
-    hideNotifyBar(taskNum);
+    hideNotifyBar(task.id);
     /*
-    remove task number (taskNum) from deletedTaskNums, so it isn't removed from the DOM when clearDeleteBacklog is executed.
+    remove task number (task.id) from deletedTaskNums, so it isn't removed from the DOM when clearDeleteBacklog is executed.
     */
-    var index = deletedTaskNums.indexOf(taskNum);
+    var index = deletedTaskNums.indexOf(task.id);
     deletedTaskNums.splice(index, 1);
     /*
     Add task back to submittedTasks object
     */
-    app.store.submittedTasks["row-" + taskNum] = taskString;
+    // app.store.submittedTasks["row-" + task.id] = task.text;
+    app.store.setTask(task.id, task);
     
     /* Create custom 'undo' event and dispatch it to all modules (specifically, to the searchBar module).
     */
