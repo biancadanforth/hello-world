@@ -303,9 +303,7 @@ nav .icon-link {
   justify-content: space-between;
   align-items: center;
   max-height: 1000px;
-  border-bottom-width: 1px;
-  border-color: #ccc;
-  border-style: solid;
+  border-bottom: 1px #ccc solid;
   /* hide flex items when this element is collapsing*/
   overflow: hidden;
   opacity: 1;
@@ -357,14 +355,17 @@ input[type="checkbox"] {
   transition: opacity 1s ease;
 }
 
-input.list-item {
+input.list-item, .no-results {
+  /*to left-align p.list-item for a submitted task with input.list-item for non-submitted tasks, margin-left and padding-left are set accordingly*/
+  /* margin-left must match margin-right of .checkbox */
   margin-left: 2em;
+  /* padding-left must match width of .checkbox*/
   padding-left: 20px;
   padding-top: 0;
   padding-bottom: 0;
 }
 
-.list-item-container p.list-item, input.list-item.hidden {
+.list-item-container p, input.list-item.hidden {
   padding-left: 0;
 }
 
@@ -426,18 +427,10 @@ input[type="text"], input[type="text"]:focus {
 }
 
 .no-results {
-  margin: 1em 2em;
-  padding-left: 20px;
-  border-bottom-width: 1px;
-  border-color: transparent;
-  border-style: solid;
-  opacity: 1;
-  transition: opacity 1s ease;
+  border-bottom: 1px transparent solid;
 }
 
 .no-results.hidden {
-  border: 0;
-  padding: 0;
   opacity: 0;
   transition: opacity 1s ease;
 }
