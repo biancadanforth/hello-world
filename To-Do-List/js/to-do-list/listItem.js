@@ -54,11 +54,15 @@ app.store = {
 
   getTaskCounter: function() {
     var counter = window.localStorage.getItem('taskCounter');
-    
+    var storedTasks = app.store.getTasks();
+    // First condition:
     // If the taskCounter key in localStorage hasn't yet been set it will
     // return null. Check for that here. We don't use truthy/falsey here
     // because logically the counter could be 0 which is falsey.
-    if (counter !== null) {
+    // Second condition:
+    // If there are no tasks stored in local storage, reset counter to 0.
+    // Can't just compare storedTasks object to {}, because {} is not a truly 'empty' object.
+    if (counter !== null && Object.keys(storedTasks).length) {
       return counter;
     } else {
       return 0;
@@ -298,13 +302,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     });
    
     inputElement.onblur = function() { 
+      if (submitFired) {
+        return;
+      }
       var userInput = inputElement.value;
       /*
       If user clicks away from the field with a non-empty task, submit the task.
       */
-      if (userInput !== "" && !submitFired) {
-        // reset submitFired flag
-        submitFired = false;
+      if (userInput !== "") {
         submitTask(userInput, taskId);
         //Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = taskId? If so, the submitted task is the last task on the list, so add a new task.
         // First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
@@ -561,14 +566,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     });
    
     inputElement.onblur = function() {
-      
+      if(submitFired) {
+        return;
+      }
       var userInput = inputElement.value;
        /*
       If user clicks away from the field with a non-empty task, submit the task.
       */
-      if (userInput !== "" && !submitFired) {
-        // reset submitFired flag
-        submitFired = false;
+      if (userInput !== "") {
         submitTask(userInput, idNum);
         /*
         Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = idNum? If so, the submitted task is the last task on the list, so add a new task.
@@ -593,8 +598,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
       */
       if (userInput === "" && inputElement.classList.toString() === "list-item") {
         // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
-        var flag = false;
-        deleteTask(idNum, flag);
+        deleteTask(idNum, false);
       }
     }
   }

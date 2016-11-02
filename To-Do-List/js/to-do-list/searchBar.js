@@ -80,7 +80,6 @@ var app = app ? app : {};
 
   // Checks to see if there are any matching results to the user's input. If at least one result matches (i.e. it is currently visible in the list and does not have the "hidden" class applied), then don't show the 'no results' notification in place of the list. Otherwise, if there are no matching results, display the notification in place of the list.
   function checkResults(subString) {
-    console.log(listContainer.children.length-1);
     //don't check the last child, since that's the blank input element automatically generated upon submitting a task.
     for (let i = 0; i < listContainer.children.length-1; i++) {
       if (!listContainer.children.item(i).classList.contains("hidden")) {
