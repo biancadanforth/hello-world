@@ -7,10 +7,11 @@ var storedTasksString = window.localStorage.getItem('submittedTasks');
 if (!storedTasksString) {
   var storedTasks = {};
   // Serialize object and store
-  //window.localStorage.setItem(JSON.stringify(storedTasks));
+  window.localStorage.setItem('submittedTasks', JSON.stringify(storedTasks));
 }
 
 app.store = {
+
   // Gets JSON string out of localStorage, unserializes it and returns it as a JavaScript Object.
   getTasks: function() {
     // Convert string representation of object back into a javascript object
@@ -22,7 +23,7 @@ app.store = {
 
   // Write tasks back into localStorage
   // tasks is an object mapping taskId to the Task object.
-  // submittedTasks object is of the form { <taskId>: Task, <taskId>: Task, ...} where
+  // submittedTasks object is of the form { <taskId>: Task, <taskId: Task, ...} where
   // Task object is defined as { <id>: Number, complete: Boolean, text: String }
   setTasks: function(tasks) {
     var tasksString = JSON.stringify(tasks);
@@ -53,12 +54,11 @@ app.store = {
 
   getTaskCounter: function() {
     var counter = window.localStorage.getItem('taskCounter');
-    var storedTasks = app.store.getTasks();
-    // Condition 1: Existence check of taskCounter - If the taskCounter key in localStorage hasn't yet been set it will
+    
+    // If the taskCounter key in localStorage hasn't yet been set it will
     // return null. Check for that here. We don't use truthy/falsey here
     // because logically the counter could be 0 which is falsey.
-    //Condition 2: Existence Check of storedTasks - If there are no submittedTasks in localStorage, then storedTasks is null, which is falsy. If submittedTasks exist, then it is truthy.
-    if (counter !== null && storedTasks) {
+    if (counter !== null) {
       return counter;
     } else {
       return 0;
@@ -129,7 +129,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     /*
     Creates a new, unique taskid#list-item-container-x <div> inside the id#list-container <div> to wrap each task in
     */
-    var listElement = createlistElement(taskId);
+    var listElement = createListElement(taskId);
     listContainer.appendChild(listElement);
 
     /*
@@ -150,16 +150,12 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     // The icon must be loaded before we can check our items.
     // Pass a callback to our load icon function so it will automatically check itself.
     var checkSelfIfNeeded = function() {
-      var storedTasks = app.store.getTasks();
-      if (storedTasks) {
-        var task = app.store.getTask(taskId);
-        // If we have this task in localStorage we can then see if it has been stored while checked
-        if (task && task.complete) {
-          // Complete the task without re-storing it in localStorage
-          completeTask(taskId, true);
-        }
+      var task = app.store.getTask(taskId);
+      // If we have this task in localStorage we can then see if it has been stored while checked
+      if (task && task.complete) {
+        // Complete the task without re-storing it in localStorage
+        completeTask(taskId, true);
       }
-      
     }
     var checkmarkIcon = loadIcon("/images/to-do-list/checkmark.svg", fakeCheckbox, checkSelfIfNeeded);
     /*
@@ -169,7 +165,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     /*
     Creates a new, unique input text field, <input type="text">, inside id#list-item-container-x <div>
     */
-    var inputElement = createinputElement(taskId, listContainer, listElement);
+    var inputElement = createInputElement(taskId, listContainer, listElement);
     listElement.appendChild(inputElement);
     inputElement.focus();
 
@@ -229,7 +225,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   /*
   Creates a new, unique id#list-item-container-x div; taskId is a number.
   */
-  function createlistElement(taskId) {
+  function createListElement(taskId) {
     var listElement = document.createElement("div");
     listElement.setAttribute("id", "list-item-container-" + taskId);
     listElement.setAttribute("class", "list-item-container hidden");
@@ -284,16 +280,55 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   /*
   Creates a new, unique input text field, <input type="text"> with which the user can enter and submit a task, adding a new task (if the submitted task is the last task) or remove an empty task (that isn't the last task) when the user clicks away; taskId is a number.
   */
-  function createinputElement(taskId, listContainer, listElement) {
+  function createInputElement(taskId, listContainer, listElement) {
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "text");
     inputElement.setAttribute("id", "list-item-input-" + taskId);
     inputElement.setAttribute("class", "list-item");
     inputElement.setAttribute("placeholder", "Enter task here.");
    
-    inputElement.onblur = function() {
-      checkToSubmit(taskId);
-    }
+    /* **********************
+    CLICK AWAY TO SUBMIT IN CREATE MODE
+    ********************************
+    */
+    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
+    var submitFired = false;
+    document.body.addEventListener('submit', function() {
+      submitFired = true;
+    });
+   
+    inputElement.onblur = function() { 
+      var userInput = inputElement.value;
+      /*
+      If user clicks away from the field with a non-empty task, submit the task.
+      */
+      if (userInput !== "" && !submitFired) {
+        // reset submitFired flag
+        submitFired = false;
+        submitTask(userInput, taskId);
+        //Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = taskId? If so, the submitted task is the last task on the list, so add a new task.
+        // First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
+        var idString = listContainer.lastChild.id;
+        //id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
+        var lastId = idString.split("-")[3];
+        //taskId is a number, lastId is a string
+        if (taskId.toString() === lastId) {
+          addTask();
+        }
+      }
+      if (listContainer.children.length === 1 || listContainer.lastChild === listElement) {
+        return;
+      }
+
+      /*
+      Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
+      */
+      if (inputElement.value === "" && inputElement.classList.toString() === "list-item") {
+        // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
+        var flag = false;
+        deleteTask(taskId, flag);
+      }
+    };
     
     /*
     Listen for when user presses the 'Enter' key, if input has a non-empty value, submitTask... If it's the last task, add a new task. If the submitted task is empty, add keyframes bounce animation.
@@ -486,45 +521,6 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     inputElement.setAttribute("aria-hidden", "true");
   }
 
-  // Callback function to submit a non-empty task when the user clicks away from the input element. Adds a new, empty task if the submitted task is the last on the list. Removes an empty task from the list when the user clicks away, provided the task is not the last task on the list. idNum is a number.
-  function checkToSubmit(idNum) { 
-    var listElement = document.getElementById("list-item-container-" + idNum);
-    var inputElement = document.getElementById("list-item-input-" + idNum);
-
-    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
-    var submitFired = false;
-    document.body.addEventListener('submit', function() {
-      submitFired = true;
-    });
-    var userInput = inputElement.value;
-    
-    // if user clicks away (as opposed to hitting 'Enter') on a non-empty task, submit the task.
-    if (userInput !== "" && !submitFired) {
-      // reset submitFired flag
-      submitFired = false;
-      submitTask(userInput, taskId);
-      //Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = taskId? If so, the submitted task is the last task on the list, so add a new task.
-      // First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
-      var idString = listContainer.lastChild.id;
-      //id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
-      var lastId = idString.split("-")[3];
-      //taskId is a number, lastId is a string
-      if (taskId.toString() === lastId) {
-        addTask();
-      }
-    }
-    if (listContainer.children.length === 1 || listContainer.lastChild === listElement) {
-      return;
-    }
-    /*
-    Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
-    */
-    if (inputElement.value === "" && inputElement.classList.toString() === "list-item") {
-      // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
-      deleteTask(taskId, false);
-    }
-  }
-
   /*
   -------------------------------------
   !----------EDITING A TASK ----------!
@@ -534,13 +530,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   /*
   Edits a task by replacing the pElement with the inputElement and hiding the fakeCheckbox and deleteIcon; input is a string and idNum is a number.
   */
-  function editTask(userInput, idNum) {
+  function editTask(input, idNum) {
     var pElement = document.getElementById("list-item-label-" + idNum);
     var inputElement = document.getElementById("list-item-input-" + idNum);
     var deleteIcon = document.getElementById("delete-icon-wrapper-" + idNum);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
     var listElement = document.getElementById("list-item-container-" + idNum);
-    inputElement.value = userInput;
+   
+    inputElement.value = input;
     deleteIcon.style.display = "none";
     fakeCheckbox.style.display = "none";
     deleteIcon.classList.toggle("hidden");
@@ -552,10 +549,44 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     inputElement.classList.toggle("hidden");
     inputElement.removeAttribute("aria-hidden");
     inputElement.focus();
+    
+    /* **********************
+    CLICK AWAY TO SUBMIT IN EDIT MODE
+    ********************************
+    */
+    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
+    var submitFired = false;
+    document.body.addEventListener('submit', function() {
+      submitFired = true;
+    });
    
     inputElement.onblur = function() {
-      checkToSubmit(idNum);
-    }
+      
+      var userInput = inputElement.value;
+       /*
+      If user clicks away from the field with a non-empty task, submit the task.
+      */
+      if (userInput !== "" && !submitFired) {
+        // reset submitFired flag
+        submitFired = false;
+        submitTask(userInput, idNum);
+        /*
+        Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = idNum? If so, the submitted task is the last task on the list, so add a new task.
+        First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
+        */
+        var idString = listContainer.lastChild.id;
+        /*
+        id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
+        */
+        var lastId = idString.split("-")[3];
+        //idNum is a number, lastId is a string
+        if (idNum.toString() === lastId) {
+          addTask();
+        }
+      }
+      if (listContainer.children.length === 1 || listContainer.lastChild === listElement) {
+        return;
+      }
 
       /*
       Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
@@ -566,7 +597,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         deleteTask(idNum, flag);
       }
     }
-
+  }
    /*
   ---------------------------------------
   !----------AUTO-SCROLL LIST ----------!

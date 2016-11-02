@@ -46,7 +46,6 @@ var app = app ? app : {};
 
   // Updates the list contents to only display the tasks that contain the substring input by the user. If the input field is empty, all tasks are visible. If the user input does not match any tasks, no tasks are shown and the user is notified that there are no matching results.
   function filterList() {             
-    console.log("entered filterList()");
     // if search box is not active, don't filter list.
     if (searchBox.classList.contains("hidden")) {
       return;
@@ -54,7 +53,6 @@ var app = app ? app : {};
     var subString = searchBox.value.toLowerCase();
     var tasks = app.store.getTasks();
     for (let taskId in tasks) {
-      console.log(taskId);
       let string = tasks[taskId].text.toLowerCase();
       let taskElem = document.getElementById("list-item-container-" + taskId);
       //indexOf returns -1 if the substring is not contained in the string
