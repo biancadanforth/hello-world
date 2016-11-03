@@ -83,6 +83,8 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
 !(function() {
   // Initializes global variables
   var listContainer = document.getElementById("list-container");
+  var globalCheckmarkIconWrapper = createCheckmarkIconWrapper();
+  var globalCheckmarkIcon = loadIcon("/images/to-do-list/checkmark.svg", globalCheckmarkIconWrapper);
 
   var existingTasks = app.store.getTasks();
 
@@ -122,6 +124,11 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     createTaskElements(taskId);
     // mark the tasks as submitted
     submitTask(task.text, taskId, true);
+    // if the task is marked as completed, complete the task
+    if (task.complete) {
+        // Complete the task without re-storing it in localStorage
+        completeTask(taskId, true);
+      }
   }
 
   // Creates the first editable task on the screen
@@ -149,19 +156,20 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     listElement.appendChild(fakeCheckbox);
 
     /*
+    Creates a new, unique wrapper element, <span>, inside fakeCheckbox element to wrap the checkmark icon. This enables the completeTask function to toggle the wrapper's visibility, instead of the checkmark <svg> element itself. This means that whenever the checkmark <svg> is retrieved from the web server in the loadIcon function, it will display, and there is no chance the script is attempting to access the icon before that (which the completeTask function was previously doing).
+    */
+    // Clone the globalCheckmarkIconWrapper node (and it's child node, the globalCheckmarkIcon <svg>) so that each clone can have a unique ID number (taskId).
+    var checkmarkIconWrapper = globalCheckmarkIconWrapper.cloneNode(true);
+    console.log(checkmarkIconWrapper);
+    checkmarkIconWrapper.setAttribute("id", "checkmark-icon-wrapper-" + taskId);
+    fakeCheckbox.appendChild(checkmarkIconWrapper);
+
+    /*
     Creates a new, unique checkmark icon, <svg>, inside the fakeCheckbox, <span>. This requires obtaining the XML document containing the <svg> element from the web server.
     */
-    // The icon must be loaded before we can check our items.
-    // Pass a callback to our load icon function so it will automatically check itself.
-    var checkSelfIfNeeded = function() {
-      var task = app.store.getTask(taskId);
-      // If we have this task in localStorage we can then see if it has been stored while checked
-      if (task && task.complete) {
-        // Complete the task without re-storing it in localStorage
-        completeTask(taskId, true);
-      }
-    }
-    var checkmarkIcon = loadIcon("/images/to-do-list/checkmark.svg", fakeCheckbox, checkSelfIfNeeded);
+    // var checkmarkIcon = loadIcon("/images/to-do-list/checkmark.svg", checkmarkIconWrapper);
+    // var checkmarkIcon = globalCheckmarkIcon;
+    // checkmarkIconWrapper.appendChild(checkmarkIcon);
     /*
     Note: Cannot add classes/ids in JS on an external XML resource using setAttribute like the others; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
     */
@@ -266,7 +274,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   /*
   Creates a new, unique icon, <svg>, inside the parentElement. This requires obtaining the XML document containing the <svg> element from the web server. url is a string, parentElement is an HTML element
   */
-  function loadIcon(url, parentElement, callback) {
+  function loadIcon(url, parentElement) {
     var iconRequest = new XMLHttpRequest();
     iconRequest.open("GET", url, true);
     iconRequest.overrideMimeType("image/svg+xml");
@@ -275,10 +283,15 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         var icon = iconRequest.responseXML.documentElement;
         icon.setAttribute("aria-hidden", "true");
         parentElement.appendChild(icon);
-        callback ? callback() : null;
       }
     }
     iconRequest.send();
+  }
+
+  function createCheckmarkIconWrapper() {
+    var checkmarkIconWrapper = document.createElement("span");
+    checkmarkIconWrapper.setAttribute("class", "checkmark-icon-wrapper");
+    return checkmarkIconWrapper;
   }
 
   /*
@@ -291,16 +304,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     inputElement.setAttribute("class", "list-item");
     inputElement.setAttribute("placeholder", "Enter task here.");
    
-    /* **********************
-    CLICK AWAY TO SUBMIT IN CREATE MODE
-    ********************************
-    */
-    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
+   
+    // Initialize flag 'submitFired' to prevent calling submitTask twice. This happens when the user hits 'enter' to submit a task: it fires the inputElement.onkeyup event AND the inputElement.onblur event. When submitFired is true, the 'enter' key has been hit, so exit the inputElement.onblur callback function.
     var submitFired = false;
     document.body.addEventListener('submit', function() {
       submitFired = true;
     });
    
+    // Click away to submit, at task creation
     inputElement.onblur = function() { 
       if(submitFired) {
         return;
@@ -424,11 +435,10 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   */
   function completeTask(idNum, skipSave) {
     var realCheckbox = document.getElementById("real-checkbox-" + idNum);
-    var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
-    var checkmark = fakeCheckbox.firstChild;
+    var checkmarkIconWrapper = document.getElementById("checkmark-icon-wrapper-" + idNum);
     if (realCheckbox.checked === false) {
       realCheckbox.checked = true;
-      checkmark.style.visibility = "visible";
+      checkmarkIconWrapper.style.visibility = "visible";
       document.getElementById("list-item-label-" + idNum).classList.add("complete");
       if (!skipSave) {
         var task = app.store.getTask(idNum);
@@ -437,7 +447,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
       }
     } else {
       realCheckbox.checked = false;
-      checkmark.style.visibility = "hidden";
+      checkmarkIconWrapper.style.visibility = "hidden";
       document.getElementById("list-item-label-" + idNum).classList.remove("complete");
       if (!skipSave) {
         var task = app.store.getTask(idNum);
@@ -478,7 +488,6 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     update global nested object 'app.store' to pass data between modules
     */
     if (!skipSave) {
-      // app.store.submittedTasks["row-" + idNum] = input;
       // Create a task object
       var task = {id: idNum, complete: realCheckbox.checked, text: input};
       app.store.setTask(idNum, task);      
@@ -500,53 +509,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     inputElement.setAttribute("aria-hidden", "true");
   }
 
-  /*
-  -------------------------------------
-  !----------EDITING A TASK ----------!
-  -------------------------------------
-  */
-  
-  /*
-  Edits a task by replacing the pElement with the inputElement and hiding the fakeCheckbox and deleteIcon; input is a string and idNum is a number.
-  */
-  function editTask(input, idNum) {
-    var pElement = document.getElementById("list-item-label-" + idNum);
-    var inputElement = document.getElementById("list-item-input-" + idNum);
-    var deleteIcon = document.getElementById("delete-icon-wrapper-" + idNum);
-    var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
-    var listElement = document.getElementById("list-item-container-" + idNum);
-   
-    inputElement.value = input;
-    deleteIcon.style.display = "none";
-    fakeCheckbox.style.display = "none";
-    deleteIcon.classList.toggle("hidden");
-    deleteIcon.setAttribute("aria-hidden", "true");
-    fakeCheckbox.classList.toggle("hidden");
-    fakeCheckbox.setAttribute("aria-hidden", "true");
-    pElement.classList.toggle("hidden");
-    pElement.setAttribute("aria-hidden", "true");
-    inputElement.classList.toggle("hidden");
-    inputElement.removeAttribute("aria-hidden");
-    inputElement.focus();
-    
-    /* **********************
-    CLICK AWAY TO SUBMIT IN EDIT MODE
-    ********************************
-    */
-    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
-    var submitFired = false;
-    document.body.addEventListener('submit', function() {
-      submitFired = true;
-    });
-   
-    inputElement.onblur = function() {
-      if(submitFired) {
-        return;
-      }
-      checkToSubmit(idNum);
-    }
-  }
-
+  // When the user clicks away from editing an input field, a few things can happen depending on context - particularly the value of the inputElement and whether or not it's the last item on the list. idNum is a number.
   function checkToSubmit(idNum) {
     var inputElement = document.getElementById("list-item-input-" + idNum);
     var listElement = document.getElementById("list-item-container-" + idNum);
@@ -581,6 +544,51 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
         deleteTask(idNum, false);
       }
+  }
+
+
+  /*
+  -------------------------------------
+  !----------EDITING A TASK ----------!
+  -------------------------------------
+  */
+  
+  /*
+  Edits a task by replacing the pElement with the inputElement and hiding the fakeCheckbox and deleteIcon; input is a string and idNum is a number.
+  */
+  function editTask(input, idNum) {
+    var pElement = document.getElementById("list-item-label-" + idNum);
+    var inputElement = document.getElementById("list-item-input-" + idNum);
+    var deleteIcon = document.getElementById("delete-icon-wrapper-" + idNum);
+    var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
+    var listElement = document.getElementById("list-item-container-" + idNum);
+   
+    inputElement.value = input;
+    deleteIcon.style.display = "none";
+    fakeCheckbox.style.display = "none";
+    deleteIcon.classList.toggle("hidden");
+    deleteIcon.setAttribute("aria-hidden", "true");
+    fakeCheckbox.classList.toggle("hidden");
+    fakeCheckbox.setAttribute("aria-hidden", "true");
+    pElement.classList.toggle("hidden");
+    pElement.setAttribute("aria-hidden", "true");
+    inputElement.classList.toggle("hidden");
+    inputElement.removeAttribute("aria-hidden");
+    inputElement.focus();
+    
+    // initialize flag 'submitFired' to prevent calling submitTask twice. This happens when the user hits 'enter' to submit a task: it fires the inputElement.onkeyup event AND the inputElement.onblur event. When submitFired is true, the 'enter' key has been hit, so exit the inputElement.onblur callback function.
+    var submitFired = false;
+    document.body.addEventListener('submit', function() {
+      submitFired = true;
+    });
+   
+    //Click away to submit, at task edit
+    inputElement.onblur = function() {
+      if(submitFired) {
+        return;
+      }
+      checkToSubmit(idNum);
+    }
   }
 
    /*
