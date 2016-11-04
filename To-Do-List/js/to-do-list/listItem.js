@@ -122,6 +122,11 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     createTaskElements(taskId);
     // mark the tasks as submitted
     submitTask(task.text, taskId, true);
+
+    if (task.complete) {
+      // Complete the task, but don't re-save it to localStorage
+      completeTask(taskId, true);
+    }
   }
 
   // Creates the first editable task on the screen
@@ -148,20 +153,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     var fakeCheckbox = createFakeCheckbox(taskId);
     listElement.appendChild(fakeCheckbox);
 
+    // checkmarkIconWrapper is necessary
+    var checkmarkIconWrapper = createCheckmarkIconWrapper(taskId);
+    fakeCheckbox.appendChild(checkmarkIconWrapper);
+
     /*
-    Creates a new, unique checkmark icon, <svg>, inside the fakeCheckbox, <span>. This requires obtaining the XML document containing the <svg> element from the web server.
+    Creates a new, unique checkmark icon, <svg>, inside the checkmarkIconWrapper, <span>. This requires obtaining the XML document containing the <svg> element from the web server.
     */
-    // The icon must be loaded before we can check our items.
-    // Pass a callback to our load icon function so it will automatically check itself.
-    var checkSelfIfNeeded = function() {
-      var task = app.store.getTask(taskId);
-      // If we have this task in localStorage we can then see if it has been stored while checked
-      if (task && task.complete) {
-        // Complete the task without re-storing it in localStorage
-        completeTask(taskId, true);
-      }
-    }
-    var checkmarkIcon = loadIcon("/images/to-do-list/checkmark.svg", fakeCheckbox, checkSelfIfNeeded);
+    loadIcon("/images/to-do-list/checkmark.svg", checkmarkIconWrapper);
     /*
     Note: Cannot add classes/ids in JS on an external XML resource using setAttribute like the others; just target parent class and use descendant selector for styling: e.g. .parent svg {..}.
     */
@@ -263,10 +262,17 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     return fakeCheckbox;
   }
 
+  function createCheckmarkIconWrapper(taskId) {
+    var checkmarkIconWrapper = document.createElement("span");
+    checkmarkIconWrapper.setAttribute("class", "checkmark-icon-wrapper");
+    checkmarkIconWrapper.setAttribute("id", "checkmark-icon-wrapper-" + taskId);
+    return checkmarkIconWrapper;
+  }
+
   /*
   Creates a new, unique icon, <svg>, inside the parentElement. This requires obtaining the XML document containing the <svg> element from the web server. url is a string, parentElement is an HTML element
   */
-  function loadIcon(url, parentElement, callback) {
+  function loadIcon(url, parentElement) {
     var iconRequest = new XMLHttpRequest();
     iconRequest.open("GET", url, true);
     iconRequest.overrideMimeType("image/svg+xml");
@@ -275,7 +281,6 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         var icon = iconRequest.responseXML.documentElement;
         icon.setAttribute("aria-hidden", "true");
         parentElement.appendChild(icon);
-        callback ? callback() : null;
       }
     }
     iconRequest.send();
@@ -302,37 +307,10 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
     });
    
     inputElement.onblur = function() { 
-      if (submitFired) {
+      if(submitFired) {
         return;
       }
-      var userInput = inputElement.value;
-      /*
-      If user clicks away from the field with a non-empty task, submit the task.
-      */
-      if (userInput !== "") {
-        submitTask(userInput, taskId);
-        //Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "list-item-container-x". Does x = taskId? If so, the submitted task is the last task on the list, so add a new task.
-        // First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
-        var idString = listContainer.lastChild.id;
-        //id name is of form: "list-item-container-x", so want 4th element in array (indexes at 0) returned by element.split
-        var lastId = idString.split("-")[3];
-        //taskId is a number, lastId is a string
-        if (taskId.toString() === lastId) {
-          addTask();
-        }
-      }
-      if (listContainer.children.length === 1 || listContainer.lastChild === listElement) {
-        return;
-      }
-
-      /*
-      Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
-      */
-      if (inputElement.value === "" && inputElement.classList.toString() === "list-item") {
-        // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
-        var flag = false;
-        deleteTask(taskId, flag);
-      }
+      checkToSubmit(taskId);
     };
     
     /*
@@ -367,6 +345,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         }, 1000);
       }
     };
+
     return inputElement;
   }
 
@@ -451,10 +430,10 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
   function completeTask(idNum, skipSave) {
     var realCheckbox = document.getElementById("real-checkbox-" + idNum);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + idNum);
-    var checkmark = fakeCheckbox.firstChild;
+    var checkmarkIconWrapper = document.getElementById("checkmark-icon-wrapper-" + idNum);
     if (realCheckbox.checked === false) {
       realCheckbox.checked = true;
-      checkmark.style.visibility = "visible";
+      checkmarkIconWrapper.style.visibility = "visible";
       document.getElementById("list-item-label-" + idNum).classList.add("complete");
       if (!skipSave) {
         var task = app.store.getTask(idNum);
@@ -463,7 +442,7 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
       }
     } else {
       realCheckbox.checked = false;
-      checkmark.style.visibility = "hidden";
+      checkmarkIconWrapper.style.visibility = "hidden";
       document.getElementById("list-item-label-" + idNum).classList.remove("complete");
       if (!skipSave) {
         var task = app.store.getTask(idNum);
@@ -569,7 +548,14 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
       if(submitFired) {
         return;
       }
-      var userInput = inputElement.value;
+      checkToSubmit(idNum);
+    }
+  }
+
+  function checkToSubmit(idNum) {
+    var inputElement = document.getElementById("list-item-input-" + idNum);
+    var listElement = document.getElementById("list-item-container-" + idNum);
+    var userInput = inputElement.value;
        /*
       If user clicks away from the field with a non-empty task, submit the task.
       */
@@ -600,8 +586,8 @@ The ! at the start of the line allows Javascript ASI to kick in on the previous 
         // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
         deleteTask(idNum, false);
       }
-    }
   }
+
    /*
   ---------------------------------------
   !----------AUTO-SCROLL LIST ----------!
