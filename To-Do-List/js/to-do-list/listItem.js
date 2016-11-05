@@ -173,7 +173,7 @@ app.store = {
     var taskId = sortable[i][0];
     var task = sortable[i][1];
     
-    createTaskElements(taskId);
+    assembleTaskElements(taskId);
 
     submitTask(task.text, taskId, true);
 
@@ -186,12 +186,18 @@ app.store = {
   // Creates the first editable task on the screen
   addTask();
   
+  /* 
+  -------------------------------------------------------
+  !---------- ASSEMBLING EACH TASK'S ELEMENTS ----------!
+  -------------------------------------------------------
+  */
+
   /*
-  * Creates the set of elements to form a task using a consistent taskId
-  * which may be new (from addTask) or old, retrieved from localStorage.
+  * Assembles the set of elements to form a task using a consistent taskId
+  * which may be new (from addTask(..)) or old, retrieved from localStorage.
   * taskId is a number. Reference: http://jsfiddle.net/g79ssyqv/12/.
   */
-  function createTaskElements(taskId) {
+  function assembleTaskElements(taskId) {
 
     var taskContainerElement = createtaskContainerElement(taskId);
     listContainer.appendChild(taskContainerElement);
@@ -225,7 +231,7 @@ app.store = {
 
     /*
     * deleteIconWrapper is necessary to target/style the delete icon
-    * using a descendant selector in CSS without needing to change
+    * (using a descendant selector in CSS) without needing to change
     * the contents of the svg XML document.
     */
     var deleteIconWrapper = createDeleteIconWrapper(taskId);
@@ -235,13 +241,10 @@ app.store = {
     * Load delete icon and append it to deleteIconWrapper when it's
     * done loading.
     */
-    var deleteIcon = loadIcon(
-      "/images/to-do-list/delete-icon.svg",
-      deleteIconWrapper
-    );
+    loadIcon("/images/to-do-list/delete-icon.svg", deleteIconWrapper);
 
     /*
-    * Now that all of the elements for the "task-container-x"
+    * Now that all of the elements in the "task-container-x"
     * parent element have been added to the DOM,
     * we can add a transition!
     */
@@ -253,23 +256,24 @@ app.store = {
 
   /* 
   -------------------------------------
-  !----------ADDING A TASK  ----------!
+  !---------- ADDING A TASK ----------!
   -------------------------------------
   */
   
-  // Used only when creating new tasks, not for recreating tasks retrieved from localStorage
+  /* Used only when creating new tasks, not for recreating tasks 
+  * retrieved from localStorage
+  */
   function addTask() {
-    // Auto scroll to bottom of list when it is extended by adding a new task
     autoScroll();
     var taskId = app.store.getTaskCounter();
-    createTaskElements(taskId);
+    assembleTaskElements(taskId);
     app.store.incrementTaskCounter();
   }
 
   /*
-  ------------------------------------------------------
-  !----------CREATING ELEMENTS FOR EACH TASK ----------!
-  ------------------------------------------------------
+  -----------------------------------------------------------------
+  !---------- CREATING ELEMENTS THAT COMPRISE EACH TASK ----------!
+  -----------------------------------------------------------------
   */
 
    /*
@@ -296,12 +300,12 @@ app.store = {
   }
 
   /*
-  * Creates a new, unique -fake- checkbox that the user can click to complete
-  * a task; taskId is a number. fakeCheckbox is a <span> element.
+  * Creates a new, unique -fake- checkbox that the user can click to 
+  * complete a task; taskId is a number. fakeCheckbox is a <span> element.
   */
   function createFakeCheckbox(taskId) {
     var fakeCheckbox = document.createElement("span");
-    // user can't interact with checkbox until they've submitted a task
+    // User can't interact with checkbox until they've submitted a task
     fakeCheckbox.setAttribute("class", "checkbox hidden");
     fakeCheckbox.setAttribute("id", "fake-checkbox-" + taskId);
     fakeCheckbox.setAttribute("title", "Complete task");
@@ -321,21 +325,24 @@ app.store = {
   function createCheckmarkIconWrapper(taskId) {
     var checkmarkIconWrapper = document.createElement("span");
     checkmarkIconWrapper.setAttribute("class", "checkmark-icon-wrapper");
-    checkmarkIconWrapper.setAttribute("id", "checkmark-icon-wrapper-" + taskId);
+    checkmarkIconWrapper.setAttribute("id", "checkmark-icon-wrapper-" 
+      + taskId);
     return checkmarkIconWrapper;
   }
 
   /*
-  * Creates a new, unique icon, <svg>, inside the parentElement. This requires
-  * obtaining the XML document containing the <svg> element from the
-  * web server. url is a string, parentElement is an HTML element.
+  * Creates a new, unique icon, <svg>, inside the parentElement.
+  * This requires obtaining the XML document containing the <svg> 
+  * element from the web server. url is a string, parentElement is
+  * an HTML element.
   */
   function loadIcon(url, parentElement) {
     var iconRequest = new XMLHttpRequest();
     iconRequest.open("GET", url, true);
     iconRequest.overrideMimeType("image/svg+xml");
     iconRequest.onreadystatechange = function() {
-      if (iconRequest.readyState === XMLHttpRequest.DONE && iconRequest.status === 200) {
+      if (iconRequest.readyState === XMLHttpRequest.DONE 
+        && iconRequest.status === 200) {
         var icon = iconRequest.responseXML.documentElement;
         icon.setAttribute("aria-hidden", "true");
         parentElement.appendChild(icon);
@@ -345,82 +352,57 @@ app.store = {
   }
 
   /*
-  * Creates a new, unique input text field, <input type="text"> with which the user
-  * can submit a task (by clicking away or hitting 'enter'). Checks to add a new task 
-  * (if the submitted task is the last task) or remove an empty task (that isn't
-  * the last task) when the user clicks away; taskId is a number.
+  * Creates a new, unique input text field with which the user can
+  * submit a task (by clicking away or hitting 'enter').
+  * taskId is a number; inputElement is an <input type="text"> 
+  * element.
   */
-  function createInputElement(taskId, taskContainerElement) {
+  function createInputElement(taskId) {
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "text");
     inputElement.setAttribute("id", "list-item-input-" + taskId);
     inputElement.setAttribute("class", "list-item");
     inputElement.setAttribute("placeholder", "Enter task here.");
    
-    /* **********************
-    CLICK AWAY TO SUBMIT IN CREATE MODE
-    ********************************
+    /*
+    * Initialize flag 'submitFired' to prevent calling submitTask 
+    * twice. When the user hits 'enter' to submit a task, it fires
+    * the inputElement.onkeyup and the inputElement.onblur event.
+    * When submitFired is true, the 'enter' key has been hit.
     */
-    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
     var submitFired = false;
     document.body.addEventListener('submit', function() {
       submitFired = true;
     });
    
+    // Click to submit event listener
     inputElement.onblur = function() { 
       if(submitFired) {
         return;
       }
-      checkToSubmit(taskId);
+      clickToSubmit(taskId);
     };
     
-    /*
-    Listen for when user presses the 'Enter' key, if input has a non-empty value, submitTask... If it's the last task, add a new task. If the submitted task is empty, add keyframes bounce animation.
-    */
+    // Enter to submit event listener
     inputElement.onkeyup = function(event) {
       var userInput = inputElement.value;
-      if (userInput !== "" && event.keyCode === 13) {
-        var submitEvent = new CustomEvent('submit');
-        document.body.dispatchEvent(submitEvent);
-        submitTask(userInput, taskId);
-        /*
-        Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "task-container-x". Does x = taskId? If so, the submitted task is the last task on the list, so add a new task.
-        First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
-        */
-        var idString = listContainer.lastChild.id;
-        /*
-        id name is of form: "task-container-x", so want 4th element in array (indexes at 0) returned by element.split
-        */
-        var lastId = idString.split("-")[2];
-        //taskId is a number, lastId is a string
-        if (taskId.toString() === lastId) {
-          addTask();
-        }
-      } else if (userInput === "" && event.keyCode === 13) {
-        inputElement.classList.add("bounce");
-        setTimeout(function() {
-          /*
-          remove the class so animation can occur as many times as user triggers event, delay must be longer than the animation duration and any delay.
-          */
-          inputElement.classList.remove("bounce");
-        }, 1000);
-      }
+      enterToSubmit(userInput, taskId);
     };
 
     return inputElement;
   }
 
   /*
-  Creates a new, unique element, <p>, initially hidden, to replace the <input> element when the task is submitted. The user can edit the task by clicking this element; taskId is a number.
+  * Creates a new, unique paragraph element initially hidden, to
+  * replace the <input> element when the task is submitted. The 
+  * user can edit the task by clicking this element.
+  * taskId is a number. pElement is a <p> element.
   */
   function createPElement(taskId) {
     var pElement = document.createElement("p");
     pElement.setAttribute("id", "list-item-label-" + taskId);
     pElement.setAttribute("class", "list-item hidden");
     pElement.setAttribute("aria-hidden", "true");
-    /*
-    grab <p> element, 'pElement' and replace it with <input> element 'inputElement', without removing either from the DOM.
-    */
     pElement.onclick = function() {
       var userInput = pElement.textContent;
       editTask(userInput, taskId);
@@ -429,11 +411,13 @@ app.store = {
   }
 
   /*
-  Creates a new, unique element, <a>, to wrap the deleteIcon svg. The user can delete a task by clicking this element; taskId is a number.
+  * Creates a new, unique wrapper element initially hidden, to
+  * wrap the deleteIcon svg. The user can delete a task by
+  * clicking this element. taskId is a number.
+  * deleteIconWrapper is an <a> element.
   */
   function createDeleteIconWrapper(taskId) {
     var deleteIconWrapper = document.createElement("a");
-    // user can't interact with delete icon until they've entered a task
     deleteIconWrapper.setAttribute("class", "hidden");
     deleteIconWrapper.setAttribute("id", "delete-icon-wrapper-" + taskId);
     deleteIconWrapper.setAttribute("title", "Delete task");
@@ -441,7 +425,9 @@ app.store = {
     deleteIconWrapper.setAttribute("aria-label", "Delete");
     deleteIconWrapper.style.display = "none";
     /*
-    I have to wrap deleteTask(..) in another function so I can pass in an argument but avoid immediately executing the function at the same time.
+    * I have to wrap deleteTask(..) in another function so I can 
+    * pass in an argument but avoid immediately executing the 
+    * function at the same time.
     */
     deleteIconWrapper.onclick = function() {
       var flag = true;
@@ -451,28 +437,41 @@ app.store = {
   }
 
   /*
-  --------------------------------------
-  !----------DELETING A TASK ----------!
-  --------------------------------------
+  ---------------------------------------
+  !---------- DELETING A TASK ----------!
+  ---------------------------------------
   */
 
   /*
-  Deletes a task in two steps: 1) collapsing the task container, taskContainerElement, with a transition by adding the "hidden" class. 2) removing the task container, taskContainerElement, from the DOM once the transition has taken place. Also stores all deleted tasks as strings in an array, so they can be accessed for an Undo feature.
-  When flag is false, don't dispatch 'delete' event inside deleteTask to the notifyUndo module. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
-  taskId is a number. Flag is a boolean.
+  * Deletes a task in two steps:
+  * 1) collapsing the task container, taskContainerElement, with
+  * a transition by adding the "hidden" class.
+  * 2) removing the task container, taskContainerElement, from the
+  * DOM once the transition has taken place. Also stores all 
+  * deleted tasks as strings in an array, so they can be accessed 
+  * for an Undo feature.
+  * When flag is false, don't dispatch 'delete' event inside 
+  * deleteTask to the notifyUndo module. This ensures when a user 
+  * edits a field, erases the contents and clicks away, which 
+  * removes the task, the notify bar doesn't trigger.
+  * taskId is a number. Flag is a boolean.
   */
   function deleteTask(taskId, flag) {
-    var taskContainerElement = document.getElementById("task-container-" + taskId);
+    var taskContainerElement = document.getElementById(
+      "task-container-" + taskId);
     taskContainerElement.classList.add("hidden");
     taskContainerElement.setAttribute("aria-hidden", "true");
     //store value of <p> element (aka submitted task) in a string
-    var taskString = document.getElementById("list-item-label-" + taskId).textContent.toString();
-    var taskComplete = document.getElementById("real-checkbox-" + taskId).checked;
+    var taskString = document.getElementById("list-item-label-"
+     + taskId).textContent.toString();
+    var taskComplete = document.getElementById("real-checkbox-"
+     + taskId).checked;
     // remove task key:value pair from app.store.submittedTasks object
     app.store.deleteTask(taskId);
     // If a task is deleted, dispatch the 'delete' event
     if (flag) {
-      var deleteEvent = new CustomEvent('delete', { 'detail': {'task': {id: taskId, complete: taskComplete, text: taskString }}});
+      var deleteEvent = new CustomEvent('delete', { 'detail': {'task': 
+        {id: taskId, complete: taskComplete, text: taskString }}});
       document.body.dispatchEvent(deleteEvent);
     }
   }
@@ -484,17 +483,24 @@ app.store = {
   */ 
   
   /*
-  Simulates checkbox behavior on fakeCheckbox while updating the realCheckbox 'checked' state. Applies different styles to the completed task. taskId is a number.
-  skipSave is a boolean. True if the task is coming from localStorage, otherwise undefined (falsy)
+  * Simulates checkbox behavior on fakeCheckbox while updating the 
+  * realCheckbox 'checked' state. Applies different styles to the 
+  * completed task. taskId is a number. skipSave is a boolean.
+  * skipSave is true if the task is coming from localStorage, 
+  * otherwise it is undefined (falsy).
   */
   function completeTask(taskId, skipSave) {
-    var realCheckbox = document.getElementById("real-checkbox-" + taskId);
-    var fakeCheckbox = document.getElementById("fake-checkbox-" + taskId);
-    var checkmarkIconWrapper = document.getElementById("checkmark-icon-wrapper-" + taskId);
+    var realCheckbox = document.getElementById("real-checkbox-" 
+      + taskId);
+    var fakeCheckbox = document.getElementById("fake-checkbox-" 
+      + taskId);
+    var checkmarkIconWrapper = document.getElementById(
+      "checkmark-icon-wrapper-" + taskId);
     if (realCheckbox.checked === false) {
       realCheckbox.checked = true;
       checkmarkIconWrapper.style.visibility = "visible";
-      document.getElementById("list-item-label-" + taskId).classList.add("complete");
+      document.getElementById("list-item-label-" + taskId)
+      .classList.add("complete");
       if (!skipSave) {
         var task = app.store.getTask(taskId);
         task.complete = true;
@@ -503,7 +509,8 @@ app.store = {
     } else {
       realCheckbox.checked = false;
       checkmarkIconWrapper.style.visibility = "hidden";
-      document.getElementById("list-item-label-" + taskId).classList.remove("complete");
+      document.getElementById("list-item-label-" + taskId)
+      .classList.remove("complete");
       if (!skipSave) {
         var task = app.store.getTask(taskId);
         task.complete = false;
@@ -519,39 +526,50 @@ app.store = {
   */  
   
   /*
-  Submits a task by replacing the inputElement with the pElement and displaying the fakeCheckbox and deleteIcon; input is a string and taskId is a number.
-  skipSave is a boolean. True if the task is coming from localStorage, otherwise undefined (falsy)
+  * Submits a task by replacing the inputElement with the pElement
+  * and displaying the fakeCheckbox and deleteIcon; userInput is a
+  * string and taskId is a number. skipSave is a boolean. True if
+  * the task is coming from localStorage, otherwise undefined (falsy)
   */
-  function submitTask(input, taskId, skipSave) {
-    var pElement = document.getElementById("list-item-label-" + taskId);
-    var inputElement = document.getElementById("list-item-input-" + taskId);
-    var deleteIcon = document.getElementById("delete-icon-wrapper-" + taskId);
-    var fakeCheckbox = document.getElementById("fake-checkbox-" + taskId);
-    var realCheckbox = document.getElementById("real-checkbox-" + taskId);
+  function submitTask(userInput, taskId, skipSave) {
+    var pElement = document.getElementById(
+      "list-item-label-" + taskId);
+    var inputElement = document.getElementById(
+      "list-item-input-" + taskId);
+    var deleteIcon = document.getElementById(
+      "delete-icon-wrapper-" + taskId);
+    var fakeCheckbox = document.getElementById(
+      "fake-checkbox-" + taskId);
+    var realCheckbox = document.getElementById(
+      "real-checkbox-" + taskId);
+    
+   // The value of the aria-label is the user's task string
+    realCheckbox.setAttribute("aria-label", userInput);
     
     /*
-    Add aria-label attribute value to the real checkbox <input type="checkbox" ...>
-    */
-    realCheckbox.setAttribute("aria-label", input);
-    
-    /*
-    Keep pElement empty of text until it's visible, otherwise it stretches the container div height with the value inside the input field.
+    * Keep pElement empty of text until it's visible, otherwise it
+    * stretches the container div height with the value inside the
+    * userInput field.
     */
     pElement.textContent = "";
-    pElement.textContent = input;
-    /*
-    update global nested object 'app.store' to pass data between modules
-    */
+    pElement.textContent = userInput;
+    
     if (!skipSave) {
-      // app.store.submittedTasks["row-" + taskId] = input;
-      // Create a task object
-      var task = {id: taskId, complete: realCheckbox.checked, text: input};
+      var task = 
+        {id: taskId, complete: realCheckbox.checked, text: userInput};
       app.store.setTask(taskId, task);      
     }
+
+    /*  
+    * Add these elements to the layout to shrink the pElement to
+    * fit in between them.
+    */
     deleteIcon.style.display = "inline-block";
     fakeCheckbox.style.display = "inline-block";
+    
     /*
-    allow a small amount of time for these elements to be added to the layout before triggering the transition
+    * Allow a small amount of time for these elements to be added
+    * to the layout before triggering the transition
     */
     setTimeout(function() {
       deleteIcon.classList.toggle("hidden");
@@ -566,24 +584,72 @@ app.store = {
   }
 
   /*
+  * Listen for when user presses the 'Enter' key, if userInput has a
+  * non-empty value, submitTask... If it's the last task, add a new
+  * task. If the submitted task is empty, add keyframes bounce
+  * animation.
+  */
+  function enterToSubmit(userInput, taskId) {
+    var inputElement = document.getElementById(
+      "list-item-input-" + taskId);
+    if (userInput !== "" && event.keyCode === 13) {
+      var submitEvent = new CustomEvent('submit');
+      document.body.dispatchEvent(submitEvent);
+      submitTask(userInput, taskId);
+      /*
+      * Need to make sure the last task is the one being submitted
+      * before adding a new task... The <div> that holds each task's
+      * elements has an id of the form "task-container-x".
+      * Does x = lastId? If so, the submitted task is the last task 
+      * on the list, so add a new task. First get x, which is the 
+      * taskId of the current task. x is the number after the last 
+      * dash on the id name.
+      */
+      var idString = listContainer.lastChild.id;
+      /*
+      * id name is of form: "task-container-x", so want 3rd element
+      * in array (indexes at 0) returned by element.split
+      */
+      var lastId = idString.split("-")[2];
+      //taskId is a number, lastId is a string
+      if (taskId.toString() === lastId) {
+        addTask();
+      }
+    } else if (userInput === "" && event.keyCode === 13) {
+      inputElement.classList.add("bounce");
+      setTimeout(function() {
+        /*
+        * remove the class so animation can occur as many times as 
+        * user triggers event, delay must be longer than the 
+        * animation duration and any delay.
+        */
+        inputElement.classList.remove("bounce");
+      }, 1000);
+    }
+  }
+
+  /*
   -------------------------------------
   !----------EDITING A TASK ----------!
   -------------------------------------
   */
   
   /*
-  Edits a task by replacing the pElement with the inputElement and hiding the fakeCheckbox and deleteIcon; input is a string and taskId is a number.
+  Edits a task by replacing the pElement with the inputElement and hiding the fakeCheckbox and deleteIcon; userInput is a string and taskId is a number.
   */
-  function editTask(input, taskId) {
+  function editTask(userInput, taskId) {
     var pElement = document.getElementById("list-item-label-" + taskId);
     var inputElement = document.getElementById("list-item-input-" + taskId);
     var deleteIcon = document.getElementById("delete-icon-wrapper-" + taskId);
     var fakeCheckbox = document.getElementById("fake-checkbox-" + taskId);
     var taskContainerElement = document.getElementById("task-container-" + taskId);
    
-    inputElement.value = input;
+    inputElement.value = userInput;
+    
+    // remove these elements from layout so inputElement can be as wide as the taskContainer
     deleteIcon.style.display = "none";
     fakeCheckbox.style.display = "none";
+    
     deleteIcon.classList.toggle("hidden");
     deleteIcon.setAttribute("aria-hidden", "true");
     fakeCheckbox.classList.toggle("hidden");
@@ -608,11 +674,16 @@ app.store = {
       if(submitFired) {
         return;
       }
-      checkToSubmit(taskId);
+      clickToSubmit(taskId);
     }
   }
 
-  function checkToSubmit(taskId) {
+  /*
+  * Checks to add a new task (if the submitted task is the last task) or remove
+  * an empty task (that isn't the last task) when the user clicks away.
+  * taskId is a number.
+  */
+  function clickToSubmit(taskId) {
     var inputElement = document.getElementById("list-item-input-" + taskId);
     var taskContainerElement = document.getElementById("task-container-" + taskId);
     var userInput = inputElement.value;
@@ -653,7 +724,7 @@ app.store = {
   !----------AUTO-SCROLL LIST ----------!
   ---------------------------------------
   */
-  // Scroll to the bottom of the document
+  // Auto scroll to bottom of list when it is extended by adding a new task
   function autoScroll() {
     window.scrollTo(0,document.body.scrollHeight);
   }
