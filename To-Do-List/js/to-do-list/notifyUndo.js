@@ -79,7 +79,7 @@ Wrap entire module in an immediately invoked function so global variables in thi
   If the user clicks the 'undo' link, hide the notification bar and restore the task to the list in its original location. taskNum is a number, taskString is a string.
   */
   function undo(task) {
-    var listNode = document.getElementById("list-item-container-" + task.id);
+    var listNode = document.getElementById("task-container-" + task.id);
     listNode.classList.remove("hidden");
     hideNotifyBar(task.id);
     /*
@@ -123,7 +123,7 @@ Wrap entire module in an immediately invoked function so global variables in thi
   When a user dismisses the notification bar, either by clicking the 'dismiss' link or by not interacting with the bar for a certain period of time, permanently delete the task. taskNum is a number.
   */
   function removeFromDOM(taskNum) {
-    listNode = document.getElementById("list-item-container-" + taskNum);
+    listNode = document.getElementById("task-container-" + taskNum);
     listNode.remove();
   }
   

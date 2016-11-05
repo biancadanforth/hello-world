@@ -54,7 +54,7 @@ var app = app ? app : {};
     var tasks = app.store.getTasks();
     for (let taskId in tasks) {
       let string = tasks[taskId].text.toLowerCase();
-      let taskElem = document.getElementById("list-item-container-" + taskId);
+      let taskElem = document.getElementById("task-container-" + taskId);
       //indexOf returns -1 if the substring is not contained in the string
       //indexOf is case sensitive, so convert tasks to lowercase to check if all lowercase characters have been entered into the search field.
       if (string.indexOf(subString) === -1 && subString !== "") {

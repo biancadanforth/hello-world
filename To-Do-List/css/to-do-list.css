@@ -296,7 +296,7 @@ nav .icon-link {
   transition: opacity .5s;
 }
 
-.list-item-container {
+.task-container {
   max-width: 100%;
   margin: 0 auto;
   display: flex;
@@ -372,7 +372,7 @@ input.list-item, .no-results {
   padding-bottom: 0;
 }
 
-.list-item-container p, input.list-item.hidden {
+.task-container p, input.list-item.hidden {
   padding-left: 0;
 }
 
@@ -393,16 +393,16 @@ a:hover, .checkbox, .add-task-container {
 }
 
 /* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
-.list-item-container svg {
+.task-container svg {
   fill: #646464;
 }
 
-.list-item-container a {
+.task-container a {
   height: 20px;
 }
 
 /* delete icon only, checkmark icon is inside a <span>*/
-.list-item-container a svg {
+.task-container a svg {
   margin-left: 2em;
   width: 20px;
   height: 20px;
@@ -425,7 +425,7 @@ input[type="text"], input[type="text"]:focus {
   transition:  opacity 1s ease, max-height 1s ease .5s;
 }
 
-.list-item-container.hidden {
+.task-container.hidden {
   border-bottom-width: 0;
 }
 
