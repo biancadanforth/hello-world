@@ -324,9 +324,10 @@ app.store = {
   */
   function createCheckmarkIconWrapper(taskId) {
     var checkmarkIconWrapper = document.createElement("span");
-    checkmarkIconWrapper.setAttribute("class", "checkmark-icon-wrapper");
-    checkmarkIconWrapper.setAttribute("id", "checkmark-icon-wrapper-" 
-      + taskId);
+    checkmarkIconWrapper.setAttribute(
+      "class", "checkmark-icon-wrapper");
+    checkmarkIconWrapper.setAttribute(
+      "id", "checkmark-icon-wrapper-" + taskId);
     return checkmarkIconWrapper;
   }
 
@@ -419,7 +420,8 @@ app.store = {
   function createDeleteIconWrapper(taskId) {
     var deleteIconWrapper = document.createElement("a");
     deleteIconWrapper.setAttribute("class", "hidden");
-    deleteIconWrapper.setAttribute("id", "delete-icon-wrapper-" + taskId);
+    deleteIconWrapper.setAttribute(
+      "id", "delete-icon-wrapper-" + taskId);
     deleteIconWrapper.setAttribute("title", "Delete task");
     deleteIconWrapper.setAttribute("aria-hidden", "true");
     deleteIconWrapper.setAttribute("aria-label", "Delete");
@@ -629,24 +631,34 @@ app.store = {
   }
 
   /*
-  -------------------------------------
-  !----------EDITING A TASK ----------!
-  -------------------------------------
+  --------------------------------------
+  !---------- EDITING A TASK ----------!
+  --------------------------------------
   */
   
   /*
-  Edits a task by replacing the pElement with the inputElement and hiding the fakeCheckbox and deleteIcon; userInput is a string and taskId is a number.
+  * Edits a task by replacing the pElement with the inputElement and
+  * hiding the fakeCheckbox and deleteIcon; userInput is a string
+  * and taskId is a number.
   */
   function editTask(userInput, taskId) {
-    var pElement = document.getElementById("list-item-label-" + taskId);
-    var inputElement = document.getElementById("list-item-input-" + taskId);
-    var deleteIcon = document.getElementById("delete-icon-wrapper-" + taskId);
-    var fakeCheckbox = document.getElementById("fake-checkbox-" + taskId);
-    var taskContainerElement = document.getElementById("task-container-" + taskId);
+    var pElement = document.getElementById(
+      "list-item-label-" + taskId);
+    var inputElement = document.getElementById(
+      "list-item-input-" + taskId);
+    var deleteIcon = document.getElementById(
+      "delete-icon-wrapper-" + taskId);
+    var fakeCheckbox = document.getElementById(
+      "fake-checkbox-" + taskId);
+    var taskContainerElement = document.getElementById(
+      "task-container-" + taskId);
    
     inputElement.value = userInput;
     
-    // remove these elements from layout so inputElement can be as wide as the taskContainer
+    /*
+    * Remove these elements from layout so inputElement can be as
+    * wide as the taskContainer
+    */
     deleteIcon.style.display = "none";
     fakeCheckbox.style.display = "none";
     
@@ -660,45 +672,52 @@ app.store = {
     inputElement.removeAttribute("aria-hidden");
     inputElement.focus();
     
-    /* **********************
-    CLICK AWAY TO SUBMIT IN EDIT MODE
-    ********************************
+    /*
+    * Initialize flag 'submitFired' to prevent calling submitTask 
+    * twice. When the user hits 'enter' to submit a task, it fires
+    * the inputElement.onkeyup and the inputElement.onblur event.
+    * When submitFired is true, the 'enter' key has been hit.
     */
-    // initialize flag 'submitFired' to prevent calling submitTask twice. When the user hits 'enter' to submit a task, it fires an event looking for the enter key AND the inputElement onblur event. When submitTask is true, the 'enter' key has been hit
     var submitFired = false;
     document.body.addEventListener('submit', function() {
       submitFired = true;
     });
    
-    inputElement.onblur = function() {
+    // Click to submit event listener for edit mode
+    inputElement.onblur = function() { 
       if(submitFired) {
         return;
       }
       clickToSubmit(taskId);
-    }
+    };
   }
 
   /*
-  * Checks to add a new task (if the submitted task is the last task) or remove
-  * an empty task (that isn't the last task) when the user clicks away.
-  * taskId is a number.
+  * Checks to add a new task (if the submitted task is the last task)
+  * or remove an empty task (that isn't the last task) when the user
+  * clicks away. taskId is a number.
   */
   function clickToSubmit(taskId) {
-    var inputElement = document.getElementById("list-item-input-" + taskId);
-    var taskContainerElement = document.getElementById("task-container-" + taskId);
+    var inputElement = document.getElementById(
+      "list-item-input-" + taskId);
+    var taskContainerElement = document.getElementById(
+      "task-container-" + taskId);
     var userInput = inputElement.value;
-       /*
-      If user clicks away from the field with a non-empty task, submit the task.
-      */
       if (userInput !== "") {
         submitTask(userInput, taskId);
         /*
-        Need to make sure the last task is the one being submitted before adding a new task... The <div> that holds each task's elements has an id of the form "task-container-x". Does x = taskId? If so, the submitted task is the last task on the list, so add a new task.
-        First get x, which is the value of 'row' at the time the <div> was created. x is the number after the last dash on the id name.
+        * Need to make sure the last task is the one being submitted
+        * before adding a new task... The <div> that holds each task's
+        * elements has an id of the form "task-container-x".
+        * Does x = lastId? If so, the submitted task is the last task 
+        * on the list, so add a new task. First get x, which is the 
+        * taskId of the current task. x is the number after the last 
+        * dash on the id name.
         */
         var idString = listContainer.lastChild.id;
         /*
-        id name is of form: "task-container-x", so want 4th element in array (indexes at 0) returned by element.split
+        * id name is of form: "task-container-x", so want 3rd element
+        * in array (indexes at 0) returned by element.split
         */
         var lastId = idString.split("-")[2];
         //taskId is a number, lastId is a string
@@ -706,15 +725,19 @@ app.store = {
           addTask();
         }
       }
-      if (listContainer.children.length === 1 || listContainer.lastChild === taskContainerElement) {
+      if (listContainer.children.length === 1 
+        || listContainer.lastChild === taskContainerElement) {
         return;
       }
 
-      /*
-      Removes a task if the user has not entered anything and clicks away unless the task is last on the list.
-      */
-      if (userInput === "" && inputElement.classList.toString() === "list-item") {
-        // when flag is false, don't dispatch 'delete' event inside deleteTask to show notification bar. This ensures when a user edits a field, erases the contents and clicks away, which removes the task, the notify bar doesn't trigger.
+      if (userInput === "" 
+        && inputElement.classList.toString() === "list-item") {
+        /* when flag is false, don't dispatch 'delete' event
+        * inside deleteTask to show notification bar. This ensures
+        * when a user edits a field, erases the contents and clicks
+        * away, which removes the task, the notify bar 
+        * doesn't trigger.
+        */
         deleteTask(taskId, false);
       }
   }
@@ -724,7 +747,10 @@ app.store = {
   !----------AUTO-SCROLL LIST ----------!
   ---------------------------------------
   */
-  // Auto scroll to bottom of list when it is extended by adding a new task
+
+  /* Auto scroll to bottom of list when it is extended by adding
+  * a new task
+  */
   function autoScroll() {
     window.scrollTo(0,document.body.scrollHeight);
   }
