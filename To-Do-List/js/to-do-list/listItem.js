@@ -1,38 +1,47 @@
 /*
-* Using a ternary operator to declare variable 'app' as an empty
-* object regardless of which script is run first. Pseudocode: If app
-* already exists (first condition), then do nothing. If it doesn't, then
-* create it as an object with a nested store object.
+* Using a ternary operator to declare variable 'app' as 
+* an empty object regardless of which script is run first.
+* Pseudocode: If app already exists (first condition),
+* then do nothing. If it doesn't, then create it as an 
+* object with a nested store object.
 */
 var app = app ? app : {};
 
 /* Initialize storedTasks object
-* Check browser's localStorage for any submitted tasks from a previous session
-* submittedTasks is an object of nested objects, and is of the form 
-* { <taskId1>: <taskObject1>, <taskId2>: <taskObject2>, ...} where
-* <taskId> is a number and <taskObject> is of the form
-* { "id": <Number>, "complete": <Boolean>, "text": <String> }
+* Check browser's localStorage for any submitted tasks from a 
+* previous session submittedTasks is an object of nested
+* objects, and is of the form 
+* { <taskId1>: <taskObject1>, <taskId2>: <taskObject2>, ...} 
+* where <taskId> is a number and <taskObject> is of the form
+* { id: <Number>, complete: <Boolean>, text: <String> }
 */
 // returns 'null' if there are no submitted tasks
-var storedTasksString = window.localStorage.getItem('submittedTasks');
+var storedTasksString = window.localStorage
+.getItem('submittedTasks');
 if (!storedTasksString) {
   var storedTasks = {};
   // Serialize object and store
-  window.localStorage.setItem('submittedTasks', JSON.stringify(storedTasks));
+  window.localStorage.setItem('submittedTasks', JSON
+    .stringify(storedTasks));
 }
 
-// localStorage API: allows the user to access their list on page reload
+/*
+* localStorage API: allows the user to access their list
+* on page reload
+*/
 app.store = {
 
   /* 
-  * Gets JSON string submittedTasks out of localStorage, unserializes it &
-  * returns it as a JS object.
+  * Gets JSON string submittedTasks out of localStorage, 
+  * unserializes it & returns it as a JS object.
   */
   getTasks: function() {
-    var storedTasksString = window.localStorage.getItem('submittedTasks');
+    var storedTasksString = window.localStorage
+    .getItem('submittedTasks');
     /* 
-    * Convert string representation of submittedTasks back into a JS object
-    * JSON is the standard serialization format for JS objects.
+    * Convert string representation of submittedTasks back
+    * into a JS object JSON is the standard serialization 
+    * format for JS objects.
     */
     var storedTasks = JSON.parse(storedTasksString);
     return storedTasks;
@@ -40,10 +49,11 @@ app.store = {
 
   /* 
   * Write tasks back into localStorage
-  * tasks is an object of nested objects of the same form as submittedTasks,
-  * { <taskId1>: <taskObject1>, <taskId2>: <taskObject2>, ...} where
-  * <taskId> is a number and <taskObject> is of the form
-  * { "id": <Number>, "complete": <Boolean>, "text": <String> }
+  * tasks is an object of nested objects of the same form as
+  * submittedTasks,
+  * { <taskId1>: <taskObject1>, <taskId2>: <taskObject2>, ...} 
+  * where <taskId> is a number and <taskObject> is of the form
+  * { 'id': <Number>, 'complete': <Boolean>, 'text': <String> }
   */
   setTasks: function(tasks) {
     var tasksString = JSON.stringify(tasks);
@@ -51,9 +61,9 @@ app.store = {
   },
 
   /*
-  * Retrieves an individual task object from localStorage. taskId is a number
-  * Returns a task object of the form:
-  * { "id": <Number>, "complete": <Boolean>, "text": <String> }
+  * Retrieves an individual task object from localStorage.
+  * taskId is a number, Returns a task object of the form:
+  * {'id': <Number>, 'complete': <Boolean>, 'text': <String>}
   */
   getTask: function(taskId) {
     var storedTasks = app.store.getTasks();
@@ -63,8 +73,9 @@ app.store = {
 
   /*
   * Writes an individual task object to localStorage
-  * This will update existing tasks, or create a new task in localStorage if
-  * it doesn't exist. taskId is a number, task is an object.
+  * This will update existing tasks, or create a new task in
+  * localStorage if it doesn't exist. taskId is a number,
+  * task is an object.
   */
   setTask: function(taskId, task) {
     var storedTasks = app.store.getTasks();
@@ -72,7 +83,10 @@ app.store = {
     app.store.setTasks(storedTasks);
   },
 
-  // Deletes an individual task object from localStorage. taskId is a number.
+  /*
+  * Deletes an individual task object from localStorage.
+  * taskId is a number.
+  */
   deleteTask: function(taskId) {
     var storedTasks = app.store.getTasks();
     delete storedTasks[taskId];
@@ -81,21 +95,22 @@ app.store = {
 
   /* 
   * Retrieves the task counter from localStorage.
-  * counter determines the unique taskId number for the next task to be added 
-  * to the list. counter is a number.
+  * counter determines the unique taskId number for the next
+  * task to be added to the list. counter is a number.
   */
   getTaskCounter: function() {
     var counter = window.localStorage.getItem('taskCounter');
     var storedTasks = app.store.getTasks();
     /*
     * First condition:
-    * If the taskCounter key in localStorage hasn't yet been set it will
-    * return null. Check for that here. We don't use truthy/falsey here
-    * because logically the counter could be 0 which is falsey.
+    * If the taskCounter key in localStorage hasn't yet been
+    * set it will return null. Check for that here. We don't
+    * use truthy/falsey here because logically the counter
+    * could be 0 which is falsey.
     * Second condition:
-    * If there are no tasks stored in localStorage, reset counter to 0.
-    * Can't just compare storedTasks object to {}, because {} is not a truly 
-    * 'empty' object.
+    * If there are no tasks stored in localStorage, reset 
+    * counter to 0. Can't just compare storedTasks object to
+    * {}, because {} is not a truly 'empty' object.
     */
     if (counter !== null && Object.keys(storedTasks).length) {
       return counter;
@@ -104,7 +119,10 @@ app.store = {
     }
   },
 
-  // Increments the task counter, and then updates its value in localStorage
+  /*
+  * Increments the task counter, and then updates its value
+  * in localStorage
+  */
   incrementTaskCounter: function() {
     var counter = app.store.getTaskCounter();
     counter++;
@@ -113,14 +131,19 @@ app.store = {
 };
 
 /*
-* Wrap entire module in an immediately invoked function so global variables in
-* this module don't pollute the global namespace for the application. The ! at
-* the start of the line allows Javascript ASI to kick in on the previous line
-* and insert any missing semicolons for you. Per AirBnB ES5 Style Guide.
+* Wrap entire module in an immediately invoked function so 
+* global variables in this module don't pollute the global
+* namespace for the application. The ! at the start of the
+* line allows Javascript ASI to kick in on the previous line
+* and insert any missing semicolons for you. Per AirBnB ES5
+* Style Guide.
 */
 !(function() {
+
+  'use strict';  
+
   // Initializes global variables
-  var listContainer = document.getElementById("list-container");
+  var listContainer = document.getElementById('list-container');
   var existingTasks = app.store.getTasks();
   /*
   * sortable = [
@@ -129,19 +152,19 @@ app.store = {
   *   ...
   *  ]
   * sortable is an array of nested arrays, the contents,
-  * <taskId> and <taskObject> are of the same form as those in the submittedTasks
-  * object in the localStorage API.
+  * <taskId> and <taskObject> are of the same form as those
+  * in the submittedTasks object in the localStorage API.
   */
   var sortable = [];
 
 /*
-* Populate sortable with tasks in localStorage by iterating over the keys of the
-* existingTasks object.
+* Populate sortable with tasks in localStorage by iterating 
+* over the keys of the existingTasks object.
 */
-  for (let taskId in existingTasks) {
+  for (var taskId in existingTasks) {
     /* 
-    * Don't iterate over properties that are built into the object prototype, only
-    * iterate over custom properties.
+    * Don't iterate over properties that are built into the
+    * object prototype, only iterate over custom properties.
     */
     if (existingTasks.hasOwnProperty(taskId)) {    
       var task = existingTasks[taskId];
@@ -150,14 +173,15 @@ app.store = {
   }
 
   /*
-  * Iterating over the keys in an object may not come back in order.
-  * Sort those tasks in ascending numerical order by taskId
-  * In the first pass, a = sortable[0], b = sortable[1], they are compared and 
-  * sortable is rearranged as appropriate.
-  * In the second pass, a = sortable[1], b = sortable[2], they are compared and
+  * Iterating over the keys in an object may not come back 
+  * in order. Sort those tasks in ascending numerical order
+  * by taskId. In the first pass, a = sortable[0], 
+  * b = sortable[1], they are compared and sortable is
+  * rearranged as appropriate. In the second pass,
+  * a = sortable[1], b = sortable[2], they are compared and
   * sortable is rearranged as appropriate, etc.
   */
-  sortable.sort(function(a, b) {
+  sortable.sort(function sorting(a, b) {
     // Cast to an integer in base 10 for comparison
     var firstItem = parseInt(a[0], 10);
     var secondItem = parseInt(b[0], 10);
@@ -166,8 +190,9 @@ app.store = {
   });
 
   /*
-  * Create and submit the elements for each sorted task and complete them if
-  * they were previously checked as complete by the user.
+  * Create and submit the elements for each sorted task and 
+  * complete them if they were previously checked as complete
+  * by the user.
   */
   for (var i = 0; i < sortable.length; i++) {
     var taskId = sortable[i][0];
@@ -193,9 +218,10 @@ app.store = {
   */
 
   /*
-  * Assembles the set of elements to form a task using a consistent taskId
-  * which may be new (from addTask(..)) or old, retrieved from localStorage.
-  * taskId is a number. Reference: http://jsfiddle.net/g79ssyqv/12/.
+  * Assembles the set of elements to form a task using a 
+  * consistent taskId which may be new (from addTask(..)) 
+  * or old, retrieved from localStorage. taskId is a number.
+  * Reference: http://jsfiddle.net/g79ssyqv/12/.
   */
   function assembleTaskElements(taskId) {
 
@@ -220,7 +246,7 @@ app.store = {
     * Load checkmark icon and append it to checkmarkIconWrapper when 
     * it's done loading.
     */
-    loadIcon("/images/to-do-list/checkmark.svg", checkmarkIconWrapper);
+    loadIcon('/images/to-do-list/checkmark.svg', checkmarkIconWrapper);
     
     var inputElement = createInputElement(taskId, taskContainerElement);
     taskContainerElement.appendChild(inputElement);
@@ -241,16 +267,16 @@ app.store = {
     * Load delete icon and append it to deleteIconWrapper when it's
     * done loading.
     */
-    loadIcon("/images/to-do-list/delete-icon.svg", deleteIconWrapper);
+    loadIcon('/images/to-do-list/delete-icon.svg', deleteIconWrapper);
 
     /*
-    * Now that all of the elements in the "task-container-x"
+    * Now that all of the elements in the 'task-container-x'
     * parent element have been added to the DOM,
     * we can add a transition!
     */
-    setTimeout(function() {
-      taskContainerElement.classList.remove("hidden");
-      taskContainerElement.removeAttribute("aria-hidden");
+    setTimeout(function showTaskContainer() {
+      taskContainerElement.classList.remove('hidden');
+      taskContainerElement.removeAttribute('aria-hidden');
     }, 50);
   }
 
@@ -281,38 +307,46 @@ app.store = {
     * taskContainerElement is a <div> element.
     */
   function createtaskContainerElement(taskId) {
-    var taskContainerElement = document.createElement("div");
-    taskContainerElement.setAttribute("id", "task-container-" + taskId);
-    taskContainerElement.setAttribute("class", "task-container hidden");
-    taskContainerElement.setAttribute("aria-hidden", "true");
+    var taskContainerElement = document.createElement('div');
+    taskContainerElement.setAttribute(
+      'id', 'task-container-' + taskId);
+    taskContainerElement.setAttribute(
+      'class', 'task-container hidden');
+    taskContainerElement.setAttribute('aria-hidden', 'true');
     return taskContainerElement;
   }
 
   /*
   * Creates a new, unique -real- checkbox.
-  * taskId is a number. realCheckbox is an <input type="checkbox"> element.
+  * taskId is a number. realCheckbox is an
+  * <input type='checkbox'> element.
   */
   function createRealCheckbox(taskId) {
-    var realCheckbox = document.createElement("input");
-    realCheckbox.setAttribute("type", "checkbox");
-    realCheckbox.setAttribute("id", "real-checkbox-" + taskId);
+    var realCheckbox = document.createElement('input');
+    realCheckbox.setAttribute('type', 'checkbox');
+    realCheckbox.setAttribute('id', 'real-checkbox-' + taskId);
     return realCheckbox;
   }
 
   /*
-  * Creates a new, unique -fake- checkbox that the user can click to 
-  * complete a task; taskId is a number. fakeCheckbox is a <span> element.
+  * Creates a new, unique -fake- checkbox that the user can 
+  * click to complete a task; taskId is a number. fakeCheckbox
+  * is a <span> element.
   */
   function createFakeCheckbox(taskId) {
-    var fakeCheckbox = document.createElement("span");
+    var fakeCheckbox = document.createElement('span');
     // User can't interact with checkbox until they've submitted a task
-    fakeCheckbox.setAttribute("class", "checkbox hidden");
-    fakeCheckbox.setAttribute("id", "fake-checkbox-" + taskId);
-    fakeCheckbox.setAttribute("title", "Complete task");
-    fakeCheckbox.setAttribute("aria-hidden", "true");
-    fakeCheckbox.setAttribute("aria-label", "Complete");
-    fakeCheckbox.style.display = "none";
-    fakeCheckbox.onclick = function() {
+    fakeCheckbox.setAttribute('class', 'checkbox hidden');
+    fakeCheckbox.setAttribute('id', 'fake-checkbox-' + taskId);
+    fakeCheckbox.setAttribute('title', 'Complete task');
+    fakeCheckbox.setAttribute('aria-hidden', 'true');
+    fakeCheckbox.setAttribute('aria-label', 'Complete');
+    fakeCheckbox.style.display = 'none';
+    /*
+    * Need to pass in an argument, but don't want to immediately execute
+    * completeTask(..), so wrap in a function.
+    */
+    fakeCheckbox.onclick = function toggleCheckbox() {
       completeTask(taskId);
     };
     return fakeCheckbox;
@@ -323,11 +357,11 @@ app.store = {
   * taskId is a number. checkmarkIconWrapper is a <span> element.
   */
   function createCheckmarkIconWrapper(taskId) {
-    var checkmarkIconWrapper = document.createElement("span");
+    var checkmarkIconWrapper = document.createElement('span');
     checkmarkIconWrapper.setAttribute(
-      "class", "checkmark-icon-wrapper");
+      'class', 'checkmark-icon-wrapper');
     checkmarkIconWrapper.setAttribute(
-      "id", "checkmark-icon-wrapper-" + taskId);
+      'id', 'checkmark-icon-wrapper-' + taskId);
     return checkmarkIconWrapper;
   }
 
@@ -339,13 +373,13 @@ app.store = {
   */
   function loadIcon(url, parentElement) {
     var iconRequest = new XMLHttpRequest();
-    iconRequest.open("GET", url, true);
-    iconRequest.overrideMimeType("image/svg+xml");
-    iconRequest.onreadystatechange = function() {
+    iconRequest.open('GET', url, true);
+    iconRequest.overrideMimeType('image/svg+xml');
+    iconRequest.onreadystatechange = function setIcon() {
       if (iconRequest.readyState === XMLHttpRequest.DONE 
         && iconRequest.status === 200) {
         var icon = iconRequest.responseXML.documentElement;
-        icon.setAttribute("aria-hidden", "true");
+        icon.setAttribute('aria-hidden', 'true');
         parentElement.appendChild(icon);
       }
     }
@@ -355,37 +389,38 @@ app.store = {
   /*
   * Creates a new, unique input text field with which the user can
   * submit a task (by clicking away or hitting 'enter').
-  * taskId is a number; inputElement is an <input type="text"> 
+  * taskId is a number; inputElement is an <input type='text'> 
   * element.
   */
   function createInputElement(taskId) {
-    var inputElement = document.createElement("input");
-    inputElement.setAttribute("type", "text");
-    inputElement.setAttribute("id", "list-item-input-" + taskId);
-    inputElement.setAttribute("class", "list-item");
-    inputElement.setAttribute("placeholder", "Enter task here.");
+    var inputElement = document.createElement('input');
+    inputElement.setAttribute('type', 'text');
+    inputElement.setAttribute('id', 'list-item-input-' + taskId);
+    inputElement.setAttribute('class', 'list-item');
+    inputElement.setAttribute('placeholder', 'Enter task here.');
    
     /*
-    * Initialize flag 'submitFired' to prevent calling submitTask 
+    * Initialize flag 'isSubmitted' to prevent calling submitTask 
     * twice. When the user hits 'enter' to submit a task, it fires
     * the inputElement.onkeyup and the inputElement.onblur event.
-    * When submitFired is true, the 'enter' key has been hit.
+    * When isSubmitted is true, the 'enter' key has been hit.
     */
-    var submitFired = false;
-    document.body.addEventListener('submit', function() {
-      submitFired = true;
+    var isSubmitted = false;
+    document.body
+    .addEventListener('submit', function setisSubmitted() {
+      isSubmitted = true;
     });
    
     // Click to submit event listener
-    inputElement.onblur = function() { 
-      if(submitFired) {
+    inputElement.onblur = function clickCheckToSubmit() { 
+      if(isSubmitted) {
         return;
       }
       clickToSubmit(taskId);
     };
     
     // Enter to submit event listener
-    inputElement.onkeyup = function(event) {
+    inputElement.onkeyup = function enterCheckToSubmit(event) {
       var userInput = inputElement.value;
       enterToSubmit(userInput, taskId);
     };
@@ -400,13 +435,12 @@ app.store = {
   * taskId is a number. pElement is a <p> element.
   */
   function createPElement(taskId) {
-    var pElement = document.createElement("p");
-    pElement.setAttribute("id", "list-item-label-" + taskId);
-    pElement.setAttribute("class", "list-item hidden");
-    pElement.setAttribute("aria-hidden", "true");
-    pElement.onclick = function() {
-      var userInput = pElement.textContent;
-      editTask(userInput, taskId);
+    var pElement = document.createElement('p');
+    pElement.setAttribute('id', 'list-item-label-' + taskId);
+    pElement.setAttribute('class', 'list-item hidden');
+    pElement.setAttribute('aria-hidden', 'true');
+    pElement.onclick = function toggleEditMode() {
+      editTask(pElement.textContent, taskId);
     };
     return pElement;
   }
@@ -418,22 +452,21 @@ app.store = {
   * deleteIconWrapper is an <a> element.
   */
   function createDeleteIconWrapper(taskId) {
-    var deleteIconWrapper = document.createElement("a");
-    deleteIconWrapper.setAttribute("class", "hidden");
+    var deleteIconWrapper = document.createElement('a');
+    deleteIconWrapper.setAttribute('class', 'hidden');
     deleteIconWrapper.setAttribute(
-      "id", "delete-icon-wrapper-" + taskId);
-    deleteIconWrapper.setAttribute("title", "Delete task");
-    deleteIconWrapper.setAttribute("aria-hidden", "true");
-    deleteIconWrapper.setAttribute("aria-label", "Delete");
-    deleteIconWrapper.style.display = "none";
+      'id', 'delete-icon-wrapper-' + taskId);
+    deleteIconWrapper.setAttribute('title', 'Delete task');
+    deleteIconWrapper.setAttribute('aria-hidden', 'true');
+    deleteIconWrapper.setAttribute('aria-label', 'Delete');
+    deleteIconWrapper.style.display = 'none';
     /*
     * I have to wrap deleteTask(..) in another function so I can 
     * pass in an argument but avoid immediately executing the 
     * function at the same time.
     */
-    deleteIconWrapper.onclick = function() {
-      var flag = true;
-      deleteTask(taskId, flag);
+    deleteIconWrapper.onclick = function removeTask() {
+      deleteTask(taskId, true);
     }
     return deleteIconWrapper;
   }
@@ -447,7 +480,7 @@ app.store = {
   /*
   * Deletes a task in two steps:
   * 1) collapsing the task container, taskContainerElement, with
-  * a transition by adding the "hidden" class.
+  * a transition by adding the 'hidden' class.
   * 2) removing the task container, taskContainerElement, from the
   * DOM once the transition has taken place. Also stores all 
   * deleted tasks as strings in an array, so they can be accessed 
@@ -460,13 +493,13 @@ app.store = {
   */
   function deleteTask(taskId, flag) {
     var taskContainerElement = document.getElementById(
-      "task-container-" + taskId);
-    taskContainerElement.classList.add("hidden");
-    taskContainerElement.setAttribute("aria-hidden", "true");
+      'task-container-' + taskId);
+    taskContainerElement.classList.add('hidden');
+    taskContainerElement.setAttribute('aria-hidden', 'true');
     //store value of <p> element (aka submitted task) in a string
-    var taskString = document.getElementById("list-item-label-"
+    var taskString = document.getElementById('list-item-label-'
      + taskId).textContent.toString();
-    var taskComplete = document.getElementById("real-checkbox-"
+    var taskComplete = document.getElementById('real-checkbox-'
      + taskId).checked;
     // remove task key:value pair from app.store.submittedTasks object
     app.store.deleteTask(taskId);
@@ -487,33 +520,33 @@ app.store = {
   /*
   * Simulates checkbox behavior on fakeCheckbox while updating the 
   * realCheckbox 'checked' state. Applies different styles to the 
-  * completed task. taskId is a number. skipSave is a boolean.
-  * skipSave is true if the task is coming from localStorage, 
+  * completed task. taskId is a number. isSaved is a boolean.
+  * isSaved is true if the task is coming from localStorage, 
   * otherwise it is undefined (falsy).
   */
-  function completeTask(taskId, skipSave) {
-    var realCheckbox = document.getElementById("real-checkbox-" 
+  function completeTask(taskId, isSaved) {
+    var realCheckbox = document.getElementById('real-checkbox-' 
       + taskId);
-    var fakeCheckbox = document.getElementById("fake-checkbox-" 
+    var fakeCheckbox = document.getElementById('fake-checkbox-' 
       + taskId);
     var checkmarkIconWrapper = document.getElementById(
-      "checkmark-icon-wrapper-" + taskId);
+      'checkmark-icon-wrapper-' + taskId);
     if (realCheckbox.checked === false) {
       realCheckbox.checked = true;
-      checkmarkIconWrapper.style.visibility = "visible";
-      document.getElementById("list-item-label-" + taskId)
-      .classList.add("complete");
-      if (!skipSave) {
+      checkmarkIconWrapper.style.visibility = 'visible';
+      document.getElementById('list-item-label-' + taskId)
+      .classList.add('complete');
+      if (!isSaved) {
         var task = app.store.getTask(taskId);
         task.complete = true;
         app.store.setTask(taskId, task)
       }
     } else {
       realCheckbox.checked = false;
-      checkmarkIconWrapper.style.visibility = "hidden";
-      document.getElementById("list-item-label-" + taskId)
-      .classList.remove("complete");
-      if (!skipSave) {
+      checkmarkIconWrapper.style.visibility = 'hidden';
+      document.getElementById('list-item-label-' + taskId)
+      .classList.remove('complete');
+      if (!isSaved) {
         var task = app.store.getTask(taskId);
         task.complete = false;
         app.store.setTask(taskId, task)
@@ -530,33 +563,33 @@ app.store = {
   /*
   * Submits a task by replacing the inputElement with the pElement
   * and displaying the fakeCheckbox and deleteIcon; userInput is a
-  * string and taskId is a number. skipSave is a boolean. True if
+  * string and taskId is a number. isSaved is a boolean. True if
   * the task is coming from localStorage, otherwise undefined (falsy)
   */
-  function submitTask(userInput, taskId, skipSave) {
+  function submitTask(userInput, taskId, isSaved) {
     var pElement = document.getElementById(
-      "list-item-label-" + taskId);
+      'list-item-label-' + taskId);
     var inputElement = document.getElementById(
-      "list-item-input-" + taskId);
+      'list-item-input-' + taskId);
     var deleteIcon = document.getElementById(
-      "delete-icon-wrapper-" + taskId);
+      'delete-icon-wrapper-' + taskId);
     var fakeCheckbox = document.getElementById(
-      "fake-checkbox-" + taskId);
+      'fake-checkbox-' + taskId);
     var realCheckbox = document.getElementById(
-      "real-checkbox-" + taskId);
+      'real-checkbox-' + taskId);
     
    // The value of the aria-label is the user's task string
-    realCheckbox.setAttribute("aria-label", userInput);
+    realCheckbox.setAttribute('aria-label', userInput);
     
     /*
     * Keep pElement empty of text until it's visible, otherwise it
     * stretches the container div height with the value inside the
     * userInput field.
     */
-    pElement.textContent = "";
+    pElement.textContent = '';
     pElement.textContent = userInput;
     
-    if (!skipSave) {
+    if (!isSaved) {
       var task = 
         {id: taskId, complete: realCheckbox.checked, text: userInput};
       app.store.setTask(taskId, task);      
@@ -566,23 +599,23 @@ app.store = {
     * Add these elements to the layout to shrink the pElement to
     * fit in between them.
     */
-    deleteIcon.style.display = "inline-block";
-    fakeCheckbox.style.display = "inline-block";
+    deleteIcon.style.display = 'inline-block';
+    fakeCheckbox.style.display = 'inline-block';
     
     /*
     * Allow a small amount of time for these elements to be added
     * to the layout before triggering the transition
     */
-    setTimeout(function() {
-      deleteIcon.classList.toggle("hidden");
-      deleteIcon.removeAttribute("aria-hidden");
-      fakeCheckbox.classList.toggle("hidden");
-      fakeCheckbox.removeAttribute("aria-hidden");
+    setTimeout(function showOptions() {
+      deleteIcon.classList.toggle('hidden');
+      deleteIcon.removeAttribute('aria-hidden');
+      fakeCheckbox.classList.toggle('hidden');
+      fakeCheckbox.removeAttribute('aria-hidden');
     }, 25);
-    pElement.classList.toggle("hidden");
-    pElement.removeAttribute("aria-hidden");
-    inputElement.classList.toggle("hidden");
-    inputElement.setAttribute("aria-hidden", "true");
+    pElement.classList.toggle('hidden');
+    pElement.removeAttribute('aria-hidden');
+    inputElement.classList.toggle('hidden');
+    inputElement.setAttribute('aria-hidden', 'true');
   }
 
   /*
@@ -593,15 +626,15 @@ app.store = {
   */
   function enterToSubmit(userInput, taskId) {
     var inputElement = document.getElementById(
-      "list-item-input-" + taskId);
-    if (userInput !== "" && event.keyCode === 13) {
+      'list-item-input-' + taskId);
+    if (userInput !== '' && event.keyCode === 13) {
       var submitEvent = new CustomEvent('submit');
       document.body.dispatchEvent(submitEvent);
       submitTask(userInput, taskId);
       /*
       * Need to make sure the last task is the one being submitted
       * before adding a new task... The <div> that holds each task's
-      * elements has an id of the form "task-container-x".
+      * elements has an id of the form 'task-container-x'.
       * Does x = lastId? If so, the submitted task is the last task 
       * on the list, so add a new task. First get x, which is the 
       * taskId of the current task. x is the number after the last 
@@ -609,23 +642,23 @@ app.store = {
       */
       var idString = listContainer.lastChild.id;
       /*
-      * id name is of form: "task-container-x", so want 3rd element
+      * id name is of form: 'task-container-x', so want 3rd element
       * in array (indexes at 0) returned by element.split
       */
-      var lastId = idString.split("-")[2];
+      var lastId = idString.split('-')[2];
       //taskId is a number, lastId is a string
       if (taskId.toString() === lastId) {
         addTask();
       }
-    } else if (userInput === "" && event.keyCode === 13) {
-      inputElement.classList.add("bounce");
-      setTimeout(function() {
+    } else if (userInput === '' && event.keyCode === 13) {
+      inputElement.classList.add('bounce');
+      setTimeout(function addBounce() {
         /*
         * remove the class so animation can occur as many times as 
         * user triggers event, delay must be longer than the 
         * animation duration and any delay.
         */
-        inputElement.classList.remove("bounce");
+        inputElement.classList.remove('bounce');
       }, 1000);
     }
   }
@@ -643,15 +676,15 @@ app.store = {
   */
   function editTask(userInput, taskId) {
     var pElement = document.getElementById(
-      "list-item-label-" + taskId);
+      'list-item-label-' + taskId);
     var inputElement = document.getElementById(
-      "list-item-input-" + taskId);
+      'list-item-input-' + taskId);
     var deleteIcon = document.getElementById(
-      "delete-icon-wrapper-" + taskId);
+      'delete-icon-wrapper-' + taskId);
     var fakeCheckbox = document.getElementById(
-      "fake-checkbox-" + taskId);
+      'fake-checkbox-' + taskId);
     var taskContainerElement = document.getElementById(
-      "task-container-" + taskId);
+      'task-container-' + taskId);
    
     inputElement.value = userInput;
     
@@ -659,33 +692,34 @@ app.store = {
     * Remove these elements from layout so inputElement can be as
     * wide as the taskContainer
     */
-    deleteIcon.style.display = "none";
-    fakeCheckbox.style.display = "none";
+    deleteIcon.style.display = 'none';
+    fakeCheckbox.style.display = 'none';
     
-    deleteIcon.classList.toggle("hidden");
-    deleteIcon.setAttribute("aria-hidden", "true");
-    fakeCheckbox.classList.toggle("hidden");
-    fakeCheckbox.setAttribute("aria-hidden", "true");
-    pElement.classList.toggle("hidden");
-    pElement.setAttribute("aria-hidden", "true");
-    inputElement.classList.toggle("hidden");
-    inputElement.removeAttribute("aria-hidden");
+    deleteIcon.classList.toggle('hidden');
+    deleteIcon.setAttribute('aria-hidden', 'true');
+    fakeCheckbox.classList.toggle('hidden');
+    fakeCheckbox.setAttribute('aria-hidden', 'true');
+    pElement.classList.toggle('hidden');
+    pElement.setAttribute('aria-hidden', 'true');
+    inputElement.classList.toggle('hidden');
+    inputElement.removeAttribute('aria-hidden');
     inputElement.focus();
     
     /*
-    * Initialize flag 'submitFired' to prevent calling submitTask 
+    * Initialize flag 'isSubmitted' to prevent calling submitTask 
     * twice. When the user hits 'enter' to submit a task, it fires
     * the inputElement.onkeyup and the inputElement.onblur event.
-    * When submitFired is true, the 'enter' key has been hit.
+    * When isSubmitted is true, the 'enter' key has been hit.
     */
-    var submitFired = false;
-    document.body.addEventListener('submit', function() {
-      submitFired = true;
+    var isSubmitted = false;
+    document.body
+    .addEventListener('submit', function setisSubmitted() {
+      isSubmitted = true;
     });
    
     // Click to submit event listener for edit mode
-    inputElement.onblur = function() { 
-      if(submitFired) {
+    inputElement.onblur = function clickCheckToSubmit() { 
+      if(isSubmitted) {
         return;
       }
       clickToSubmit(taskId);
@@ -699,16 +733,16 @@ app.store = {
   */
   function clickToSubmit(taskId) {
     var inputElement = document.getElementById(
-      "list-item-input-" + taskId);
+      'list-item-input-' + taskId);
     var taskContainerElement = document.getElementById(
-      "task-container-" + taskId);
+      'task-container-' + taskId);
     var userInput = inputElement.value;
-      if (userInput !== "") {
+      if (userInput !== '') {
         submitTask(userInput, taskId);
         /*
         * Need to make sure the last task is the one being submitted
         * before adding a new task... The <div> that holds each task's
-        * elements has an id of the form "task-container-x".
+        * elements has an id of the form 'task-container-x'.
         * Does x = lastId? If so, the submitted task is the last task 
         * on the list, so add a new task. First get x, which is the 
         * taskId of the current task. x is the number after the last 
@@ -716,10 +750,10 @@ app.store = {
         */
         var idString = listContainer.lastChild.id;
         /*
-        * id name is of form: "task-container-x", so want 3rd element
+        * id name is of form: 'task-container-x', so want 3rd element
         * in array (indexes at 0) returned by element.split
         */
-        var lastId = idString.split("-")[2];
+        var lastId = idString.split('-')[2];
         //taskId is a number, lastId is a string
         if (taskId.toString() === lastId) {
           addTask();
@@ -730,8 +764,8 @@ app.store = {
         return;
       }
 
-      if (userInput === "" 
-        && inputElement.classList.toString() === "list-item") {
+      if (userInput === '' 
+        && inputElement.classList.toString() === 'list-item') {
         /* when flag is false, don't dispatch 'delete' event
         * inside deleteTask to show notification bar. This ensures
         * when a user edits a field, erases the contents and clicks

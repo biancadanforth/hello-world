@@ -11,16 +11,16 @@
 FONTS:
 font-family: 'Quattrocento', serif;
 font-family: 'Quattrocento Sans', sans-serif;
-(logo)
+Logo:
 font-family: 'Montserrat', sans-serif;
 COLORS:
 header/footer background: #rgb(207,216,220)
 header icon-default: #9e9e9e
-first list accent & first list icon hover: #2980b9
-first list notification background color: #e3f0f8
-list text default: #646464
-list text hover: #4a4a4a
-de emphasized text: #9e9e9e
+List accent & first list icon hover: #2980b9
+List notification background color: #e3f0f8
+List text default: #646464
+List text hover: #4a4a4a
+De-emphasized text: #9e9e9e
 ********************************************/
 
 
@@ -36,9 +36,9 @@ body {
   max-width: 100%;
   margin: 0 auto;
   font-family: 'Quattrocento Sans', sans-serif;
-  color: #646464;
   font-size: 100%;
   line-height: 1.25;
+  color: #646464;
 }
 
 .container {
@@ -51,19 +51,6 @@ body {
 @media (max-width: 1000px) {
   .container { margin: auto 5%; }
 }
-
-/* Background image grid to check for column alignment periodically*/
-/* .grid {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 960px;
-  height: 100vh;
-  background: url('../images/12-columns.png') repeat-y;
-  background-size: cover;
-} */
 
 .icon-link { display: inline-block; }
 
@@ -91,12 +78,12 @@ input:focus {
   left: 0;
   z-index: 1;
   width: 100%;
-  background-color: #e3f0f8;
-  color: #646464;
-  text-align: center;
   height: 30px;
   max-height: 30px;
   line-height: 30px;
+  color: #646464;
+  text-align: center;
+  background-color: #e3f0f8;
   box-shadow: 1px 2px 4px rgba(0,0,0,.2);
   overflow: hidden;
   transition: max-height .5s ease;
@@ -117,7 +104,14 @@ input:focus {
   margin-right: .5em;
 }
 
-/* I want to ensure that when the delete icon is clicked, its wrapping <a> is the element that receives the click event, not the <svg> or a <path> or anything else inside the <svg> Source: https://css-tricks.com/links-inline-svg-staying-target-events/*/
+/*
+* I want to ensure that when the delete icon is clicked,
+* its wrapping <a> is the element that receives the click
+* event, not the <svg> or a <path> or anything else inside
+* the <svg> 
+* Source: https://css-tricks.com
+* /links-inline-svg-staying-target-events/
+*/
 a > svg {
   pointer-events: none;
 }
@@ -140,7 +134,7 @@ a > svg {
 }
 
 .logo-arch {
-  fill: transparent !important;
+  fill: transparent;
   stroke: #2980b9;
 }
 
@@ -148,11 +142,15 @@ a > svg {
 * 3.0 NAV
 ********************************************/
 
-/* Keeps header from changing height when search icon is clicked; for some reason nav's height was 45px instead of 40px naturally with no margin, padding or border...*/
+/*
+* Keeps header from changing height when search icon is
+* clicked; for some reason nav's height was 45px instead
+* of 40px naturally with no margin, padding or border...
+*/
 nav {
   position: relative;
-  flex: 0 1 75%;
   display: flex;
+  flex: 0 1 75%;
   height: 40px;
   /* nav collapses in Safari 10 without min-height */
   min-height: 40px;
@@ -164,7 +162,10 @@ nav .icon-link {
   position: relative;
   width: 40px;
   height: 40px;
-  /* without min-width, when clicked, .icon-link shrinks by a few pixels*/
+  /*
+  * Without min-width, when clicked, .icon-link shrinks
+  * by a few pixels
+  */
   min-width: 40px;
 }
 
@@ -172,37 +173,54 @@ nav .icon-link {
   visibility: hidden;
 }
 
-/* IE11 bug workaround to toggle class names for search icon svg, since element.classList doesn't work on SVGs. *sigh* */
+/*
+* IE11 bug workaround to toggle class names for search
+* icon svg, since element.classList doesn't work on
+* SVGs.
+*/
 .search-link-active .search-icon {
   width: 20px;
   height: 20px;
-  /* overrides visibility: hidden on wrapper <a> to allow the mouse to become an arrow instead of a pointer, since the link is disabled in this state*/
+  /*
+  * Overrides visibility: hidden on wrapper <a> to 
+  * allow the mouse to become an arrow instead of a 
+  * pointer, since the link is disabled in this state
+  */
   visibility: visible;
   transition: width .75s ease;
 }
 
 .search-box {
   height: 40px;
+  width: 100%;
+  /*
+  * Using padding left instead of text-indent because
+  * of MS Edge 38 text-indent bug
+  */
+  padding-left: 10px;
   border: 1px solid #d6d6d6;
   outline: 0;
   border-radius: 5px;
   background-color: transparent;
-  /* return cursor to default for input field now that it's visible */
+  /*
+  * Return cursor to default for input field now that
+  * it's visible
+  */
   cursor: text;
-  width: 100%;
-  /* using padding left instead of text-indent because of MS Edge 38 text-indent bug*/
-  padding-left: 10px;
   box-shadow: inset 1px 1px 1px rgba(0,0,0,.2);
   transition: width 1s ease, padding-left 1s ease;
 }
 
 .search-box.hidden {
-  /* Need to override max-height: 0, max-width:0, and opacity: 0 of .hidden class */
+  /*
+  * Need to override max-height: 0, max-width:0, and
+  * opacity: 0 of .hidden class
+  */
   max-height: 40px;
-  border-color: transparent;
-  padding-left: 0;
-  opacity: 1;
   width: 0;
+  padding-left: 0;
+  border-color: transparent;
+  opacity: 1;
   /* Don't want the text cursor until input field is active*/
   cursor: default;
   transition: width 1s ease, padding-left 1s ease;
@@ -297,12 +315,12 @@ nav .icon-link {
 }
 
 .task-container {
-  max-width: 100%;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 100%;
   max-height: 1000px;
+  margin: 0 auto;
   border-bottom: 1px #ccc solid;
   /* hide flex items when this element is collapsing*/
   overflow: hidden;
@@ -311,22 +329,21 @@ nav .icon-link {
   transition: opacity 1s ease, max-height 5s ease;
 }
 
-/* Remove System Checkbox */
+/* Remove system checkbox */
 input[type="checkbox"] {
   display: none;
 }
 
 /* Fake checkbox made in CSS */
 .checkbox {
-/*  position: relative;*/
   display:inline-block;
-  margin-right: 2em;
   width:20px;
-  max-width: 20px;
   height:20px;
-  background-color: transparent;
+  max-width: 20px;
+  margin-right: 2em;
   border: 1px solid #aeaeae;
   border-radius: 4px;
+  background-color: transparent;
   opacity: 1;
   transition: opacity 1s ease;
 }
@@ -339,7 +356,12 @@ input[type="checkbox"] {
   visibility: hidden;
 }
 
-/* The checkmark svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
+/*
+* The checkmark svg is added with JS using AJAX; cannot
+* edit external XML resource to add/remove classes on
+* the svg, so it must be targeted with a descendant
+* selector
+*/
 .checkbox svg {
   position: absolute;
   top: 50%;
@@ -353,9 +375,9 @@ input[type="checkbox"] {
 .list-item {
   flex-grow: 1;
   margin: 1em 0;
+  padding-left: 10px;
   line-height: 2;
   background-color: transparent;
-  padding-left: 10px;
   visibility: visible;
   overflow: hidden;
   opacity: 1;
@@ -363,8 +385,11 @@ input[type="checkbox"] {
 }
 
 input.list-item, .no-results {
-  /*to left-align p.list-item for a submitted task with input.list-item for non-submitted tasks, margin-left and padding-left are set accordingly*/
-  /* margin-left must match margin-right of .checkbox */
+  /*
+  * To left-align p.list-item for a submitted task with
+  * input.list-item for non-submitted tasks, margin-left
+  * and padding-left are set accordingly
+  * margin-left must match margin-right of .checkbox */
   margin-left: 2em;
   /* padding-left must match width of .checkbox*/
   padding-left: 20px;
@@ -378,8 +403,11 @@ input.list-item, .no-results {
 
 .list-item.complete {
   color: #9e9e9e;
+  /*
+  * Note: text-decoration is not an animatable property:
+  * https://www.w3.org/TR/css3-transitions/
+  */
   text-decoration: line-through;
-  /*Note: text-decoration is not an animatable property: https://www.w3.org/TR/css3-transitions/*/
 }
 
 a {
@@ -392,7 +420,12 @@ a:hover, .checkbox, .add-task-container {
   cursor: pointer;
 }
 
-/* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
+/*
+* The delete icon svg is added with JS using AJAX;
+* cannot edit external XML resource to add/remove
+* classes on the svg, so it must be targeted with
+* a descendant selector
+*/
 .task-container svg {
   fill: #646464;
 }
@@ -403,9 +436,9 @@ a:hover, .checkbox, .add-task-container {
 
 /* delete icon only, checkmark icon is inside a <span>*/
 .task-container a svg {
-  margin-left: 2em;
   width: 20px;
   height: 20px;
+  margin-left: 2em;
 }
 
 input[type="text"], input[type="text"]:focus {
@@ -417,7 +450,10 @@ input[type="text"], input[type="text"]:focus {
   transition: none;
 }
 
-/* .hidden style block must be placed AFTER .list-item block to override its opacity property setting*/
+/*
+* .hidden style block must be placed AFTER .list-item
+* block to override its opacity property setting
+*/
 .hidden {
   max-height: 0;
   padding: 0;
@@ -442,7 +478,11 @@ input[type="text"], input[type="text"]:focus {
   transition: opacity 1s ease;
 }
 
-/* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/
+/*
+* Separate neutralizing styles keep these elements
+* from spatially or visually affecting other
+* transitions that use the "hidden" class
+*/
 p.hidden, a.hidden, .list-item.hidden, span.hidden {
   max-width: 0;
   margin: 0;
@@ -456,7 +496,11 @@ input[type="text"]:focus.bounce {
   animation-delay: 0.25s;
 }
 
-/*Approximates a critically damped sinusoidal function centered around zero. Inspiration: easeInOutBounce timing-function from easings.net*/
+/*
+* Approximates a critically damped sinusoidal function
+* centered around zero. Inspiration: easeInOutBounce
+* timing-function from easings.net
+*/
 @keyframes bounce {
   0% {
     transform: translateX(0px);
@@ -497,6 +541,6 @@ input[type="text"]:focus.bounce {
 ********************************************/
 
 footer {
-  background-color: rgba(207,216,220, .7);
   text-align: center;
+  background-color: rgba(207,216,220, .7);
 }
