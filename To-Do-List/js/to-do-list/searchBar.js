@@ -18,18 +18,18 @@ var app = app ? app : {};
   
   'use strict';
 
-  var searchLink = document.getElementById("search-link");
-  var searchBox = document.getElementById("search-box");
+  var searchLink = document.getElementById('search-link');
+  var searchBox = document.getElementById('search-box');
   
   // Get the <div> element containing the list
   var listContainer = document.getElementById(
-    "list-container");
+    'list-container');
 
   /*
   * Get the <p> element that displays when no search results
   * are found
   */
-  var noResults = document.getElementById("no-results");
+  var noResults = document.getElementById('no-results');
 
   // activate CSS3 transitions!
   searchLink.onclick = showSearchBar;
@@ -44,23 +44,23 @@ var app = app ? app : {};
   * Any time the user deletes an item or returns an item to
   * the list from deletion, filter the list again.
   */
-  document.body.addEventListener("delete", filterList);
-  document.body.addEventListener("undo", filterList);
+  document.body.addEventListener('delete', filterList);
+  document.body.addEventListener('undo', filterList);
 
   // Displays the search bar using CSS transitions
   function showSearchBar() {
-    searchLink.classList.add("search-link-active");
-    searchBox.classList.remove("hidden");
-    searchBox.removeAttribute("aria-hidden");
+    searchLink.classList.add('search-link-active');
+    searchBox.classList.remove('hidden');
+    searchBox.removeAttribute('aria-hidden');
     searchBox.focus();
   }
   
   // Hides the search bar using CSS transitions
   function hideSearchBar() {
-    if (searchBox.value === "") {
-      searchLink.classList.remove("search-link-active");
-      searchBox.classList.add("hidden"); 
-      searchBox.setAttribute("aria-hidden", "true");
+    if (searchBox.value === '') {
+      searchLink.classList.remove('search-link-active');
+      searchBox.classList.add('hidden'); 
+      searchBox.setAttribute('aria-hidden', 'true');
     }
   }
 
@@ -74,16 +74,16 @@ var app = app ? app : {};
   function filterList() {             
     
     // If the search box is not active, don't filter the list.
-    if (searchBox.classList.contains("hidden")) {
+    if (searchBox.classList.contains('hidden')) {
       return;
     }
     var subString = searchBox.value.toLowerCase();
     var tasks = app.store.getTasks();
     
-    for (let taskId in tasks) {
-      let string = tasks[taskId].text.toLowerCase();
-      let taskElem = document
-      .getElementById("task-container-" + taskId);
+    for (var taskId in tasks) {
+      var string = tasks[taskId].text.toLowerCase();
+      var taskElem = document
+      .getElementById('task-container-' + taskId);
       
       /* 
       * indexOf returns -1 if the substring is not contained
@@ -93,27 +93,27 @@ var app = app ? app : {};
       * been entered into the search field.
       */
       if (string.indexOf(subString) === -1 
-        && subString !== "") {
+        && subString !== '') {
         // Substring is not contained in the string
-        taskElem.classList.add("hidden");
-        taskElem.setAttribute("aria-hidden", "true");
+        taskElem.classList.add('hidden');
+        taskElem.setAttribute('aria-hidden', 'true');
         /* 
         * Adding an additional search class when toggling
         * hidden state, to alter transitions in CSS when user
         * is searching tasks. (.hidden.search {} in CSS)
         */
-        taskElem.classList.add("search");
+        taskElem.classList.add('search');
       
       } else {
-        taskElem.classList.remove("hidden");
-        taskElem.removeAttribute("aria-hidden");
-        taskElem.classList.remove("search");
+        taskElem.classList.remove('hidden');
+        taskElem.removeAttribute('aria-hidden');
+        taskElem.classList.remove('search');
       }
       
-      if (subString === "") {
-        taskElem.classList.remove("hidden");
-        taskElem.removeAttribute("aria-hidden");
-        taskElem.classList.remove("search");
+      if (subString === '') {
+        taskElem.classList.remove('hidden');
+        taskElem.removeAttribute('aria-hidden');
+        taskElem.classList.remove('search');
       }
     }
     /*
@@ -129,7 +129,7 @@ var app = app ? app : {};
   * Checks to see if there are any matching results to
   * the user's input. If at least one result matches
   * (i.e. it is currently visible in the list and does
-  * not have the "hidden" class applied), then don't show
+  * not have the 'hidden' class applied), then don't show
   * the 'no results' notification in place of the list.
   * Otherwise, if there are no matching results, display
   * the notification in place of the list.
@@ -141,37 +141,37 @@ var app = app ? app : {};
     * input element automatically generated upon submitting
     * a task.
     */
-    for (let i = 0; i < listContainer.children
+    for (var i = 0; i < listContainer.children
       .length-1; i++) {
       
       if (!listContainer.children.item(i).classList
-        .contains("hidden")) {
-        noResults.classList.add("hidden");
-        noResults.setAttribute("aria-hidden", "true");
-        noResults.classList.add("search");
-        listContainer.classList.remove("hidden");
-        listContainer.removeAttribute("aria-hidden");
-        listContainer.classList.remove("search");
+        .contains('hidden')) {
+        noResults.classList.add('hidden');
+        noResults.setAttribute('aria-hidden', 'true');
+        noResults.classList.add('search');
+        listContainer.classList.remove('hidden');
+        listContainer.removeAttribute('aria-hidden');
+        listContainer.classList.remove('search');
         return;
       }
     }
 
      //Check if the input field is blank to remove noResults
-    if (subString === "") {
-      noResults.classList.add("hidden");
-      noResults.setAttribute("aria-hidden", "true");
-      noResults.classList.add("search");
-      listContainer.classList.remove("hidden");
-      listContainer.removeAttribute("aria-hidden");
-      listContainer.classList.remove("search");
+    if (subString === '') {
+      noResults.classList.add('hidden');
+      noResults.setAttribute('aria-hidden', 'true');
+      noResults.classList.add('search');
+      listContainer.classList.remove('hidden');
+      listContainer.removeAttribute('aria-hidden');
+      listContainer.classList.remove('search');
       return;
     }
-    noResults.classList.remove("hidden");
-    noResults.removeAttribute("aria-hidden");
-    noResults.classList.remove("search");
-    listContainer.classList.add("hidden");
-    listContainer.setAttribute("aria-hidden", "true");
-    listContainer.classList.add("search");
+    noResults.classList.remove('hidden');
+    noResults.removeAttribute('aria-hidden');
+    noResults.classList.remove('search');
+    listContainer.classList.add('hidden');
+    listContainer.setAttribute('aria-hidden', 'true');
+    listContainer.classList.add('search');
   }
   
 }());

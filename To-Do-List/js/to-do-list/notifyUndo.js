@@ -19,9 +19,9 @@ var app = app ? app : {};
   
   'use strict';  
 
-  var notifyBar = document.getElementById("notify-bar");
-  var dismissLink = document.getElementById("dismiss-link");
-  var undoLink = document.getElementById("undo-link");
+  var notifyBar = document.getElementById('notify-bar');
+  var dismissLink = document.getElementById('dismiss-link');
+  var undoLink = document.getElementById('undo-link');
   /*
   * If user spam deletes a bunch of tasks, make sure all of
   * them -- not just the most recently deleted task -- are
@@ -45,8 +45,8 @@ var app = app ? app : {};
   * Listen for when a task from the list-item module has
   * been deleted.
   */
-  document.body.addEventListener("delete"
-    , function notify(event) {
+  document.body.addEventListener('delete',
+  function notify(event) {
     
     clearTimeout(deleteClickTimer);
     
@@ -55,19 +55,21 @@ var app = app ? app : {};
     * module for the most recently deleted task
     */
     var task = event.detail.task;
-    showNotifyBar(task.id); 
+    showNotifyBar(task.id);
     
     /*
     * If the user clicks undo, hide the notification bar and
     * restore the task to the list in its original location.
     */
-    undoLink.onclick = function() {
+    undoLink.onclick = function clickToUndo() {
       undo(task);
-    }
+    };
+
     // If the user clicks dismiss, hide the notification bar.
-    dismissLink.onclick = function() {
+    dismissLink.onclick = function clickToDismiss() {
       hideNotifyBar(task.id);
     };
+
     /*
     * If the user spam deletes a number of tasks at once, capture
     * the task.id for each task in deletedTaskIds and remove
@@ -80,8 +82,7 @@ var app = app ? app : {};
     * a while. The delay must exceed the delay on notifyTimer
     */
     deleteClickTimer = setTimeout(clearDeleteBacklog, 65000);
-  }
-  );
+  });
   
   
   /*
@@ -93,9 +94,10 @@ var app = app ? app : {};
   */
   function clearDeleteBacklog() {
     for (var i = 0; i <= deletedTaskIds.length-1; i++) {
-      let taskId = deletedTaskIds[i];
+      var taskId = deletedTaskIds[i];
       removeFromDOM(taskId);
     }
+    
     /*
     * After permanently removing all deleted tasks from the DOM,
     * reset deletedTaskIds.
@@ -110,9 +112,9 @@ var app = app ? app : {};
   * { id: <Number>, complete: <Boolean>, text: <String> }
   */
   function undo(task) {
-    var listNode = document.getElementById("task-container-"
+    var listNode = document.getElementById('task-container-'
      + task.id);
-    listNode.classList.remove("hidden");
+    listNode.classList.remove('hidden');
     hideNotifyBar(task.id);
     
     /*
@@ -144,9 +146,9 @@ var app = app ? app : {};
   */
   function showNotifyBar(taskId) {
     window.clearTimeout(notifyTimer);
-    notifyBar.classList.remove("hidden");
-    notifyBar.removeAttribute("aria-hidden");
-    notifyTimer = setTimeout(function() {
+    notifyBar.classList.remove('hidden');
+    notifyBar.removeAttribute('aria-hidden');
+    notifyTimer = setTimeout(function waitToDismiss() {
       hideNotifyBar(taskId);
     }, 60000);
   }
@@ -156,8 +158,8 @@ var app = app ? app : {};
   * notification bar. taskId is a number.
   */
   function hideNotifyBar(taskId) {
-    notifyBar.classList.add("hidden");
-    notifyBar.setAttribute("aria-hidden", "true");
+    notifyBar.classList.add('hidden');
+    notifyBar.setAttribute('aria-hidden', 'true');
   }
   
   /*
@@ -167,7 +169,7 @@ var app = app ? app : {};
   * the task. taskId is a number.
   */
   function removeFromDOM(taskId) {
-    listNode = document.getElementById("task-container-"
+    listNode = document.getElementById('task-container-'
      + taskId);
     listNode.remove();
   }

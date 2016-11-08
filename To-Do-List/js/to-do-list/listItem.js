@@ -1,17 +1,17 @@
 /*
-* Using a ternary operator to declare variable 'app' as 
+* Using a ternary operator to declare variable 'app' as
 * an empty object regardless of which script is run first.
 * Pseudocode: If app already exists (first condition),
-* then do nothing. If it doesn't, then create it as an 
+* then do nothing. If it doesn't, then create it as an
 * object with a nested store object.
 */
 var app = app ? app : {};
 
 /* Initialize storedTasks object
-* Check browser's localStorage for any submitted tasks from a 
+* Check browser's localStorage for any submitted tasks from a
 * previous session submittedTasks is an object of nested
-* objects, and is of the form 
-* { <taskId1>: <taskObject1>, <taskId2>: <taskObject2>, ...} 
+* objects, and is of the form
+* { <taskId1>: <taskObject1>, <taskId2>: <taskObject2>, ...}
 * where <taskId> is a number and <taskObject> is of the form
 * { id: <Number>, complete: <Boolean>, text: <String> }
 */
@@ -31,23 +31,23 @@ if (!storedTasksString) {
 */
 app.store = {
 
-  /* 
-  * Gets JSON string submittedTasks out of localStorage, 
+  /*
+  * Gets JSON string submittedTasks out of localStorage,
   * unserializes it & returns it as a JS object.
   */
   getTasks: function() {
     var storedTasksString = window.localStorage
     .getItem('submittedTasks');
-    /* 
+    /*
     * Convert string representation of submittedTasks back
-    * into a JS object JSON is the standard serialization 
+    * into a JS object JSON is the standard serialization
     * format for JS objects.
     */
     var storedTasks = JSON.parse(storedTasksString);
     return storedTasks;
   },
 
-  /* 
+  /*
   * Write tasks back into localStorage
   * tasks is an object of nested objects of the same form as
   * submittedTasks,
@@ -131,7 +131,7 @@ app.store = {
 };
 
 /*
-* Wrap entire module in an immediately invoked function so 
+* Wrap entire module in an immediately invoked function so
 * global variables in this module don't pollute the global
 * namespace for the application. The ! at the start of the
 * line allows Javascript ASI to kick in on the previous line
@@ -140,7 +140,7 @@ app.store = {
 */
 !(function() {
 
-  'use strict';  
+  'use strict';
 
   // Initializes global variables
   var listContainer = document.getElementById('list-container');
@@ -158,11 +158,11 @@ app.store = {
   var sortable = [];
 
 /*
-* Populate sortable with tasks in localStorage by iterating 
+* Populate sortable with tasks in localStorage by iterating
 * over the keys of the existingTasks object.
 */
   for (var taskId in existingTasks) {
-    /* 
+    /*
     * Don't iterate over properties that are built into the
     * object prototype, only iterate over custom properties.
     */
@@ -173,9 +173,9 @@ app.store = {
   }
 
   /*
-  * Iterating over the keys in an object may not come back 
+  * Iterating over the keys in an object may not come back
   * in order. Sort those tasks in ascending numerical order
-  * by taskId. In the first pass, a = sortable[0], 
+  * by taskId. In the first pass, a = sortable[0],
   * b = sortable[1], they are compared and sortable is
   * rearranged as appropriate. In the second pass,
   * a = sortable[1], b = sortable[2], they are compared and
@@ -421,8 +421,9 @@ app.store = {
     
     // Enter to submit event listener
     inputElement.onkeyup = function enterCheckToSubmit(event) {
+      var keyCode = event.keyCode;
       var userInput = inputElement.value;
-      enterToSubmit(userInput, taskId);
+      enterToSubmit(keyCode, userInput, taskId);
     };
 
     return inputElement;
@@ -624,10 +625,10 @@ app.store = {
   * task. If the submitted task is empty, add keyframes bounce
   * animation.
   */
-  function enterToSubmit(userInput, taskId) {
+  function enterToSubmit(keyCode, userInput, taskId) {
     var inputElement = document.getElementById(
       'list-item-input-' + taskId);
-    if (userInput !== '' && event.keyCode === 13) {
+    if (userInput !== '' && keyCode === 13) {
       var submitEvent = new CustomEvent('submit');
       document.body.dispatchEvent(submitEvent);
       submitTask(userInput, taskId);
@@ -650,7 +651,7 @@ app.store = {
       if (taskId.toString() === lastId) {
         addTask();
       }
-    } else if (userInput === '' && event.keyCode === 13) {
+    } else if (userInput === '' && keyCode === 13) {
       inputElement.classList.add('bounce');
       setTimeout(function addBounce() {
         /*
