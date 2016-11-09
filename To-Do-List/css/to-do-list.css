@@ -33,7 +33,7 @@ html {
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*, *::before, *::after {
   box-sizing: inherit;
 }
 
@@ -85,6 +85,14 @@ input[type="search"] {
 
 input[type="text"] {
   border-width: 0;
+}
+
+/* Remove 'X' icon when editing input field
+in MS Edge 38*/
+input[type=text]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 :placeholder-shown {
@@ -295,7 +303,7 @@ nav a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 15px 0;
+  margin: 20px 0;
 }
 
 @media (max-width: 910px) {
@@ -343,6 +351,10 @@ nav a {
   transition: opacity .5s;
 }
 
+.no-results {
+  border-bottom: 1px transparent solid;
+}
+
 .task-container {
   display: flex;
   justify-content: space-between;
@@ -351,6 +363,11 @@ nav a {
   max-height: 1000px;
   margin: 0 auto;
   border-bottom: 1px #ccc solid;
+  /*
+  * Needed for delete task transition to work in
+  * Firefox 49
+  */
+  overflow: hidden;
   opacity: 1;
   visibility: visible;
   transition: opacity 1s, max-height 5s;
@@ -443,10 +460,9 @@ input.list-item, .no-results {
   * margin-left must match margin-right of .checkbox
   */
   margin-left: 2em;
+  margin-right: 2em;
   /* padding-left must match width of .checkbox*/
-  padding-left: 20px;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0 20px;
 }
 
 .list-item.complete {
@@ -493,14 +509,6 @@ input.list-item.hidden {
 
 .search.hidden {
   transition: opacity .5s, max-height 1s;
-}
-
-.no-results.hidden {
-  transition: opacity 1s;
-}
-
-.no-results {
-  border-bottom: 1px transparent solid;
 }
 
 .bounce {
