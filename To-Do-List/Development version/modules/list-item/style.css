@@ -1,0 +1,150 @@
+/* LIST ITEM MODULE STYLE SHEET */
+
+body {
+  background: grey;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.list-item-container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-height: 1000px;
+  /* hide flex items when this element is collapsing*/
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease, max-height 5s ease;
+}
+
+/* Remove System Checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Fake checkbox made in CSS */
+.checkbox {
+  position: relative;
+  display:inline-block;
+  min-width:20px;
+  height:20px;
+  margin-left: 1em;
+  margin-top: 1em;
+  background-color: #ededed;
+  border: 1px solid #aeaeae;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+/* The checkmark svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
+.checkbox svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -70%);
+  display: inline-block;
+  width: 30px;
+  height: 23.61px;
+  visibility: hidden;
+}
+
+.list-item {
+  flex-grow: 1;
+  margin: 1em;
+  line-height: 1.5;
+  padding-left: 10px;
+  visibility: visible;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+p.list-item {
+  padding-left: 0;
+}
+
+.list-item.complete {
+  text-decoration: line-through;
+  /*Note: text-decoration is not an animatable property: https://www.w3.org/TR/css3-transitions/*/
+}
+
+a {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+a:hover, .checkbox, .add-task-container {
+  cursor: pointer;
+}
+
+/* The delete icon svg is added with JS using AJAX; cannot edit external XML resource to add/remove classes on the svg, so it must be targeted with a descendant selector*/
+.list-item-container a svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 1em;
+  margin-top: 1em;
+}
+
+.hidden {
+  max-height: 0;
+  padding: 0;
+  opacity: 0;
+  transition:  opacity 1s ease, max-height 1s ease .5s;
+}
+
+/* Separate neutralizing styles keep these elements from spatially or visually affecting other transitions that use the "hidden" class*/
+p.hidden, a.hidden, input.hidden {
+  max-width: 0;
+  margin: 0;
+  border: 0;
+}
+
+.bounce {
+  outline: 1px solid red;
+  animation-name: bounce;
+  animation-duration: .5s;
+  animation-delay: 0.25s;
+}
+
+/*Approximates a critically damped sinusoidal function centered around zero. Inspiration: easeInOutBounce timing-function from easings.net*/
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-out;
+  }
+}
