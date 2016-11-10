@@ -511,6 +511,10 @@ input.list-item.hidden {
   transition: opacity .5s, max-height 1s;
 }
 
+.no-results.list-item.hidden {
+  transition: opacity .5s;
+}
+
 .bounce {
   outline: 1px solid red;
   animation-name: bounce;
