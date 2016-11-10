@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="IE=edge">
+      <title>To Do List: Make a To Do List</title>
+      <meta name="description" content="Use this free application to make a to do list.">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="css/vendor/reset-min.css">
+      <link rel="stylesheet" href="css/vendor/normalize-min.css">
+      <link rel="stylesheet" href="css/to-do-list-min.css">
+      <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat|Quattrocento" rel="stylesheet">
+    </head>
+    <body>
+      <div class="notify hidden" id="notify-bar" aria-hidden="true">
+        <p>You just deleted a task!
+          <a class="notify-link" id="undo-link" href="javascript:void(0);">Undo</a>
+          |
+          <a class="notify-link" id="dismiss-link" href="javascript:void(0);">Dismiss</a>
+        </p>
+      </div>
+      <header class="menu" role="banner">
+        <div class="container">
+          <a class="logo-link" href="http://www.biancascura.com" target="_blank" title="Go to Bianca Danforth's website" aria-label="Go to Bianca Danforth's website in a new window">
+            <svg class="logo-icon" id="svg3336" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="35.116" viewBox="0 0 50.000004 35.116184" width="50" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" aria-hidden="true">
+              <metadata id="metadata3342">
+                <rdf:RDF>
+                  <cc:Work rdf:about="">
+                    <dc:format>image/svg+xml</dc:format>
+                    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+                    <dc:title/>
+                  </cc:Work>
+                </rdf:RDF>
+              </metadata>
+              <g id="g4210" transform="matrix(1.0576 0 0 1.0576 -15.807 -8.6478)">
+                <path class="logo-arch" id="path3366" d="m25.583 23.139a13 13 0 0 1 13 -12.963 13 13 0 0 1 13 12.963" stroke="#000" stroke-width="4" fill="none"/>
+                <text class="logo-text" id="text3348" style="word-spacing:0px;letter-spacing:0px" line-height="125%" font-size="40px" y="41.058823" x="11.705884" font-family="sans-serif" xml:space="preserve"><tspan id="tspan3350" y="41.058823" x="11.705884" font-family="montserrat">bd</tspan></text>
+              </g>
+            </svg>
+          </a>
+        </div>
+      </header>
+      <main role="main">
+        <section class="list-section" id="list-section">
+          <div class="container">
+            <div class="list-background">
+              <div class="list-header">
+                <h1 class="list-name">To Do List</h1>
+                <nav role="navigation">
+                  <a id="search-link" href="javascript:void(0);" title="Search tasks" role="search" aria-label="Search">
+                    <svg class="search-icon" id="Capa_1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 49.999999 49.999999" width="50" version="1.1" y="0px" x="0px" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" aria-hidden="true">
+                      <metadata id="metadata40"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><g id="Search" transform="scale(.19975)"><path class="search" id="path4" fill-rule="evenodd" clip-rule="evenodd" d="m244.19 214.6-54.379-54.378c-0.289-0.289-0.628-0.491-0.93-0.76 10.7-16.231 16.945-35.66 16.945-56.554 0-56.835-46.07-102.91-102.91-102.91-56.835 0-102.91 46.075-102.91 102.91s46.074 102.91 102.91 102.91c20.895 0 40.323-6.245 56.554-16.945 0.269 0.301 0.47 0.64 0.759 0.929l54.38 54.38c8.169 8.168 21.413 8.168 29.583 0 8.168-8.169 8.168-21.413 0-29.582zm-141.28-44.45c-37.134 0-67.236-30.102-67.236-67.235 0-37.134 30.103-67.236 67.236-67.236 37.132 0 67.235 30.103 67.235 67.236s-30.103 67.235-67.235 67.235z"/></g>
+                    </svg>
+                  </a>
+                  <input class="search-box hidden" id="search-box" name="search" type="search" placeholder="Search tasks..." aria-hidden="true">
+                </nav>
+              </div>
+              <hr class="list-name-hr">
+              <p class="no-results list-item hidden" id="no-results" aria-hidden="true">No search results...</p>
+              <div class="list" id="list-container">
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer role="contentinfo">
+        <div class="container">
+          <a class="link-text" href="http://biancascura.com" target="_blank" title="Go to Bianca Danforth's website">&#169; Bianca Danforth 2016</a>
+        </div>
+      </footer>
+      <script src="js/listItemMin.js"></script>
+      <script src="js/searchBarMin.js"></script>
+      <script src="js/notifyUndoMin.js"></script>
+    </body>
+</html>
