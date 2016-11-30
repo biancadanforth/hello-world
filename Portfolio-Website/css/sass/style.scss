@@ -1,0 +1,29 @@
+// biancadanforth.com Sass stylesheet
+
+// ------------ CONSTANTS -------------
+
+// COLORS
+$color-primary: #fbfced; // off-white
+$color-secondary: #418ac9; // blue
+$color-accent: #f1c40f; // yellow
+$color-text-header: #545454; // dark grey
+$color-text-body: #6d6d6d; // grey
+
+// FONTS
+$font-main: 'Montserrat', sans-serif;
+
+// MARGIN
+$margin-default: 20px;
+
+/*
+*-------------------------------------
+*-------------- GLOBAL ---------------
+*-------------------------------------
+*/
+
+body {
+	font: {
+		family: $font-main;
+		size: 100%;
+	}
+}
